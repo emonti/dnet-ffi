@@ -1,20 +1,7 @@
 
-# A dnet blob_t structure.
+## blob is libdnet's name for binary buffers
+
 module Dnet
-
-  # attach all the libdnet blob_* related functions ...
-
-  attach_function :blob_new,    [], :pointer
-  attach_function :blob_read,   [:pointer, :pointer, :int], :int
-  attach_function :blob_write,  [:pointer, :pointer, :int], :int
-  attach_function :blob_seek,   [:pointer, :int, :int], :int
-  attach_function :blob_index,  [:pointer, :pointer, :int], :int
-  attach_function :blob_rindex, [:pointer, :string, :int], :int
-  attach_function :blob_pack,   [:pointer, :string, :varargs], :int
-  attach_function :blob_unpack, [:pointer, :string, :varargs], :int
-  attach_function :blob_print,  [:pointer, :string, :int], :int
-  attach_function :blob_free,   [:pointer], :pointer
-
 
   # FFI mapping to libdnet's "blob_t" binary buffer struct.
   #
@@ -59,13 +46,11 @@ module Dnet
       raise "blob has already been released" if @blob_closed
     end
 
-    # This method calls libdnet's blob_free behind the scenes. It should auto-
-    # matically get run by the garbage collector when a blob is no longer
-    # referenced. You probably don't want to use this method unless you
-    # are sure about what you're doing
+    # This method calls libdnet's blob_free behind the scenes. It should 
+    # automatically get run by the garbage collector when a blob is no longer
+    # referenced.
     # 
-    # blob_free deallocates the memory associated with blob b and returns
-    # NULL.
+    # blob_free deallocates the memory associated with blob b and returns NULL.
     #
     # Below is the libdnet C function definition
     #
@@ -81,10 +66,10 @@ module Dnet
     # in blob b according to the given format fmt as described below, returning
     # 0 on success, and -1 on failure.
     #
-    # The format string is composed of zero or more directives: ordinary char-
-    # acters (not % ), which are copied to / read from the blob, and conversion
-    # specifications, each of which results in reading / writing zero or more
-    # subsequent arguments.
+    # The format string is composed of zero or more directives: ordinary 
+    # characters (not % ), which are copied to / read from the blob, and 
+    # conversion specifications, each of which results in reading / writing 
+    # zero or more subsequent arguments.
     #
     # Each conversion specification is introduced by the character %, and may
     # be prefixed by length specifier. The arguments must correspond properly
@@ -163,8 +148,7 @@ module Dnet
     def read(len=nil)
       _check_closed
       len ||= self[:end] - self[:off]
-      buf = ::FFI::MemoryPointer.from_string("\x00"*len)
-      buf.autorelease=true
+      (buf = ::FFI::MemoryPointer.new("\x00", len)).autorelease = true
       if rlen=Dnet.blob_read(self, buf, len)
         return buf.read_string_length(rlen)
       else
@@ -177,7 +161,6 @@ module Dnet
       _check_closed
       Dnet.blob_seek(self, 0, 0)
     end
-
 
     # sets the blob buffer offset to p
     def pos=(p)
@@ -227,8 +210,7 @@ module Dnet
     def index(bstr, rewind=false)
       _check_closed
       self.rewind() if rewind
-      buf = ::FFI::MemoryPointer.from_string(bstr)
-      buf.autorelease=true
+      (buf = ::FFI::MemoryPointer.from_string(bstr)).autorelease=true
       if (i=Dnet.blob_index(self, buf, bstr.size)) > -1
         return i
       else
@@ -251,8 +233,7 @@ module Dnet
     def rindex(buf, rewind=false)
       _check_closed
       self.rewind() if rewind
-      buf = ::FFI::MemoryPointer.from_string(bstr)
-      buf.autorelease=true
+      (buf = ::FFI::MemoryPointer.from_string(bstr)).autorelease=true
       if (i=Dnet.blob_rindex(self, buf, bstr.size)) > -1
         return i
       else
@@ -278,5 +259,16 @@ module Dnet
       Dnet.blob_print(self, "hexl", len)
     end
   end
+
+  attach_function :blob_new,    [], :pointer
+  attach_function :blob_read,   [Blob, :pointer, :int], :int
+  attach_function :blob_write,  [Blob, :pointer, :int], :int
+  attach_function :blob_seek,   [Blob, :int, :int], :int
+  attach_function :blob_index,  [Blob, :pointer, :int], :int
+  attach_function :blob_rindex, [Blob, :string, :int], :int
+  attach_function :blob_pack,   [Blob, :string, :varargs], :int
+  attach_function :blob_unpack, [Blob, :string, :varargs], :int
+  attach_function :blob_print,  [Blob, :string, :int], :int
+  attach_function :blob_free,   [Blob], :pointer
 end
 
