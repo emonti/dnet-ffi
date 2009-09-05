@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'rake'
 
-require File.join(File.dirname(__FILE__), "lib/dnet-ffi/version")
 require 'rake/clean'
 
 begin

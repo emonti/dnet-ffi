@@ -9,19 +9,18 @@ module Dnet
   ffi_lib 'dnet'
 end
 
-require 'dnet_ffi/version'
-require 'dnet_ffi/ffi'
+require 'dnet-ffi/ffi'
 
 # structure classes
-require 'dnet_ffi/addr'
-require 'dnet_ffi/arp'
-require 'dnet_ffi/blob'
-require 'dnet_ffi/ethernet'
-require 'dnet_ffi/fw'
-require 'dnet_ffi/interface'
-require 'dnet_ffi/ip'
-require 'dnet_ffi/rand'
-require 'dnet_ffi/route'
-require 'dnet_ffi/tun'
+require 'dnet-ffi/addr'
+require 'dnet-ffi/arp'
+require 'dnet-ffi/blob'
+require 'dnet-ffi/ethernet'
+require 'dnet-ffi/fw'
+require 'dnet-ffi/interface'
+require 'dnet-ffi/ip'
+require 'dnet-ffi/rand'
+require 'dnet-ffi/route'
+require 'dnet-ffi/tun'
 
 
