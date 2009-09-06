@@ -61,11 +61,12 @@ module Dnet
     end
 
     # Returns all entries as an array.
-    def self.entries
-      ary = []
-      each_entry {|x| ary << x}
-      return ary
-    end
+    # XXX this is buggin... looks like we end up with stale pointers?
+    # def self.entries
+    #   ary = []
+    #   each_entry {|x| ary << x}
+    #   return ary
+    # end
 
     private
       # Generic helper for libdnet's *_loop method interfaces.
