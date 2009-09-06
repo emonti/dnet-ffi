@@ -33,10 +33,10 @@ module Dnet
     # Obtains a handle to access the kernel arp(4) cache. Uses dnet(3)'s 
     # arp_open() function under the hood.
     def initialize
-      _handle_opened!
       if (@handle = ::Dnet.arp_open).address == 0
         raise H_ERR.new("unable to open arp handle")
       end
+      _handle_opened!
     end
     
     # Closes the handle. Uses dnet(3)'s arp_close() function under the hood.
@@ -57,8 +57,8 @@ module Dnet
     def get(addr)
       _check_open!
       ae = ArpEntry.new
-      return ae if( ae.paddr.set_string(addr) and 
-                    ::Dnet.arp_get(@handle, ae) == 0 )
+      return ae if ae.paddr.set_string(addr) and 
+                   ::Dnet.arp_get(@handle, ae) == 0
     end
 
     # Adds a new ARP entry specified as an ArpEntry object. Uses dnet(3)'s 
