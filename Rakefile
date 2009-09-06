@@ -7,8 +7,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "dnet-ffi"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Ruby FFI bindings for libdnet}
+    gem.description = %Q{Ruby FFI bindings for the libdnet raw network library}
     gem.email = "emonti@matasano.com"
     gem.homepage = "http://github.com/emonti/dnet-ffi"
     gem.authors = ["Eric Monti"]
