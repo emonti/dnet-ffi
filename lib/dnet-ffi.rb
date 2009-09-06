@@ -9,18 +9,21 @@ module Dnet
   ffi_lib 'dnet'
 end
 
-require 'dnet-ffi/ffi'
+require 'dnet-ffi/defs.rb' unless defined?(Dnet::DNET_DEFS)
 
-# structure classes
+require 'dnet-ffi/util.rb'
+require 'dnet-ffi/helpers.rb'
+
 require 'dnet-ffi/addr'
-require 'dnet-ffi/arp'
-require 'dnet-ffi/blob'
 require 'dnet-ffi/ethernet'
-require 'dnet-ffi/fw'
-require 'dnet-ffi/interface'
+require 'dnet-ffi/arp'
 require 'dnet-ffi/ip'
-require 'dnet-ffi/rand'
+require 'dnet-ffi/ip6'
+require 'dnet-ffi/tcp.rb'
+require 'dnet-ffi/interface'
 require 'dnet-ffi/route'
+require 'dnet-ffi/fw'
 require 'dnet-ffi/tun'
-
+require 'dnet-ffi/blob'
+require 'dnet-ffi/rand'
 

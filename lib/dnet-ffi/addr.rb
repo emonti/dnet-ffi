@@ -2,9 +2,9 @@
 
 module Dnet
 
-  # FFI mapping to libdnet's 'addr' network address structure.
+  # FFI mapping to dnet(3)'s 'addr' network address structure.
   #
-  # libdnet's network addresses are described by the following C structure:
+  # dnet(3)'s network addresses are described by the following C structure:
   #
   #    struct addr {
   #            uint16_t                addr_type;
@@ -36,10 +36,6 @@ module Dnet
   # The field addr_bits denotes the length of the network mask in bits.
   #
   class Addr < FFI::Struct
-    TYPE_NONE = 0
-    TYPE_ETH  = 1
-    TYPE_IP   = 2
-    TYPE_IP6  = 3
 
     ADDR_TYPES = [ nil, :eth, :ip, :ip6 ]
 
@@ -50,36 +46,35 @@ module Dnet
             :addr,      [:uchar, 16])
 
 
-    # Returns a human-readable network address from self. Uses libdnet's
+    # If passed a String argument, it will be parsed as an address using 
+    # set_string(). Otherwise, see FFI:Struct for arguments.
+    def initialize(*args)
+      if args.size == 1 and (str=args[0]).is_a? String
+        super().aton(str)
+      else
+        super(*args)
+      end
+    end
+
+    def addr_type; ADDR_TYPES[ self[:addr_type] ] ; end
+
+    def addr_bits;  self[:addr_bits] ; end
+    alias mask addr_bits
+
+    def addr_bits=(val); self[:addr_bits]=val ; end
+    alias mask= addr_bits=
+
+    # Returns a human-readable network address from self. Uses dnet(3)'s
     # addr_ntoa function under the hood.
-    #
-    # addr_ntoa converts an address from network format to a string, return-
-    # ing a pointer to the result in static memory.
-    #
-    #   char * addr_ntoa(const struct addr *a);
-    #
     def ntoa
       Dnet.addr_ntoa(self)
     end
     alias string ntoa
     alias addr ntoa
 
-    def addr_type
-      ADDR_TYPES[ self[:addr_type] ]
-    end
-
-    def addr_bits
-      self[:addr_bits]
-    end
-
     # Returns a new Addr object containing the broadcast address for the
-    # network specified in this object. Uses libdnet's addr_bcast under the
+    # network specified in this object. Uses dnet(3)'s addr_bcast under the
     # hood.
-    #
-    # addr_bcast computes the broadcast address for the network specified in
-    # a and writes it into b.
-    #
-    #   int addr_bcast(const struct addr *a, struct addr *b);
     def bcast
       bcast = self.class.new()
       Dnet.addr_bcast(self, bcast)
@@ -88,13 +83,8 @@ module Dnet
     alias broadcast bcast
 
     # Returns a new Addr object containing the network address for the 
-    # network specified in this object. Uses libdnet's addr_net under the
+    # network specified in this object. Uses dnet(3)'s addr_net under the
     # hood.
-    #
-    # addr_net computes the network address for the network specified in a
-    # and writes it into b.
-    #
-    #   int addr_net(const struct addr *a, struct addr *b);
     def net
       n = self.class.new()
       Dnet.addr_net(self, n)
@@ -102,45 +92,38 @@ module Dnet
     end
     alias network net
 
-    # Compare one Addr object against another. Uses libdnet's addr_cmp 
+    # Compare one Addr object against another. Uses dnet(3)'s addr_cmp 
     # under the hood.
     #
-    # addr_cmp compares network addresses a and b, returning an integer less
+    # addr_cmp() compares network addresses a and b, returning an integer less
     # than, equal to, or greater than zero if a is found, respectively, to be
     # less than, equal to, or greater than b.  Both addresses must be of the
     # same address type.
-    #
-    #   int addr_cmp(const struct addr *a, const struct addr *b);
-    #
     def <=>(other)
+      raise "can only compare another #{self.class}" unless other.is_a? Addr
       Dnet.addr_cmp(self, other)
     end
 
-
     # Converts an address (or hostname) from a string to network format 
-    # storing the result in this object. Uses libdnet's addr_pton under 
+    # storing the result in this object. Uses dnet(3)'s addr_pton under 
     # the hood.
-    #
-    #   int addr_pton(const char *src, struct addr *dst);
-    #
-    def from_string(str)
+    def set_string(str)
       return self if Dnet.addr_pton(str, self) == 0
     end
-    alias pton from_string
+    alias aton set_string
+    alias pton set_string
+    alias from_string set_string
 
     # Convert an address from network format to a string and store the 
-    # result in a destination buffer.  This uses libdnet's addr_ntop under 
+    # result in a destination buffer.  This uses dnet(3)'s addr_ntop under 
     # the hood.
-    #
-    #   char * addr_ntop(const struct addr *src, char *dst, size_t size);
-    #
     def ntop(buf_p, sz)
       Dnet.addr_ntop(self, buf_p, sz)
     end
 
     # Returns a new Addr object from a string address. Hostnames work too.
     def self.from_string(str)
-      new().from_string(str)
+      new().set_string(str)
     end
 
     # Returns a new Addr object containing the broadcast address for the
@@ -167,6 +150,8 @@ module Dnet
 
   # addr_aton is just an alias for addr_pton. eh, it's in the manpage...
   class <<self ; alias_method :addr_aton, :addr_pton; end
+
+  ### Misc unused stuff from dnet(3):
 
   # addr_ntos converts an address from network format to the appropriate
   # struct sockaddr.

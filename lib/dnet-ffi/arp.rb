@@ -1,62 +1,6 @@
 # Address resolution Protocol
 
 module Dnet
-  class ArpHandle
-    def self.open
-      a = new()
-      return a unless block_given?
-      begin
-        ret = yield(a)
-      ensure
-        a.close
-      end
-      return ret
-    end
-
-    def self.each_entry
-      open {|a| a.loop {|e| yield e } }
-    end
-
-    def self.entries
-      ary = []
-      each_entry {|x| ary << x}
-      ary
-    end
-
-    def initialize
-      @arp_closed = false
-      @arp_t = Dnet.arp_open
-    end
-    
-    def close
-      return nil if @arp_closed
-      @arp_closed = true
-      Dnet.arp_close(@arp_t)
-    end
-
-    def loop
-      b = lambda {|e, i| yield ArpEntry.new(e); nil }
-      Dnet.arp_loop( @arp_t, b, self.object_id )
-    end
-
-    def get_entry(addr)
-      ae = ArpEntry.new
-      if( Dnet.addr_aton(addr.to_s, ae[:paddr]) == 0 and 
-          Dnet.arp_get(@arp_t, ae) == 0 )
-        return ae
-      end
-    end
-
-    def add_entry(entry)
-      Dnet.arp_add(@arp_t, entry)
-    end
-
-    def delete_entry(entry)
-      Dnet.arp_delete(@arp_t, entry)
-    end
-
-  end
-
   # FFI mapping to libdnet's "arp_entry" struct.
   #
   # libnet's ARP cache entries are described by the following C structure:
@@ -66,57 +10,82 @@ module Dnet
   #          struct addr     arp_ha;         /* hardware address */
   #   };
   #
+  # Helper methods and internal struct members map to the following names
+  #
+  # * arp_pa == paddr / self[:paddr]
+  # * arp_ha == haddr / self[:haddr]
+  #
   class ArpEntry < FFI::Struct
 
     # struct arp_entry { ... };
-    layout( :paddr, ::Dnet::Addr,
-            :haddr, ::Dnet::Addr )
+    layout( :paddr, ::Dnet::Addr,   # protocol address
+            :haddr, ::Dnet::Addr )  # hardware address
 
+    # protocol address
+    def paddr ; self[:paddr] ; end
 
-    def paddr
-      self[:paddr]
-    end
-
-    def haddr
-      self[:haddr]
-    end
+    # hardware address
+    def haddr ; self[:haddr] ; end
   end
 
-  # The callback definition used by arp_loop
-  #   typedef int (*arp_handler)(const struct arp_entry *entry, void *arg);
-  callback :arp_handler, [:pointer, :ulong], :int
+  class ArpHandle < LoopableHandle
 
-  # arp_open is used to obtain a handle to access the kernel arp(4) cache.
-  #
-  #   arp_t * arp_open(void);
-  attach_function :arp_open, [], :pointer
+    # Obtains a handle to access the kernel arp(4) cache. Uses dnet(3)'s 
+    # arp_open() function under the hood.
+    def initialize
+      _handle_opened!
+      if (@handle = ::Dnet.arp_open).address == 0
+        raise H_ERR.new("unable to open arp handle")
+      end
+    end
+    
+    # Closes the handle. Uses dnet(3)'s arp_close() function under the hood.
+    def close
+      _do_if_open { _handle_closed!; ::Dnet.arp_close(@handle) }
+    end
 
-  # arp_add adds a new ARP entry.
-  #
-  #   int arp_add(arp_t *a, const struct arp_entry *entry);
-  attach_function :arp_add, [:pointer, ArpEntry], :int
+    # Iterates over the kernel arp cache, yielding each entry (cast as an
+    # ArpEntry) to a block. Uses dnet(3)'s arp_loop() function under the hood.
+    def loop &block
+      _loop :arp_loop, ArpEntry, &block
+    end
 
-  # arp_delete deletes the ARP entry for the protocol address specified by
-  # arp_pa.
-  #
-  #   int arp_delete(arp_t *a, const struct arp_entry *entry);
-  attach_function :arp_delete, [:pointer, ArpEntry], :int
+    # Retrieves the ARP entry for the protocol address specified by 'addr'
+    # (supplied as a String). Uses dnet(3)'s addr_aton() function to parse
+    # 'addr' and arp_get() to retrieve a result, which is cast as an ArpEntry 
+    # instance.
+    def get(addr)
+      _check_open!
+      ae = ArpEntry.new
+      return ae if( ae.paddr.set_string(addr) and 
+                    ::Dnet.arp_get(@handle, ae) == 0 )
+    end
 
-  # arp_get retrieves the ARP entry for the protocol address specified by
-  # arp_pa.
-  #
-  #   int arp_get(arp_t *a, struct arp_entry *entry);
-  attach_function :arp_get, [:pointer, ArpEntry], :int
+    # Adds a new ARP entry specified as an ArpEntry object. Uses dnet(3)'s 
+    # arp_add() function under the hood.
+    def add(entry)
+      _check_open!
+      ::Dnet.arp_add(@handle, entry)
+    end
 
-  # arp_loop iterates over the kernel arp cache, invoking the specified
-  # callback with each entry and the context arg passed to arp_loop.
-  #
-  #   int arp_loop(arp_t *a, arp_handler callback, void *arg);
-  attach_function :arp_loop, [:pointer, :arp_handler, :ulong], :int
+    # Deletes the ARP entry for the protocol address specified by
+    # 'entry' supplied as an ArpEntry object. Uses dnet(3)'s arp_delete()
+    # function under the hood.
+    def delete(entry)
+      _check_open!
+      ::Dnet.arp_delete(@handle, entry)
+    end
 
-  # arp_close closes the specified handle.
-  #
-  #   arp_t * arp_close(arp_t *a);
-  attach_function :arp_close, [:pointer], :pointer
+  end
+
+
+  typedef :pointer, :arp_t
+  callback :arp_handler, [ArpEntry, :ulong], :int
+  attach_function :arp_open, [], :arp_t
+  attach_function :arp_add, [:arp_t, ArpEntry], :int
+  attach_function :arp_delete, [:arp_t, ArpEntry], :int
+  attach_function :arp_get, [:arp_t, ArpEntry], :int
+  attach_function :arp_loop, [:arp_t, :arp_handler, :ulong], :int
+  attach_function :arp_close, [:arp_t], :arp_t
 
 end

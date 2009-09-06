@@ -1,11 +1,11 @@
 
-## blob is libdnet's name for binary buffers
+## blob is dnet(3)'s name for binary buffers
 
 module Dnet
 
-  # FFI mapping to libdnet's "blob_t" binary buffer struct.
+  # FFI mapping to dnet(3)'s "blob_t" binary buffer struct.
   #
-  # libdnet's binary buffers are described by the following C structure:
+  # dnet(3)'s binary buffers are described by the following C structure:
   #
   #    typedef struct blob {
   #            u_char          *base;          /* start of data */
@@ -15,24 +15,27 @@ module Dnet
   #    } blob_t;
   #
   class Blob < FFI::ManagedStruct
+    include HandleHelpers
+
     # struct blob { ... } blob_t;
     layout( :base, :pointer,
             :off,  :int,
             :end,  :int,
             :size, :int )
 
-    # Initializes a new Blob using libdnet's blob_new under the hood.
+
+    # Initializes a new Blob using dnet(3)'s blob_new under the hood.
     #
     # blob_new is used to allocate a new dynamic binary buffer, returning
     # NULL on failure.
     #
-    # Below is the libdnet C function definition:
+    # Below is the dnet(3) C function definition:
     #
     #    blob_t * blob_new(void);
     #
     def initialize
-      @blob_closed = false
-      super(blob_new())
+      super(::Dnet.blob_new())
+      _handle_opened!
     end
 
     # Called by the garbage collector for ::FFI:ManagedStruct objects
@@ -40,26 +43,13 @@ module Dnet
       blob.release()
     end
 
-    # A sanity check used throughout to make sure we don't accidentally
-    # use this blob after it has been released
-    def _check_closed
-      raise "blob has already been released" if @blob_closed
-    end
-
-    # This method calls libdnet's blob_free behind the scenes. It should 
+    # This method calls dnet(3)'s blob_free behind the scenes. It should 
     # automatically get run by the garbage collector when a blob is no longer
     # referenced.
     # 
     # blob_free deallocates the memory associated with blob b and returns NULL.
-    #
-    # Below is the libdnet C function definition
-    #
-    #    blob_t * blob_free(blob_t *b);
-    #
     def release
-      return nil if @blob_closed
-      @blob_closed = true
-      Dnet.blob_free(self)
+      _do_if_open { _handle_closed! ; ::Dnet.blob_free(self) }
     end
 
     # blob_pack converts and writes, and blob_unpack() reads and converts data
@@ -92,171 +82,143 @@ module Dnet
     #             specified when unpacking.
     #
     # Custom conversion routines and their specifiers may be registered via
-    # blob_register_pack, currently undocumented. TODO add ruby wrapper.
+    # blob_register_pack, currently undocumented. 
     #
-    # Below is the libdnet C function definition:
-    #
-    #    int blob_pack(blob_t *b, const void *fmt, ...);
-    #
+    # TODO add ruby wrapper for blob_register_pack.
+    # XXX TODO - need to wrap varargs FFI for easier type casting
     def pack(sfmt, *args)
-      _check_closed
+      _check_open!
       (fmt = ::FFI::MemoryPointer.from_string(sfmt)).autorelease=true
-      Dnet.blob_pack(self, fmt, *args)
+      ::Dnet.blob_pack(self, fmt, *args)
     end
 
-    # Uses libdnets 'blob_unpack' under the hood.  See pack for more 
+    # Uses dnet(3)s 'blob_unpack' under the hood.  See pack() for more 
     # information.
     #
-    # Below is the libdnet C function definition:
-    #
-    #    int blob_unpack(blob_t *b, const void *fmt, ...);
-    #
+    # XXX TODO - need to wrap varargs FFI for easier type casting
     def unpack(sfmt, *args)
-      _check_closed
+      _check_open!
       (fmt = ::FFI::MemoryPointer.from_string(sfmt)).autorelease=true
-      Dnet.blob_unpack(self, fmt, *args)
+      ::Dnet.blob_unpack(self, fmt, *args)
     end
 
     # Writes the supplied string to the blob at the current offset. Uses
-    # libdnet's "blob_write" under the hood.
-    #
-    # blob_write writes len bytes from buf to blob b, advancing the current
-    # offset. It returns the number of bytes written, or -1 on failure.
-    #
-    # Below is the libdnet C function definition:
-    #
-    #    int blob_write(blob_t *b, const void *buf, int len);
-    #
+    # dnet(3)'s "blob_write" under the hood.
     def write(bstr)
-      _check_closed
+      _check_open!
       buf = ::FFI::MemoryPointer.from_string(bstr)
       buf.autorelease=true
-      Dnet.blob_write(self, buf, bstr.size)
+      ::Dnet.blob_write(self, buf, bstr.size)
     end
 
     # Reads 'len' bytes out of the blob from the current offset. If len is nil
     # (the default) then all remaining bytes are read. Moves the offset 
-    # accordingly. This method uses libdnet's "blob_read" under the hood.
-    #
-    # blob_read reads len bytes from the current offset in blob b into buf,
-    # returning the total number of bytes read, or -1 on failure.
-    #
-    # Below is the libdnet C function definition:
-    #
-    #    int blob_read(blob_t *b, void *buf, int len);
-    #
+    # accordingly. This method uses dnet(3)'s "blob_read" under the hood.
     def read(len=nil)
-      _check_closed
+      _check_open!
       len ||= self[:end] - self[:off]
       (buf = ::FFI::MemoryPointer.new("\x00", len)).autorelease = true
-      if rlen=Dnet.blob_read(self, buf, len)
+      if rlen=::Dnet.blob_read(self, buf, len)
         return buf.read_string_length(rlen)
       else
         nil
       end
     end
 
+    # Returns the entirety of the blob from beginning to end.
+    # Note, this will also move the offset to the end of the buffer.
+    def string()
+      _check_open!
+      rewind()
+      read()
+    end
+
     # rewinds the blob buffer offset to the beginning
     def rewind
-      _check_closed
-      Dnet.blob_seek(self, 0, 0)
+      _check_open!
+      ::Dnet.blob_seek(self, 0, 0)
     end
 
-    # sets the blob buffer offset to p
+    # sets the blob buffer offset to p. returns -1 on failure
     def pos=(p)
-      _check_closed
-      raise "position must be positive" unless p > -1
-      Dnet.blob_seek(self, p, 0) == p or raise "position out of bounds"
+      _check_open!
+      ::Dnet.blob_seek(self, p.to_i, 0)
     end
 
-    # returns the current position offset of the blob buffer
+    # base pointer - start of data
+    def base; 
+      _check_open!
+      self[:base]
+    end
+
+    # size of allocated data - aka self[:size]
+    def blob_size; 
+      _check_open!
+      self[:size]
+    end
+
+    # returns the current position offset of the blob buffer - aka self[:off]
     def pos
-      _check_closed
+      _check_open!
       self[:off]
     end
 
-    # returns the end of the blob buffer in use
+    # returns the end of the blob buffer in use - aka self[:end]
     def blob_end
-      _check_closed
+      _check_open!
       self[:end]
     end
 
-    # This method calls libdnet's blob_seek under the hood.
+    # This method calls dnet(3)'s blob_seek under the hood.
     #
     # blob_seek repositions the offset within blob b to off, according to the
     # directive whence (see lseek(2) for details), returning the new absolute
     # offset, or -1 on failure.
-    # Below is the libdnet C function definition
-    #
-    #    int blob_seek(blob_t *b, int off, int whence);
-    #
     def seek(off, whence=0)
-      _check_closed
-      Dnet.blob_seek(self, off, whence)
+      _check_open!
+      ::Dnet.blob_seek(self, off.to_i, whence.to_i)
     end
 
-    # Uses libdnet's "blob_index" under the hood. An additional 'rewind' 
+    # Uses dnet(3)'s "blob_index" under the hood. An additional 'rewind' 
     # argument was added which can be used to force a rewind before searching.
     # The default value for "rewind" is "false". nil is returned on a failed
     # search.
-    #
-    # blob_index returns the offset of the first occurence in blob b of the
-    # specified buf of length len, or -1 on failure.
-    #
-    # Below is the libdnet C function definition
-    #
-    #    int blob_index(blob_t *b, const void *buf, int len);
-    #
     def index(bstr, rewind=false)
-      _check_closed
+      _check_open!
       self.rewind() if rewind
       (buf = ::FFI::MemoryPointer.from_string(bstr)).autorelease=true
-      if (i=Dnet.blob_index(self, buf, bstr.size)) > -1
+      if (i=::Dnet.blob_index(self, buf, bstr.size)) > -1
         return i
       else
         return nil
       end
     end
 
-    # Uses libdnet's "blob_rindex" under the hood. An additional 'rewind' 
+    # Uses dnet(3)'s "blob_rindex" under the hood. An additional 'rewind' 
     # argument was added which can be used to force a rewind before searching.
     # The default value for "rewind" is "false". nil is returned on a failed
     # search.
-    #
-    # blob_rindex returns the offset of the last occurence in blob b of the
-    # specified buf of length len, or -1 on failure.
-    #
-    # Below is the libdnet C function definition
-    #
-    #    int blob_rindex(blob_t *b, const void *buf, int len);
-    #
     def rindex(buf, rewind=false)
-      _check_closed
+      _check_open!
       self.rewind() if rewind
       (buf = ::FFI::MemoryPointer.from_string(bstr)).autorelease=true
-      if (i=Dnet.blob_rindex(self, buf, bstr.size)) > -1
+      if (i=::Dnet.blob_rindex(self, buf, bstr.size)) > -1
         return i
       else
         return nil
       end
     end
 
-    # Prints a hexdump on standard output using libdnet's "blob_print" under 
+    # Prints a hexdump on standard output using dnet(3)'s "blob_print" under 
     # the hood.  Can optionally rewind the blob before dumping using the 
     # 'rewind' argument (default: rewind=true).
     #
-    # blob_print prints len bytes of the contents of blob b from the current
-    # offset in the specified style; currently only ``hexl'' is available.
-    #
-    # NOTE: len does not appear to do anything at all
-    #
-    # int blob_print(blob_t *b, char *style, int len);
-    #
+    # NOTE: len does not appear to do anything at all for blob_print
     def print_dump(rewind=true, len=nil)
-      _check_closed
+      _check_open!
       self.rewind if rewind==true
       len ||= self[:end] - self[:off]
-      Dnet.blob_print(self, "hexl", len)
+      Dnet.blob_print(self, "hexl", len.to_i)
     end
   end
 
