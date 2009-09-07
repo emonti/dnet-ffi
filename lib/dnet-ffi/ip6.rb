@@ -52,5 +52,8 @@ module Dnet
   # 	uint32_t  ident;		/* identification */
   # } __attribute__((__packed__));
   # 
+  #     void ip6_checksum(void *buf, size_t len);
+
+  attach_function :ip6_checksum, [:pointer, :size_t], :void
 
 end
