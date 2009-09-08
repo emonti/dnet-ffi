@@ -4,9 +4,11 @@ Ruby FFI bindings for libdnet.
 
 == REQUIREMENTS
 
-* libdnet v1.11 - http://libdnet.sourceforge.net
+* libdnet v1.11 
+    http://libdnet.sourceforge.net
 
-* Ruby ffi - http://github.com/ffi/ffi or http://rubyforge.org/projects/ffi/
+* Ruby ffi  >= 0.5.0
+    http://github.com/ffi/ffi or http://rubyforge.org/projects/ffi/
 
 == LICENSE
 

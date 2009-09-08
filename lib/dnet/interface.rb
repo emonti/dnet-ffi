@@ -4,7 +4,7 @@
 module Dnet
   class IntfEntry < FFI::Struct
     layout( :if_len,         :uint,        # length of entry
-            :if_name,        [:uchar, 16], # interface name
+            :if_name,        [:uint8, 16], # interface name
             :if_type,        :ushort,      # interface type
             :if_flags,       :ushort,      # interface flags
             :if_mtu,         :uint,        # interface MTU
@@ -12,7 +12,7 @@ module Dnet
             :if_dst_addr,    Addr,         # point-to-point dst
             :if_link_addr,   Addr,         # link-layer address
             :if_alias_num,   :uint,        # number of aliases
-            :if_aliases,     [Addr, 0] )   # array of aliases
+            :if_aliases,     :pointer  )   # array of aliases
 
     # length of entry
     def if_len;   self[:if_len]; end
