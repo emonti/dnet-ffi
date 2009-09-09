@@ -1,7 +1,7 @@
 module Dnet
 
   class Udp
-    class Hdr < ::FFI::Struct
+    class Hdr < ::Dnet::SugarHelper
       # struct udp_hdr {
       #   uint16_t	uh_sport;	/* source port */
       #  	uint16_t	uh_dport;	/* destination port */
@@ -13,7 +13,6 @@ module Dnet
               :len,     :uint16,
               :sum,     :uint16 )
     end
-
   end
 
 
