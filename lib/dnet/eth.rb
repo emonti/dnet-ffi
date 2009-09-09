@@ -9,7 +9,7 @@ module Dnet
 
     MAC_RX = /^[a-f0-9]{1,2}([:-]?)(?:[a-f0-9]{1,2}\1){4}[a-f0-9]{1,2}$/i
 
-    # Adds the ability to initialize a new Eth::Addr with a mac address
+    # Adds the ability to initialize a new EthAddr with a mac address
     # string such as 'de:ad:be:ef:ba:be'. This argument is only parsed
     # if it is passed as the only String argument.
     def initialize(*args)
@@ -105,8 +105,8 @@ module Dnet
     end # Handle
   end # Eth
 
-  # This is just an alias for ::Dnet::Eth::Addr
-  class EthAddr < Eth::Addr;  end
+  # This is just an alias for ::Dnet::Eth::Handle
+  class EthHandle < Eth::Handle;  end
 
   attach_function :eth_open, [:string], :eth_t
   attach_function :eth_get, [:eth_t, EthAddr], :int
