@@ -53,6 +53,14 @@ module Dnet
               :src,     :uint32,      # source address
               :dst,     :uint32 )     # destination address
 
+      # #define ip_pack_hdr(hdr, tos, len, id, off, ttl, p, src, dst) do {  \
+      # struct ip_hdr *ip_pack_p = (struct ip_hdr *)(hdr);    \
+      #   ip_pack_p->ip_v = 4; ip_pack_p->ip_hl = 5;      \
+      #   ip_pack_p->ip_tos = tos; ip_pack_p->ip_len = htons(len);  \
+      #   ip_pack_p->ip_id = htons(id); ip_pack_p->ip_off = htons(off);  \
+      #   ip_pack_p->ip_ttl = ttl; ip_pack_p->ip_p = p;      \
+      #   ip_pack_p->ip_src = src; ip_pack_p->ip_dst = dst;    \
+      # } while (0)
     end
 
 
@@ -89,8 +97,8 @@ module Dnet
       # {Loose Source, Record, Strict Source} Route option data - RFC 791, 3.1
       class DataRR < ::FFI::Struct
         # struct ip_opt_data_rr {
-        #   uint8_t		ptr;		/* from start of option, >= 4 */
-        #   uint32_t	iplist __flexarr; /* list of IP addresses */
+        #   uint8_t    ptr;    /* from start of option, >= 4 */
+        #   uint32_t  iplist __flexarr; /* list of IP addresses */
         # } __attribute__((__packed__));
         layout( :ptr,     :uint8,
                 :iplist,  :uint32 )
@@ -205,6 +213,7 @@ module Dnet
       return [bufp, plen]
     end
     
+
   end
 
 
