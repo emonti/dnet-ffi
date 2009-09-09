@@ -153,7 +153,6 @@ module Dnet
 
       end
 
-
       #  Traceroute option data - RFC 1393, 2.2
       #
       #   struct ip_opt_data_tr {
