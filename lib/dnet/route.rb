@@ -77,7 +77,6 @@ module Dnet
     end # Handle
   end # Route
 
-  typedef :pointer, :route_t
   callback :route_handler, [:route_t, :string], :int
   attach_function :route_open, [], :route_t
   attach_function :route_add, [:route_t, Route::Entry], :int

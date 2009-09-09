@@ -74,7 +74,7 @@ module Dnet
       # to a new instance of 'entry_cast' class and yielded to a block.
       def _loop(loop_meth, entry_cast)
         _check_open!
-        b = lambda {|e, i| yield entry_cast.new(e); nil } # nil for ret sanity
+        b = lambda {|e, i| yield entry_cast.new(e); nil } 
         ::Dnet.__send__ loop_meth, @handle, b, self.object_id
       end
 
