@@ -44,14 +44,6 @@ module Dnet
               :src,   EthAddr,
               :etype, :ushort )
 
-      # destination address
-      def eth_dst;  self[:eth_dst]; end
-
-      # source address
-      def eth_src;  self[:eth_src]; end
-
-      # payload type
-      def eth_type; self[:eth_type]; end
     end
 
 
