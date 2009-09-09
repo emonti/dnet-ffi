@@ -9,6 +9,7 @@ module Dnet
   ffi_lib 'dnet'
 end
 
+require 'dnet/typedefs.rb'
 require 'dnet/defs.rb' unless defined?(Dnet::DNET_DEFS)
 
 require 'dnet/util.rb'

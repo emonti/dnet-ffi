@@ -178,7 +178,7 @@ module Dnet
   IP_PROTO_MFPNSP     = 31           # MFE Network Services
   IP_PROTO_MERITINP   = 32           # Merit Internodal Protocol
   IP_PROTO_SEP        = 33           # Sequential Exchange proto
-  IP_PROTO_3PC        = 34           # Third Party Connect proto
+  IP_PROTO_THIRDPC    = 34           # Third Party Connect proto
   IP_PROTO_IDPR       = 35           # Interdomain Policy Route
   IP_PROTO_XTP        = 36           # Xpress Transfer Protocol
   IP_PROTO_DDP        = 37           # Datagram Delivery Proto
@@ -280,8 +280,9 @@ module Dnet
   IP_PROTO_RSVPIGN    = 134          # RSVP-E2E-IGNORE
   IP_PROTO_RAW        = 255          # Raw IP packets
 
-  IP_PROTO_RESERVED   = IP_PROTO_RAW # Reserved
-  IP_PROTO_HOPOPTS    = IP_PROTO_IP  # IPv6 hop-by-hop options
+  IP_PROTO__RESERVED  = IP_PROTO_RAW     # Reserved
+  IP_PROTO__HOPOPTS   = IP_PROTO_IP      # IPv6 hop-by-hop options
+  IP_PROTO_3PC        = IP_PROTO_THIRDPC  # Third Party Connect proto
 
  
   # Option types (opt_type) - http://www.iana.org/assignments/ip-parameters
