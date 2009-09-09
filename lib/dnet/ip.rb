@@ -21,7 +21,7 @@ module Dnet
     #     ip_addr_t  ip_dst;   /* destination address */
     #   };
     #
-    class Hdr < ::FFI::Struct
+    class Hdr < ::Dnet::SugarStruct
       layout( :v_hl,    :uint8,       # v=vers(. & 0xf0) / hl=hdr len(. & 0x0f)
               :tos,     :uint8,       # type of service
               :len,     :uint16,      # total length (incl header)
@@ -59,7 +59,7 @@ module Dnet
       #   ip_pack_p->ip_ttl = ttl; ip_pack_p->ip_p = p;      \
       #   ip_pack_p->ip_src = src; ip_pack_p->ip_dst = dst;    \
       # } while (0)
-    end
+    end # class Hdr
 
 
     # IP option (following IP header)
@@ -81,7 +81,7 @@ module Dnet
     #     } opt_data;
     #   } __attribute__((__packed__));
     #
-    class Opt < ::FFI::Struct
+    class Opt < ::Dnet::SugarStruct
       layout( :otype,   :uint8,     # option type
               :len,     :uint8,     # option length
               :data,    [:uint8, (IP_OPT_LEN_MAX - IP_OPT_LEN)] )
@@ -105,7 +105,7 @@ module Dnet
       #     uint8_t   tcc[3]; /* transmission control code */
       #   } __attribute__((__packed__));
       #
-      class DataSEC < ::FFI::Struct
+      class DataSEC < ::Dnet::SugarStruct
         layout( :sec,   :uint16,
                 :cpt,   :uint16,
                 :hr,    :uint16,
@@ -122,7 +122,7 @@ module Dnet
       #     uint32_t   ipts __flexarr;  /* IP address [/ timestamp] pairs */
       #   } __attribute__((__packed__));
       #
-      class DataTS < ::FFI::Struct
+      class DataTS < ::Dnet::SugarStruct
         layout( :ptr,       :uint8,
                 :oflw_flg,  :uint8,
                 :iptspairs, :uint32 )
@@ -136,7 +136,7 @@ module Dnet
       #     uint32_t  iplist __flexarr; /* list of IP addresses */
       #   } __attribute__((__packed__));
       #
-      class DataRR < ::FFI::Struct
+      class DataRR < ::Dnet::SugarStruct
         layout( :ptr,     :uint8,
                 :iplist,  :uint32 )
 
@@ -151,7 +151,7 @@ module Dnet
       #     uint32_t  origip; /* originator IP address */
       #   } __attribute__((__packed__));
       #
-      class DataTR < ::FFI::Struct
+      class DataTR < ::Dnet::SugarStruct
         layout( :id,      :uint16,
                 :ohc,     :uint16,
                 :rhc,     :uint16,
@@ -159,7 +159,7 @@ module Dnet
 
       end
 
-    end
+    end # class Opt
 
 
     # Abstraction around dnet(3)'s ip_t handle for transmitting raw IP packets
@@ -201,7 +201,7 @@ module Dnet
       # Instance alias to ::Dnet.ip_checksum()
       def checksum(*args);    ::Dnet::Ip.ip_checksum(*args);  end
 
-    end
+    end # class Handle
 
 
     # Adds the header option for the protocol proto specified
@@ -235,8 +235,10 @@ module Dnet
     end
     
 
-  end
+  end # module Ip
 
+  # Alias for Ip::Handle
+  class IpHandle < Ip::Handle;  end
 
   attach_function :ip_open, [], :ip_t
   attach_function :ip_add_option, [ :pointer, :size_t, :int, :pointer, 
