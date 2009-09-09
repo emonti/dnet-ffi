@@ -3,12 +3,15 @@
 module Dnet
   
   # FFI implementation of dnet(3)'s eth_addr struct.
-  class EthAddr < FFI::Struct
+  class EthAddr < ::Dnet::SugarStruct
     # struct eth_addr { ... } eth_addr_t;
     layout( :data, [:uchar, ETH_ADDR_LEN] )
 
     MAC_RX = /^[a-f0-9]{1,2}([:-]?)(?:[a-f0-9]{1,2}\1){4}[a-f0-9]{1,2}$/i
 
+    # Adds the ability to initialize a new Eth::Addr with a mac address
+    # string such as 'de:ad:be:ef:ba:be'. This argument is only parsed
+    # if it is passed as the only String argument.
     def initialize(*args)
       if args.size == 1 and (s=args[0]).is_a? String
         raise "bad mac address" unless s =~ MAC_RX
@@ -19,11 +22,8 @@ module Dnet
       end
     end
     
-    # Returns the MAC address raw data reference.
-    def data; self[:data] ; end
-
     # Returns the MAC address as an array of unsigned char values.
-    def chars; data.to_a ; end
+    def chars; self[:data].to_a ; end
 
     # Returns the MAC address as a string with colon-separated hex-bytes.
     def string; chars.map {|x| "%0.2x" % x }.join(':'); end
@@ -38,7 +38,7 @@ module Dnet
     #     uint16_t	  etype;	/* payload type */
     #   };
     #
-    class Hdr < FFI::Struct
+    class Hdr < ::Dnet::SugarStruct
       # struct eth_hdr { ... };
       layout( :dst,   EthAddr,
               :src,   EthAddr,
@@ -104,6 +104,9 @@ module Dnet
 
     end # Handle
   end # Eth
+
+  # This is just an alias for ::Dnet::Eth::Addr
+  class EthAddr < Eth::Addr;  end
 
   attach_function :eth_open, [:string], :eth_t
   attach_function :eth_get, [:eth_t, EthAddr], :int
