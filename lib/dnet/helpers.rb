@@ -1,6 +1,16 @@
-# Bindings for dnet(3)'s arp_* API
+# This file contains various helper methods, modules, and classes used 
+# throughout the Dnet FFI bindings.
 
 module Dnet
+
+  # Produces a null-terminated string from 'val', if max is supplied,
+  # it is taken as a maximum length. If 'val' is longer than max, it will
+  # be truncated to max-1 with a terminating null.
+  def self.truncate_cstr(val, max=nil)
+    ret = (max and val.size > (max-1))? val[0,max-1] : val
+    ret << "\x00"
+    return ret
+  end
 
   # An exception class raised on Handle related errors.
   class HandleError < Exception; end
@@ -81,14 +91,14 @@ module Dnet
 
   end # LoopableHandle
 
-  class StructError < ::Exception
-  end
+  # A exception class for errors generated through the SugarStruct module
+  class StructError < ::Exception; end
 
   # Adds some sugar to the base FFI::Struct class.
   #
   # XXX maybe this wants to be a module so it can be shared with ManagedStruct,
   # Union, etc.
-  class SugarStruct < FFI::Struct
+  class SugarStruct < ::FFI::Struct
 
     # shortcut for ::Dnet::StructError
     S_ERR = ::Dnet::StructError
@@ -193,5 +203,27 @@ module Dnet
     end
 
   end # SugarStruct
+
+
+  # Used for creating various value <=> constant mapping modules such as 
+  # Ip::Hdr::Proto for IP protocols.
+  module ConstList
+
+    def self.included(klass)
+      klass.extend(::Dnet::ConstList)
+    end
+
+    def slurp_constants(nspace, prefix)
+      ::Dnet.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
+        const_set $2, ::Dnet.const_get($1)
+      end
+    end
+
+    private
+      def _list
+        constants.inject({}){|h,c| h.merge! c => const_get(c) }
+      end
+  end
+
 end
 
