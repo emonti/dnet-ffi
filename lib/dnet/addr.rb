@@ -7,8 +7,8 @@ module Dnet
   # dnet(3)'s network addresses are described by the following C structure:
   #
   #    struct addr {
-  #            uint16_t                addr_type;
-  #            uint16_t                addr_bits;
+  #            uint16_t                atype;
+  #            uint16_t                abits;
   #            union {
   #                    eth_addr_t      __eth;
   #                    ip_addr_t       __ip;
@@ -19,50 +19,45 @@ module Dnet
   #                    uint32_t        __data32[4];
   #            } __addr_u;
   #    };
-  #    #define addr_eth        __addr_u.__eth
-  #    #define addr_ip         __addr_u.__ip
-  #    #define addr_ip6        __addr_u.__ip6
-  #    #define addr_data8      __addr_u.__data8
-  #    #define addr_data16     __addr_u.__data16
-  #    #define addr_data32     __addr_u.__data32
   #
-  # The following values are defined for addr_type:
-  #
-  #    #define ADDR_TYPE_NONE          0       /* No address set */
-  #    #define ADDR_TYPE_ETH           1       /* Ethernet */
-  #    #define ADDR_TYPE_IP            2       /* Internet Protocol v4 */
-  #    #define ADDR_TYPE_IP6           3       /* Internet Protocol v6 */
-  #
-  # The field addr_bits denotes the length of the network mask in bits.
-  #
-  class Addr < FFI::Struct
+  class Addr < ::Dnet::SugarStruct
 
     ADDR_TYPES = [ nil, :eth, :ip, :ip6 ]
 
     # struct addr { ... };
-    # TODO put that addr_u union back in!!!!
-    layout( :addr_type, :uint16,
-            :addr_bits, :uint16,
+    layout( :atype,     :uint16,
+            :bits,      :uint16,
             :addr,      [:uchar, 16])
 
 
-    # If passed a String argument, it will be parsed as an address using 
-    # set_string(). Otherwise, see FFI:Struct for arguments.
+    # If passed a String argument (and only 1 arg), it will be parsed as 
+    # an address using set_string(). Otherwise, see ::Dnet::SugarStruct for
+    # more info.
+    #
+    # :bits cannot be specified as an individual parameter on initialization.
+    # Instead use :addr => 'n.n.n.n/bits'
     def initialize(*args)
       if args.size == 1 and (str=args[0]).is_a? String
-        super().aton(str)
+        super()
+        self.aton(str)
       else
         super(*args)
       end
     end
 
-    def addr_type; ADDR_TYPES[ self[:addr_type] ] ; end
+    # override to reject :bits fields , use :addr => 'x.x.x.x/nn' instead
+    def set_fields(params)
+      if params[:bits] and params[:addr]
+        raise S_ERR, "Don't use :addr and :bits fields together. "+
+                     "Just use :addr => 'x.x.x.x/nn' instead"
+      else
+        super(params)
+      end
+    end
 
-    def addr_bits;  self[:addr_bits] ; end
-    alias mask addr_bits
-
-    def addr_bits=(val); self[:addr_bits]=val ; end
-    alias mask= addr_bits=
+    # Looks up this object's 'atype' member against ADDR_TYPES
+    # Returns a symbol for the type or nil a type is not found.
+    def addr_type; ADDR_TYPES[ self[:atype] ] ; end
 
     # Returns a human-readable network address from self. Uses dnet(3)'s
     # addr_ntoa function under the hood.
@@ -113,6 +108,7 @@ module Dnet
     alias aton set_string
     alias pton set_string
     alias from_string set_string
+    alias addr= set_string
 
     # Convert an address from network format to a string and store the 
     # result in a destination buffer.  This uses dnet(3)'s addr_ntop under 
