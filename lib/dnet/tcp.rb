@@ -25,6 +25,18 @@ module Dnet
               :sum,     :uint16,
               :urgp,    :uint16 ) # urgent pointer
 
+      # TCP control flags (flags)
+      module Flags
+        ::Dnet.constants.grep(/^(TH_([A-Z][A-Z0-9_]+))$/) do
+          self.const_set $2, ::Dnet.const_get($1)
+        end
+
+        module_function
+        def list
+          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
+        end
+      end
+
       #  #define \
       #    tcp_pack_hdr(hdr, sport, dport, seq, ack, flags, win, urp) do { \
       #      struct tcp_hdr *tcp_pack_p = (struct tcp_hdr *)(hdr);    \
@@ -43,27 +55,54 @@ module Dnet
     #
     # TCP option (following TCP header)
     #
+    #   struct tcp_opt {
+    #      uint8_t        opt_type;  /* option type */
+    #      uint8_t        opt_len;   /* option length >= TCP_OPT_LEN */
+    #      union tcp_opt_data {
+    #        uint16_t    mss;           /* TCP_OPT_MSS */
+    #        uint8_t        wscale;     /* TCP_OPT_WSCALE */
+    #        uint16_t    sack[19];      /* TCP_OPT_SACK */
+    #        uint32_t    echo;          /* TCP_OPT_ECHO{REPLY} */
+    #        uint32_t    timestamp[2];  /* TCP_OPT_TIMESTAMP */
+    #        uint32_t    cc;            /* TCP_OPT_CC{NEW,ECHO} */
+    #        uint8_t        cksum;      /* TCP_OPT_ALTSUM */
+    #        uint8_t        md5[16];    /* TCP_OPT_MD5 */
+    #        uint8_t        data8[TCP_OPT_LEN_MAX - TCP_OPT_LEN];
+    #      } opt_data;
+    #   } __attribute__((__packed__));
+    #
     class Opt < ::FFI::Struct
-      # struct tcp_opt {
-      #    uint8_t        opt_type;  /* option type */
-      #    uint8_t        opt_len;   /* option length >= TCP_OPT_LEN */
-      #    union tcp_opt_data {
-      #      uint16_t    mss;           /* TCP_OPT_MSS */
-      #      uint8_t        wscale;     /* TCP_OPT_WSCALE */
-      #      uint16_t    sack[19];      /* TCP_OPT_SACK */
-      #      uint32_t    echo;          /* TCP_OPT_ECHO{REPLY} */
-      #      uint32_t    timestamp[2];  /* TCP_OPT_TIMESTAMP */
-      #      uint32_t    cc;            /* TCP_OPT_CC{NEW,ECHO} */
-      #      uint8_t        cksum;      /* TCP_OPT_ALTSUM */
-      #      uint8_t        md5[16];    /* TCP_OPT_MD5 */
-      #      uint8_t        data8[TCP_OPT_LEN_MAX - TCP_OPT_LEN];
-      #    } opt_data;
-      # } __attribute__((__packed__));
       layout( :otype,   :uint8,
               :len,     :uint8,
               :data8,   [:uint8, (TCP_OPT_LEN_MAX - TCP_OPT_LEN)] )
+
+
+      # Options (otype) - http://www.iana.org/assignments/tcp-parameters
+      module Otype
+        ::Dnet.constants.grep(/^(TCP_OTYPE_([A-Z][A-Z0-9_]+))$/) do
+          self.const_set $2, ::Dnet.const_get($1)
+        end
+
+        module_function
+        def list
+          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
+        end
+      end
+
+    end # Opt
+
+    # TCP FSM states
+    module State
+      ::Dnet.constants.grep(/^(TCP_STATE_([A-Z][A-Z0-9_]+))$/) do
+        self.const_set $2, ::Dnet.const_get($1)
+      end
+
+      module_function
+      def list
+        @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
+      end
     end
 
-  end
-end
+  end # Tcp
+end # Dnet
 

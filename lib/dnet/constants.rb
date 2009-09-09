@@ -111,7 +111,7 @@ module Dnet
   IP_ADDR_LEN     = 4    # IP address length
   IP_ADDR_BITS    = 32   # IP address bits
   IP_HDR_LEN      = 20   # base IP header length
-  IP_OPT_LEN      = 2  # base IP option length
+  IP_OPT_LEN      = 2    # base IP option length
   IP_OPT_LEN_MAX  = 40
   IP_HDR_LEN_MAX  = (IP_HDR_LEN + IP_OPT_LEN_MAX)
   IP_LEN_MAX      = 65535
@@ -124,6 +124,7 @@ module Dnet
   IP_TOS_LOWCOST              = 0x02    # low monetary cost - XXX
   IP_TOS_ECT                  = 0x02    # ECN-capable transport
   IP_TOS_CE                   = 0x01    # congestion experienced
+
   IP_TOS_PREC_ROUTINE         = 0x00
   IP_TOS_PREC_PRIORITY        = 0x20
   IP_TOS_PREC_IMMEDIATE       = 0x40
@@ -142,7 +143,7 @@ module Dnet
   IP_TTL_MAX     = 255    # maximum ttl
 
 
-  # Protocols (ip_p) - http://www.iana.org/assignments/protocol-numbers
+  # Protocols (proto) - http://www.iana.org/assignments/protocol-numbers
 
   IP_PROTO_IP         = 0            # dummy for IP
   IP_PROTO_ICMP       = 1            # ICMP
@@ -285,7 +286,9 @@ module Dnet
   IP_PROTO_3PC        = IP_PROTO_THIRDPC  # Third Party Connect proto
 
  
-  # Option types (opt_type) - http://www.iana.org/assignments/ip-parameters
+
+
+  # Opt bits
 
   IP_OPT_CONTROL   = 0x00 # control
   IP_OPT_DEBMEAS   = 0x40 # debugging & measurement
@@ -293,43 +296,39 @@ module Dnet
   IP_OPT_RESERVED1 = 0x20
   IP_OPT_RESERVED2 = 0x60
 
-  IP_OPT_EOL    = 0                               # terminates option list
-  IP_OPT_NOP    = 1                               # no operation
-  IP_OPT_SEC    = (2|IP_OPT_COPY)                 # DoD basic security
-  IP_OPT_LSRR   = (3|IP_OPT_COPY)                 # loose source route
-  IP_OPT_TS     = (4|IP_OPT_DEBMEAS)              # timestamp
-  IP_OPT_ESEC   = (5|IP_OPT_COPY)                 # DoD extended security
-  IP_OPT_CIPSO  = (6|IP_OPT_COPY)                 # commercial security
-  IP_OPT_RR     = 7                               # record route
-  IP_OPT_SATID  = (8|IP_OPT_COPY)                 # stream ID (obsolete)
-  IP_OPT_SSRR   = (9|IP_OPT_COPY)                 # strict source route
-  IP_OPT_ZSU    = 10                              # experimental measurement
-  IP_OPT_MTUP   = 11                              # MTU probe
-  IP_OPT_MTUR   = 12                              # MTU reply
-  IP_OPT_FINN   = (13|IP_OPT_COPY|IP_OPT_DEBMEAS) # exp flow control
-  IP_OPT_VISA   = (14|IP_OPT_COPY)                # exp access control
-  IP_OPT_ENCODE = 15                              # ???
-  IP_OPT_IMITD  = (16|IP_OPT_COPY)                # IMI traffic descriptor
-  IP_OPT_EIP    = (17|IP_OPT_COPY)                # extended IP, RFC 1385
-  IP_OPT_TR     = (18|IP_OPT_DEBMEAS)             # traceroute
-  IP_OPT_ADDEXT = (19|IP_OPT_COPY)                # IPv7 ext addr, RFC 1475
-  IP_OPT_RTRALT = (20|IP_OPT_COPY)                # router alert, RFC 2113
-  IP_OPT_SDB    = (21|IP_OPT_COPY)                # directed bcast, RFC 1770
-  IP_OPT_NSAPA  = (22|IP_OPT_COPY)                # NSAP addresses
-  IP_OPT_DPS    = (23|IP_OPT_COPY)                # dynamic packet state
-  IP_OPT_UMP    = (24|IP_OPT_COPY)                # upstream multicast
-  IP_OPT_MAX    = 25
+  # Option types (otype) - http://www.iana.org/assignments/ip-parameters
+  #
+  # values renamed IP_OPT_* to IP_OTYPE_*
+
+  IP_OTYPE_EOL    = 0                               # terminates option list
+  IP_OTYPE_NOP    = 1                               # no operation
+  IP_OTYPE_SEC    = (2|IP_OPT_COPY)                 # DoD basic security
+  IP_OTYPE_LSRR   = (3|IP_OPT_COPY)                 # loose source route
+  IP_OTYPE_TS     = (4|IP_OPT_DEBMEAS)              # timestamp
+  IP_OTYPE_ESEC   = (5|IP_OPT_COPY)                 # DoD extended security
+  IP_OTYPE_CIPSO  = (6|IP_OPT_COPY)                 # commercial security
+  IP_OTYPE_RR     = 7                               # record route
+  IP_OTYPE_SATID  = (8|IP_OPT_COPY)                 # stream ID (obsolete)
+  IP_OTYPE_SSRR   = (9|IP_OPT_COPY)                 # strict source route
+  IP_OTYPE_ZSU    = 10                              # experimental measurement
+  IP_OTYPE_MTUP   = 11                              # MTU probe
+  IP_OTYPE_MTUR   = 12                              # MTU reply
+  IP_OTYPE_FINN   = (13|IP_OPT_COPY|IP_OPT_DEBMEAS) # exp flow control
+  IP_OTYPE_VISA   = (14|IP_OPT_COPY)                # exp access control
+  IP_OTYPE_ENCODE = 15                              # ???
+  IP_OTYPE_IMITD  = (16|IP_OPT_COPY)                # IMI traffic descriptor
+  IP_OTYPE_EIP    = (17|IP_OPT_COPY)                # extended IP, RFC 1385
+  IP_OTYPE_TR     = (18|IP_OPT_DEBMEAS)             # traceroute
+  IP_OTYPE_ADDEXT = (19|IP_OPT_COPY)                # IPv7 ext addr, RFC 1475
+  IP_OTYPE_RTRALT = (20|IP_OPT_COPY)                # router alert, RFC 2113
+  IP_OTYPE_SDB    = (21|IP_OPT_COPY)                # directed bcast, RFC 1770
+  IP_OTYPE_NSAPA  = (22|IP_OPT_COPY)                # NSAP addresses
+  IP_OTYPE_DPS    = (23|IP_OPT_COPY)                # dynamic packet state
+  IP_OTYPE_UMP    = (24|IP_OPT_COPY)                # upstream multicast
+  IP_OTYPE_MAX    = 25
 
 
   # Security option data - RFC 791, 3.1
-
-  #  struct ip_opt_data_sec {
-  #    uint16_t	s;		/* security */
-  #    uint16_t	c;		/* compartments */
-  #    uint16_t	h;		/* handling restrictions */
-  #    uint8_t		tcc[3];		/* transmission control code */
-  #  } __attribute__((__packed__));
-
 
   IP_OPT_SEC_UNCLASS   = 0x0000 # unclassified
   IP_OPT_SEC_CONFID    = 0xf135 # confidential
@@ -340,59 +339,11 @@ module Dnet
   IP_OPT_SEC_SECRET    = 0xd788 # secret
   IP_OPT_SEC_TOPSECRET = 0x6bc5 # top secret
 
-
-  # {Loose Source, Record, Strict Source} Route option data - RFC 791, 3.1
-
-  # struct ip_opt_data_rr {
-  # 	uint8_t		ptr;		/* from start of option, >= 4 */
-  # 	uint32_t	iplist __flexarr; /* list of IP addresses */
-  # } __attribute__((__packed__));
-
-
   # Timestamp option data - RFC 791, 3.1
-
-  # struct ip_opt_data_ts {
-  # 	uint8_t		ptr;		  /* from start of option, >= 5 */
-  # 	uint8_t		oflw:4,		/* number of IPs skipped */
-  # 	    		  flg:4;		/* address[ / timestamp] flag */
-  # 	uint32_t	ipts __flexarr;	/* IP address [/ timestamp] pairs */
-  # } __attribute__((__packed__));
-  # 
 
   IP_OPT_TS_TSONLY  = 0 # timestamps only
   IP_OPT_TS_TSADDR  = 1 # IP address / timestamp pairs
   IP_OPT_TS_PRESPEC = 3 # IP address / zero timestamp pairs
-
-
-  #  Traceroute option data - RFC 1393, 2.2
-
-  # struct ip_opt_data_tr {
-  # 	uint16_t	id;		/* ID number */
-  # 	uint16_t	ohc;		/* outbound hop count */
-  # 	uint16_t	rhc;		/* return hop count */
-  # 	uint32_t	origip;		/* originator IP address */
-  # } __attribute__((__packed__));
-
-
-  # IP option (following IP header)
-
-  # struct ip_opt {
-  # 	uint8_t		opt_type;	/* option type */
-  # 	uint8_t		opt_len;	/* option length >= IP_OPT_LEN */
-  # 	union ip_opt_data {
-  # 		struct ip_opt_data_sec	sec;	   /* IP_OPT_SEC */
-  # 		struct ip_opt_data_rr	rr;	   /* IP_OPT_{L,S}RR */
-  # 		struct ip_opt_data_ts	ts;	   /* IP_OPT_TS */
-  # 		uint16_t		satid;	   /* IP_OPT_SATID */
-  # 		uint16_t		mtu;	   /* IP_OPT_MTU{P,R} */
-  # 		struct ip_opt_data_tr	tr;	   /* IP_OPT_TR */
-  # 		uint32_t		addext[2]; /* IP_OPT_ADDEXT */
-  # 		uint16_t		rtralt;    /* IP_OPT_RTRALT */
-  # 		uint32_t		sdb[9];    /* IP_OPT_SDB */
-  # 		uint8_t			data8[IP_OPT_LEN_MAX - IP_OPT_LEN];
-  # 	} opt_data;
-  # } __attribute__((__packed__));
-  # 
 
   ######################################################################
   ### include/dnet/ip6.h
@@ -455,7 +406,7 @@ module Dnet
   ######################################################################
 
   TCP_HDR_LEN     = 20    # base TCP header length
-  TCP_OPT_LEN     = 2    # base TCP option length
+  TCP_OPT_LEN     = 2     # base TCP option length
   TCP_OPT_LEN_MAX = 40
   TCP_HDR_LEN_MAX = (TCP_HDR_LEN + TCP_OPT_LEN_MAX)
 
@@ -493,34 +444,36 @@ module Dnet
 
 
   # Options (opt_type) - http://www.iana.org/assignments/tcp-parameters
+  #
+  # renamed TCP_OPT_* to TCP_OTYPE_*
 
-  TCP_OPT_EOL        = 0    # end of option list
-  TCP_OPT_NOP        = 1    # no operation
-  TCP_OPT_MSS        = 2    # maximum segment size
-  TCP_OPT_WSCALE     = 3    # window scale factor, RFC 1072
-  TCP_OPT_SACKOK     = 4    # SACK permitted, RFC 2018
-  TCP_OPT_SACK       = 5    # SACK, RFC 2018
-  TCP_OPT_ECHO       = 6    # echo (obsolete), RFC 1072
-  TCP_OPT_ECHOREPLY  = 7    # echo reply (obsolete), RFC 1072
-  TCP_OPT_TIMESTAMP  = 8    # timestamp, RFC 1323
-  TCP_OPT_POCONN     = 9    # partial order conn, RFC 1693
-  TCP_OPT_POSVC      = 10   # partial order service, RFC 1693
-  TCP_OPT_CC         = 11   # connection count, RFC 1644
-  TCP_OPT_CCNEW      = 12   # CC.NEW, RFC 1644
-  TCP_OPT_CCECHO     = 13   # CC.ECHO, RFC 1644
-  TCP_OPT_ALTSUM     = 14   # alt checksum request, RFC 1146
-  TCP_OPT_ALTSUMDATA = 15   # alt checksum data, RFC 1146
-  TCP_OPT_SKEETER    = 16   # Skeeter
-  TCP_OPT_BUBBA      = 17   # Bubba
-  TCP_OPT_TRAILSUM   = 18   # trailer checksum
-  TCP_OPT_MD5        = 19   # MD5 signature, RFC 2385
-  TCP_OPT_SCPS       = 20   # SCPS capabilities
-  TCP_OPT_SNACK      = 21   # selective negative acks
-  TCP_OPT_REC        = 22   # record boundaries
-  TCP_OPT_CORRUPT    = 23   # corruption experienced
-  TCP_OPT_SNAP       = 24   # SNAP
-  TCP_OPT_TCPCOMP    = 26   # TCP compression filter
-  TCP_OPT_MAX        = 27
+  TCP_OTYPE_EOL        = 0    # end of option list
+  TCP_OTYPE_NOP        = 1    # no operation
+  TCP_OTYPE_MSS        = 2    # maximum segment size
+  TCP_OTYPE_WSCALE     = 3    # window scale factor, RFC 1072
+  TCP_OTYPE_SACKOK     = 4    # SACK permitted, RFC 2018
+  TCP_OTYPE_SACK       = 5    # SACK, RFC 2018
+  TCP_OTYPE_ECHO       = 6    # echo (obsolete), RFC 1072
+  TCP_OTYPE_ECHOREPLY  = 7    # echo reply (obsolete), RFC 1072
+  TCP_OTYPE_TIMESTAMP  = 8    # timestamp, RFC 1323
+  TCP_OTYPE_POCONN     = 9    # partial order conn, RFC 1693
+  TCP_OTYPE_POSVC      = 10   # partial order service, RFC 1693
+  TCP_OTYPE_CC         = 11   # connection count, RFC 1644
+  TCP_OTYPE_CCNEW      = 12   # CC.NEW, RFC 1644
+  TCP_OTYPE_CCECHO     = 13   # CC.ECHO, RFC 1644
+  TCP_OTYPE_ALTSUM     = 14   # alt checksum request, RFC 1146
+  TCP_OTYPE_ALTSUMDATA = 15   # alt checksum data, RFC 1146
+  TCP_OTYPE_SKEETER    = 16   # Skeeter
+  TCP_OTYPE_BUBBA      = 17   # Bubba
+  TCP_OTYPE_TRAILSUM   = 18   # trailer checksum
+  TCP_OTYPE_MD5        = 19   # MD5 signature, RFC 2385
+  TCP_OTYPE_SCPS       = 20   # SCPS capabilities
+  TCP_OTYPE_SNACK      = 21   # selective negative acks
+  TCP_OTYPE_REC        = 22   # record boundaries
+  TCP_OTYPE_CORRUPT    = 23   # corruption experienced
+  TCP_OTYPE_SNAP       = 24   # SNAP
+  TCP_OTYPE_TCPCOMP    = 26   # TCP compression filter
+  TCP_OTYPE_MAX        = 27
 
 
   ######################################################################
