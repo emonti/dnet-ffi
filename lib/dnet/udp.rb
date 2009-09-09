@@ -1,11 +1,20 @@
 module Dnet
 
-  #  struct udp_hdr {
-  #  	uint16_t	uh_sport;	/* source port */
-  #  	uint16_t	uh_dport;	/* destination port */
-  #  	uint16_t	uh_ulen;	/* udp length (including header) */
-  #  	uint16_t	uh_sum;		/* udp checksum */
-  #  };
+  class Udp
+    class Hdr < ::FFI::Struct
+      # struct udp_hdr {
+      #   uint16_t	uh_sport;	/* source port */
+      #  	uint16_t	uh_dport;	/* destination port */
+      #  	uint16_t	uh_ulen;	/* udp length (including header) */
+      #  	uint16_t	uh_sum;		/* udp checksum */
+      # };
+      layout( :sport,   :uint16,
+              :dport,   :uint16,
+              :len,     :uint16,
+              :sum,     :uint16 )
+    end
+
+  end
 
 
   #  #define udp_pack_hdr(hdr, sport, dport, ulen) do {		\
