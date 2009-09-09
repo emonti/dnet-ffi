@@ -6,7 +6,7 @@ module Dnet
   module Intf
 
     # An interface table entry
-    class Entry < FFI::Struct
+    class Entry < ::Dnet::SugarStruct
       layout( :if_len,         :uint,        # length of entry
               :if_name,        [:uint8, 16], # interface name
               :if_type,        :ushort,      # interface type
@@ -18,53 +18,15 @@ module Dnet
               :if_alias_num,   :uint,        # number of aliases
               :if_aliases,     :pointer  )   # array of aliases
 
-      # length of entry
-      def if_len;   self[:if_len]; end
-
-      def if_len=(val)
-        self[:if_len] = val.to_i
-      end
-
       # interface name
       def if_name;  self[:if_name].to_ptr.read_string; end
 
-      def set_name(name)
-        name[15]="\x00" if name.size > 15
-        len = name.size < 16 ? name.size : 16
+      def set_name(val)
+        name = ::Dnet.truncate_cstr(val, 16)
         self[:if_name].to_ptr.write_string_length(name.to_s, len)
       end
+      alias if_name= set_name
 
-      # interface type
-      def if_type;  self[:if_type]; end
-
-      # interface flags
-      def if_flags; self[:if_flags]; end
-
-      # interface mtu
-      def if_mtu; self[:if_mtu]; end
-
-      # interface address
-      def if_addr;  self[:if_addr]; end
-
-      # point-to-point destination
-      def if_dst_addr; self[:if_dst_addr]; end
-
-      # link-layer-address
-      def if_link_addr; self[:if_link_addr]; end
-
-      # number of aliases
-      def if_alias_num;  self[:if_alias_num]; end
-
-      def if_aliases
-        # ...
-      end
-
-      def self.new_with_aliases(num)
-        sz = self.size + (num * Addr.size)
-        ie = new( ::FFI::MemoryPointer.new("\x00", sz) )
-        ie.if_len = sz
-        return ie
-      end
     end
 
     class Handle < ::Dnet::LoopableHandle
@@ -99,8 +61,8 @@ module Dnet
       #
       def get(name, ie=nil)
         _check_open!
-        ie ||= Entry.new_with_aliases(0)
-        ie.set_name(name.to_s)
+        ie ||= Entry.new
+        ie.name = name.to_s
         return ie if ::Dnet.intf_get(@handle, ie) == 0
       end
 
@@ -111,7 +73,7 @@ module Dnet
       def get_src(addr, ie=nil)
         _check_open!
         src = Addr.new(addr.to_s)
-        ie ||= Entry.new_with_aliases(0)
+        ie ||= Entry.new
         return ie if ::Dnet.intf_get_src(@handle, ie, src) == 0
       end
 
@@ -122,7 +84,7 @@ module Dnet
       def get_dst(addr, ie=nil)
         _check_open!
         dst = Addr.new(addr.to_s)
-        ie ||= Entry.new_with_aliases(0)
+        ie ||= Entry.new
         return ie if ::Dnet.intf_get_dst(@handle, ie, dst) == 0
       end
 
@@ -134,6 +96,9 @@ module Dnet
 
     end # Handle
   end # Intf
+
+  # Alias for Intf::Handle
+  class IntfHandle < Intf::Handle ; end
 
   callback :intf_handler, [Intf::Entry, :ulong] , :int
 
