@@ -11,7 +11,7 @@ module Dnet
     #     uint8_t   pln;  /* length of protocol address (IP_ADDR_LEN) */
     #     uint16_t  op;  /* operation */
     #   };
-    class Hdr < ::FFI::Struct
+    class Hdr < ::Dnet::SugarStruct
       layout( :pro,   :uint16,
               :hrd,   :uint16,
               :hln,   :uint8,
@@ -39,7 +39,7 @@ module Dnet
     #     uint8_t    ar_tha[ETH_ADDR_LEN];  /* target hardware address */
     #     uint8_t    ar_tpa[IP_ADDR_LEN];  /* target protocol address */
     #   };
-    class Ethip < ::FFI::Struct
+    class Ethip < ::Dnet::SugarStruct
       layout( :sha,   [:uint8, ETH_ADDR_LEN],
               :spa,   [:uint8, IP_ADDR_LEN],
               :tha,   [:uint8, ETH_ADDR_LEN],
@@ -57,18 +57,11 @@ module Dnet
     #          struct addr     haddr;         /* hardware address */
     #   };
     #
-    class Entry < FFI::Struct
+    class Entry < ::Dnet::SugarStruct
 
       # struct arp_entry { ... };
       layout( :paddr, ::Dnet::Addr,   # protocol address
               :haddr, ::Dnet::Addr )  # hardware address
-
-      # protocol address
-      def paddr ; self[:paddr] ; end
-
-      # hardware address
-      def haddr ; self[:haddr] ; end
-
 
     end # Entry
 
@@ -139,6 +132,8 @@ module Dnet
 
   end # Arp
 
+  # This is just an alias for Arp::Handle
+  class ArpHandle < Arp::Handle; end
 
   typedef :pointer, :arp_t
   callback :arp_handler, [Arp::Entry, :ulong], :int
