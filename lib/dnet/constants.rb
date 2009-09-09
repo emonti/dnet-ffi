@@ -1,5 +1,5 @@
 module Dnet
-  DNET_DEFS = true
+  DNET_CONSTANTS = true
 
   ######################################################################
   ### include/dnet/addr.h

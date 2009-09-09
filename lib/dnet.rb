@@ -10,7 +10,7 @@ module Dnet
 end
 
 require 'dnet/typedefs.rb'
-require 'dnet/defs.rb' unless defined?(Dnet::DNET_DEFS)
+require 'dnet/constants.rb' unless defined?(Dnet::DNET_CONSTANTS)
 
 require 'dnet/util.rb'
 require 'dnet/helpers.rb'
