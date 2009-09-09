@@ -34,27 +34,21 @@ module Dnet
               :dst,     :uint32 )     # destination address
 
       # Type of service (ip_tos), RFC 1349 ("obsoleted by RFC 2474")
+      #
+      # Contains mappings for all the IP_TOS_[A-Z].* constants
       module Tos
-        ::Dnet.constants.grep(/^(IP_TOS_([A-Z][A-Z0-9_]+))$/) do
-          self.const_set $2, ::Dnet.const_get($1)
-        end
-
-        module_function
-        def list
-          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
-        end
+        include ConstList
+        slurp_constants(::Dnet, "IP_TOS_")
+        def self.list;  @@list ||= _list; end
       end
 
       # Protocols (proto) - http://www.iana.org/assignments/protocol-numbers
+      #
+      # Contains mappings for all the IP_PROTO_[A-Z].* constants
       module Proto
-        ::Dnet.constants.grep(/^(IP_PROTO_([A-Z][A-Z0-9_]+))$/) do
-          self.const_set $2, ::Dnet.const_get($1)
-        end
-
-        module_function
-        def list
-          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
-        end
+        include ConstList
+        slurp_constants(::Dnet, "IP_PROTO_")
+        def self.list;  @@list ||= _list; end
       end
 
       # #define ip_pack_hdr(hdr, tos, len, id, off, ttl, p, src, dst) do {  \
@@ -95,16 +89,11 @@ module Dnet
 
       # Option types (otype) - http://www.iana.org/assignments/ip-parameters
       #
-      # mapped to IP_OTYPE_* constants
+      # Contains mappings for all the IP_OTYPE_[A-Z].* constants
       module Otype
-        ::Dnet.constants.grep(/^(IP_OTYPE_([A-Z][A-Z0-9_]+))$/) do
-          self.const_set $2, ::Dnet.const_get($1)
-        end
-
-        module_function
-        def list
-          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
-        end
+        include ConstList
+        slurp_constants(::Dnet, "IP_OTYPE_")
+        def self.list;  @@list ||= _list; end
       end
 
       # Security option data - RFC 791, 3.1
