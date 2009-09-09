@@ -85,7 +85,8 @@ module Dnet
     # blob_register_pack, currently undocumented. 
     #
     # TODO add ruby wrapper for blob_register_pack.
-    # XXX TODO - need to wrap varargs FFI for easier type casting
+    #
+    # XXX want to wrap varargs FFI for easier type casting?
     def pack(sfmt, *args)
       _check_open!
       (fmt = ::FFI::MemoryPointer.from_string(sfmt)).autorelease=true
@@ -95,7 +96,7 @@ module Dnet
     # Uses dnet(3)s 'blob_unpack' under the hood.  See pack() for more 
     # information.
     #
-    # XXX TODO - need to wrap varargs FFI for easier type casting
+    # XXX TODO - want to wrap varargs FFI for easier type casting?
     def unpack(sfmt, *args)
       _check_open!
       (fmt = ::FFI::MemoryPointer.from_string(sfmt)).autorelease=true
