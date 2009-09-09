@@ -2,7 +2,7 @@ module Dnet
   module Tcp
 
     # TCP header, without options
-    class Hdr < ::FFI::Struct
+    class Hdr < ::Dnet::SugarStruct
       #  struct tcp_hdr {
       #      uint16_t    th_sport;    /* source port */
       #      uint16_t    th_dport;    /* destination port */
@@ -27,14 +27,9 @@ module Dnet
 
       # TCP control flags (flags)
       module Flags
-        ::Dnet.constants.grep(/^(TH_([A-Z][A-Z0-9_]+))$/) do
-          self.const_set $2, ::Dnet.const_get($1)
-        end
-
-        module_function
-        def list
-          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
-        end
+        include ConstList
+        slurp_constants(::Dnet, "TH_")
+        def self.list; @@list ||= _list ; end
       end
 
       #  #define \
@@ -71,7 +66,7 @@ module Dnet
     #      } opt_data;
     #   } __attribute__((__packed__));
     #
-    class Opt < ::FFI::Struct
+    class Opt < ::Dnet::SugarStruct
       layout( :otype,   :uint8,
               :len,     :uint8,
               :data8,   [:uint8, (TCP_OPT_LEN_MAX - TCP_OPT_LEN)] )
@@ -79,28 +74,18 @@ module Dnet
 
       # Options (otype) - http://www.iana.org/assignments/tcp-parameters
       module Otype
-        ::Dnet.constants.grep(/^(TCP_OTYPE_([A-Z][A-Z0-9_]+))$/) do
-          self.const_set $2, ::Dnet.const_get($1)
-        end
-
-        module_function
-        def list
-          @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
-        end
+        include ConstList
+        slurp_constants(::Dnet, "TCP_OTYPE_")
+        def self.list; @@list ||= _list ; end
       end
 
     end # Opt
 
     # TCP FSM states
     module State
-      ::Dnet.constants.grep(/^(TCP_STATE_([A-Z][A-Z0-9_]+))$/) do
-        self.const_set $2, ::Dnet.const_get($1)
-      end
-
-      module_function
-      def list
-        @@list ||= constants.inject({}){|h,c| h.merge! c => const_get(c) }
-      end
+      include ConstList
+      slurp_constants(::Dnet, "TCP_STATE_")
+      def self.list; @@list ||= _list ; end
     end
 
   end # Tcp
