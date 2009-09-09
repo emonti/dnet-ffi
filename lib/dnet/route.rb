@@ -10,12 +10,10 @@ module Dnet
     #      struct addr    route_dst;   /* destination address */
     #      struct addr    route_gw;    /* gateway address */
     #   };
-    class Entry < FFI::Struct
+    class Entry < ::Dnet::SugarStruct
       layout( :dst, ::Dnet::Addr,
               :gw,  ::Dnet::Addr )
 
-      def dst ; self[:dst] ; end
-      def gw ; self[:gw] ; end
     end
 
     # Obtains a handle to access the kernel route(4) table.
