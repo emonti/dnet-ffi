@@ -8,6 +8,7 @@ module Dnet
   # A helper used for maintaining open/close state on libdnet's handles and 
   # volatile objects.
   module HandleHelpers
+
     # shorthand for the ::Dnet::HandleError exception class
     H_ERR = ::Dnet::HandleError
 
@@ -24,7 +25,7 @@ module Dnet
       end
 
       def _check_open!
-        raise ::Dnet::HandleError.new("handle is closed") unless @handle_open
+        raise H_ERR.new("handle is closed") unless @handle_open
       end
 
       def _handle_open?
@@ -78,6 +79,119 @@ module Dnet
         ::Dnet.__send__ loop_meth, @handle, b, self.object_id
       end
 
+  end # LoopableHandle
+
+  class StructError < ::Exception
   end
 
+  # Adds some sugar to the base FFI::Struct class.
+  #
+  # XXX maybe this wants to be a module so it can be shared with ManagedStruct,
+  # Union, etc.
+  class SugarStruct < FFI::Struct
+
+    # shortcut for ::Dnet::StructError
+    S_ERR = ::Dnet::StructError
+
+    # Adds field setting on initialization to ::FFI::Struct.new as well as
+    # a "yield(self) if block_given?" at the end.
+    #
+    # The field initialization kicks in if there is only one argument, and it 
+    # is a Hash. 
+    #
+    # Note: 
+    # The :raw parameter is a special tag in the hash. The value is taken as a 
+    # string and initialized into a new FFI::MemoryPointer which this Struct 
+    # then overlays.
+    #
+    # If your struct layout has a field named :raw field, it won't be 
+    # assignable through the hash argument.
+    #
+    # See also: set_fields() which is called automatically on the hash, minus
+    # the :raw tag.
+    #
+    # Below are several examples:
+    #
+    #    ss=SomeStruct.new :raw => raw_data, :field1 => 1, :field3 => 2
+    #
+    #   # or...
+    #
+    #    ss=SomeStruct.new {|x| x.field1=1; x.field3=2 }
+    #
+    #   # or...
+    # 
+    #    ss=SomeStruct.new(:raw => raw_data) {|x| x.field1=1 }
+    #
+    def initialize(*args)
+      if args.size == 1 and (oparams=args[0]).is_a? Hash
+        params = oparams.dup
+        if raw=params.delete(:raw)
+          super( ::FFI::MemoryPointer.from_string(raw) )
+        else
+          super()
+        end
+        set_fields(params)
+      else
+        super(*args)
+      end
+
+      yield self if block_given?
+    end
+
+    # Sets field values in the struct specified by their symbolic name from a 
+    # hash of ':field => value' pairs. Uses accessor field wrapper methods 
+    # (as in "obj.field1 = x" instead of "obj[:field] = x")
+    #
+    # This method is called automatically if you are using the new() method
+    # provided in the SugarStruct helper and passing it a Hash as its only
+    # argument.
+    def set_fields(params)
+      params.keys.each do |p|
+        if @reject_hash_set and @reject_hash_set.include?(p)
+          err = "can't use set_fields with `#{p}'"
+          if msg=@reject_hash_set[p]
+            err << ": #{msg}" 
+          end
+          raise(S_ERR, "cant use set_fields with '#{p}': #{msg}")
+        elsif members().include?(p)
+          self.__send__ :"#{p}=", params[p]
+        else
+          raise S_ERR.new("#{self.class} does not have a '#{p}' field")
+        end
+      end
+    end
+
+    # Attempts to resolve calls as read/write accessors for structure fields 
+    # (i.e. you automatically get a "obj.field" and "obj.field=(x)" method 
+    # for every structure member).
+    #
+    # This convention can be followed in custom accessors that take inputs
+    # or return values in a specific format.
+    #
+    # It can be desirable to have accessors using different formats for calls
+    # between what's returned from "obj.fieldX" and "obj[:fieldX]", as well as 
+    # a difference between what you supply via "obj.fieldX=y" and 
+    # "obj[:field]=y". However, ideally the format for set( obj.fieldX=... ) 
+    # and get( obj.fieldX() ) should always match.
+    def method_missing(m, *args)
+      mstr = m.to_s ;  msym = m.to_sym
+      asz = args.size
+      if( mstr[-1,1] == "=" and (not (mset=mstr[0..-2]).empty?) and 
+          members.include?(:"#{mset}") )
+        if asz != 1
+          raise(::ArgumentError, ("wrong number of arguments (#{asz} for 1)"))
+        end
+        self[:"#{mset}"] = args[0]
+      elsif members().include?(msym)
+        if asz != 0
+          raise(::ArgumentError, "wrong number of arguments (#{asz} for 0)")
+        end
+        self[msym]
+      else
+        raise(::NoMethodError, "undefined method `#{m}' for #{self.inspect}")
+      end
+    end
+
+  end # SugarStruct
 end
+
