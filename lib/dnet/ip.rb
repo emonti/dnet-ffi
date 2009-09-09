@@ -129,7 +129,7 @@ module Dnet
 
       end
 
-      # {Loose Source, Record, Strict Source} Route option data - RFC 791, 3.1
+      # (Loose Source/Record/Strict Source) Route option data - RFC 791, 3.1
       #
       #   struct ip_opt_data_rr {
       #     uint8_t    ptr;    /* from start of option, >= 4 */
