@@ -135,7 +135,7 @@ module Dnet
   end # Arp
 
   # This is just an alias for Arp::Handle
-  class ArpHandle < Arp::Handle; end
+  ArpHandle = Arp::Handle
 
   typedef :pointer, :arp_t
   callback :arp_handler, [Arp::Entry, :ulong], :int

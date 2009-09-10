@@ -241,7 +241,7 @@ module Dnet
   end # module Ip
 
   # Alias for Ip::Handle
-  class IpHandle < Ip::Handle;  end
+  IpHandle = Ip::Handle
 
   attach_function :ip_open, [], :ip_t
   attach_function :ip_add_option, [ :pointer, :size_t, :int, :pointer, 

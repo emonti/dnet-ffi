@@ -87,7 +87,7 @@ module Dnet
     end
 
     # an alias for Fw::Handle
-    class FwHandle < Fw::Handle; end
+    FwHandle = Fw::Handle
 
   end
 

@@ -98,7 +98,7 @@ module Dnet
   end # Eth
 
   # This is just an alias for ::Dnet::Eth::Handle
-  class EthHandle < Eth::Handle;  end
+  EthHandle = Eth::Handle
 
   attach_function :eth_open, [:string], :eth_t
   attach_function :eth_get, [:eth_t, EthAddr], :int

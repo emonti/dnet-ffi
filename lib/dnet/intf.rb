@@ -147,7 +147,7 @@ module Dnet
   end # Intf
 
   # Alias for Intf::Handle
-  class IntfHandle < Intf::Handle ; end
+  IntfHandle = Intf::Handle
 
 
   callback :intf_handler, [Intf::Entry, :ulong] , :int
