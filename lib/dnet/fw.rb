@@ -15,14 +15,31 @@ module Dnet
     #          uint16_t        fw_dport[2];              /* range / ICMP code */
     #  };
     class Rule < ::Dnet::SugarStruct
-      layout( :device,  [:char, INTF_NAME_LEN], # interface name
-              :op,      :uchar,                 # operation
-              :dir,     :uchar,                 # direction
-              :proto,   :uchar,                 # IP protocol
-              :src,     ::Dnet::Addr,           # src address / net
-              :dst,     ::Dnet::Addr,           # dst address / net
-              :sport,   [:ushort, 2],           # src port-range / ICMP type
-              :dport,   [:ushort, 2] )          # dst port-range / ICMP code
+      layout( :device,  [:uint8, INTF_NAME_LEN], # interface name
+              :op,      :uint8,                  # operation
+              :dir,     :uint8,                  # direction
+              :proto,   :uint8,                  # IP protocol
+              :src,     ::Dnet::Addr,            # src address / net
+              :dst,     ::Dnet::Addr,            # dst address / net
+              :sport,   [:uint16, 2],            # src port-range / ICMP type
+              :dport,   [:uint16, 2] )           # dst port-range / ICMP code
+
+      # Alias to ::Dnet::Ip::Proto
+      Proto = ::Dnet::Ip::Proto
+
+      module Op 
+        include ::Dnet::ConstMap
+        ALLOW = 1
+        BLOCK = 2
+        def self.list ; @@list ||= super(); end
+      end
+
+      module Dir
+        include ::Dnet::ConstMap
+        IN  = 1
+        OUT = 2
+        def self.list ; @@list ||= super(); end
+      end
 
       def device; self[:device].to_ptr.read_string ; end
 
