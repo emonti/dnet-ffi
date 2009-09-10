@@ -4,6 +4,15 @@
 module Dnet
 
   module Ip
+    # Protocols (proto) - http://www.iana.org/assignments/protocol-numbers
+    #
+    # Contains mappings for all the IP_PROTO_[A-Z].* constants 
+    # (defined in constants.rb)
+    module Proto
+      include ConstMap
+      slurp_constants(::Dnet, "IP_PROTO_")
+      def self.list;  @@list ||= super(); end
+    end
 
     # IP header, without options
     #
@@ -42,14 +51,7 @@ module Dnet
         def self.list;  @@list ||= super(); end
       end
 
-      # Protocols (proto) - http://www.iana.org/assignments/protocol-numbers
-      #
-      # Contains mappings for all the IP_PROTO_[A-Z].* constants
-      module Proto
-        include ConstMap
-        slurp_constants(::Dnet, "IP_PROTO_")
-        def self.list;  @@list ||= super(); end
-      end
+      Proto = ::Dnet::Ip::Proto
 
       # #define ip_pack_hdr(hdr, tos, len, id, off, ttl, p, src, dst) do {  \
       # struct ip_hdr *ip_pack_p = (struct ip_hdr *)(hdr);    \
