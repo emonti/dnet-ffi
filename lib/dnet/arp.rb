@@ -53,18 +53,20 @@ module Dnet
     # dnet(3)'s ARP cache entries are described by the following C structure:
     # 
     #   struct arp_entry {
-    #          struct addr     paddr;         /* protocol address */
-    #          struct addr     haddr;         /* hardware address */
+    #          struct addr     pa;         /* protocol address */
+    #          struct addr     ha;         /* hardware address */
     #   };
     #
     class Entry < ::Dnet::SugarStruct
 
       # struct arp_entry { ... };
-      layout( :paddr, ::Dnet::Addr,   # protocol address
-              :haddr, ::Dnet::Addr )  # hardware address
+      layout( :pa, ::Dnet::Addr,   # protocol address
+              :ha, ::Dnet::Addr )  # hardware address
 
     end # Entry
 
+    # A handle for accessing the kernel arp(4) cache. This does not require
+    # root privileges.
     class Handle < LoopableHandle
 
       # Obtains a handle to access the kernel arp(4) cache. Uses dnet(3)'s 
@@ -94,7 +96,7 @@ module Dnet
       def get(addr)
         _check_open!
         ae = Entry.new
-        return ae if ae.paddr.set_string(addr) and 
+        return ae if ae.pa.set_string(addr) and 
                      ::Dnet.arp_get(@handle, ae) == 0
       end
 

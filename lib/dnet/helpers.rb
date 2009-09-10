@@ -72,12 +72,11 @@ module Dnet
     end
 
     # Returns all entries as an array.
-    # XXX this is buggin... looks like we end up with stale pointers?
-    # def self.entries
-    #   ary = []
-    #   each_entry {|x| ary << x}
-    #   return ary
-    # end
+    def self.entries
+      ary = []
+      each_entry {|x| ary << x.copy }
+      return ary
+    end
 
     private
       # Generic helper for libdnet's *_loop method interfaces.
@@ -200,6 +199,54 @@ module Dnet
       else
         raise(::NoMethodError, "undefined method `#{m}' for #{self.inspect}")
       end
+    end
+
+
+    # Returns a new instance of self.class containing a seperately allocated 
+    # copy of all our data. This abstract method can be called from overridden 
+    # 'copy()' implementations. 
+    #
+    # Note that this determine's size automatically based on the structure size.
+    # This may not be what you want if your structure contains variable-length
+    # data. Screw it up, and don't be supprised if you get weird/missing data 
+    # or worse -- segfaults and bus error crashes from ruby.
+    #
+    # Implementing a correct 'copy' is crucial for structures passed 
+    # the looping callbacks. These callbacks are found throughout the dnet(3) 
+    # API since the instances passed into the callback are free'd as soon 
+    # as the yield is finished. This lets us keep copies around when we want 
+    # to. 
+    #
+    # For example:
+    #
+    #    ary =[]
+    #    # => []
+    #    Dnet::Arp::Handle.each_entry do |en| 
+    #           ary << en.copy
+    #           ary << en
+    #    end
+    #    # => 0
+    #    ary.each {|x| p [x.pa.addr, x.ha.addr] }
+    #    #["192.168.116.4", "de:ad:be:ef:ba:be"]  # the copy
+    #    #[nil, nil]                              # original
+    #    # => [#<Dnet::Arp::Entry:0x5017e8>, #<Dnet::Arp::Entry:0x501978>]
+    #  
+    # Only the entry that was copied is now usable outside the each_entry 
+    # block. This is because the entry passed into the block ('en') was freed 
+    # by eth_loop after the FFI did block callback.
+    # 
+    # Copying can get hairy when your structure contains fields that are 
+    # pointers. but that's what overriding is for. Just allocate and copy
+    # over to new pointers, then assign the structure members in these cases.
+    # 
+    # This method also includes a 'grown' parameter which is added to the
+    # size of the struct when allocating and copying over the new data.
+    # If this goes out of bounds, FFI usually raises a bounds error. How
+    # FFI always knows (or *if* it always knows) is totally opaque to the author
+    # so be warned, you could also produce an access violation this way on 
+    # the read.
+    def copy(grown=0)
+      self.class.new( :raw => self.to_ptr.read_string(self.size+grown) )
     end
 
   end # SugarStruct

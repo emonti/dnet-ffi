@@ -15,8 +15,8 @@ module Dnet
               :if_addr,        ::Dnet::Addr, # interface address
               :if_dst_addr,    ::Dnet::Addr, # point-to-point dst
               :if_link_addr,   ::Dnet::Addr, # link-layer address
-              :if_alias_num,   :uint,        # number of aliases
-              :if_aliases,     :pointer  )   # array of aliases
+              :if_alias_num,   :uint )       # number of aliases
+            #  :if_aliases,     ::Dnet::Addr  )   # array of aliases
 
       # interface name
       def if_name;  self[:if_name].to_ptr.read_string; end

@@ -22,7 +22,7 @@ module Dnet
   #
   class Addr < ::Dnet::SugarStruct
 
-    ADDR_TYPES = [ nil, :eth, :ip, :ip6 ]
+    ADDR_TYPES = [ nil, :eth, :ip, :ip6 ] # A mapping of dnet address types
 
     # struct addr { ... };
     layout( :atype,     :uint16,
@@ -34,8 +34,8 @@ module Dnet
     # an address using set_string(). Otherwise, see ::Dnet::SugarStruct for
     # more info.
     #
-    # :bits cannot be specified as an individual parameter on initialization.
-    # Instead use :addr => 'n.n.n.n/bits'
+    # The fields :bits and :addr aren't allowed to be used together.
+    # Instead, just use :addr => 'n.n.n.n/bits'. See also set_string()
     def initialize(*args)
       if args.size == 1 and (str=args[0]).is_a? String
         super()
@@ -45,11 +45,17 @@ module Dnet
       end
     end
 
-    # override to reject :bits fields , use :addr => 'x.x.x.x/nn' instead
+    # Overrides SugarStruct.set_fields to reject :bits fields when :addr
+    # is supplied as well.
+    #
+    # Forces you to use :addr => 'x.x.x.x/nn' instead. Having both together
+    # leaves setting :bits up to chance depending on which hash key gets
+    # plucked first in set_fields() because of how ip_aton() works under 
+    # the hood.
     def set_fields(params)
       if params[:bits] and params[:addr]
         raise S_ERR, "Don't use :addr and :bits fields together. "+
-                     "Just use :addr => 'x.x.x.x/nn' instead"
+                     "Just use :addr => 'x.x.x.x/nn' where nn are the bits"
       else
         super(params)
       end
