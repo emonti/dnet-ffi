@@ -37,7 +37,7 @@ module Dnet
       #
       # Contains mappings for all the IP_TOS_[A-Z].* constants
       module Tos
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "IP_TOS_")
         def self.list;  @@list ||= super(); end
       end
@@ -46,7 +46,7 @@ module Dnet
       #
       # Contains mappings for all the IP_PROTO_[A-Z].* constants
       module Proto
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "IP_PROTO_")
         def self.list;  @@list ||= super(); end
       end
@@ -91,7 +91,7 @@ module Dnet
       #
       # Contains mappings for all the IP_OTYPE_[A-Z].* constants
       module Otype
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "IP_OTYPE_")
         def self.list;  @@list ||= super(); end
       end

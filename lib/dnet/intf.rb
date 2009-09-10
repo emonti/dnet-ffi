@@ -20,14 +20,14 @@ module Dnet
 
       # Constants map for interface flags
       module Flags
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "INTF_FLAGS_")
         def self.list; @@list ||= super();  end
       end
 
       # Constants map for interface types
       module Itype
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "INTF_TYPE_")
         def self.list; @@list ||= super();  end
       end

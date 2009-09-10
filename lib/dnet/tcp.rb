@@ -27,7 +27,7 @@ module Dnet
 
       # TCP control flags (flags)
       module Flags
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "TH_")
         def self.list; @@list ||= super() ; end
       end
@@ -74,7 +74,7 @@ module Dnet
 
       # Options (otype) - http://www.iana.org/assignments/tcp-parameters
       module Otype
-        include ConstList
+        include ConstMap
         slurp_constants(::Dnet, "TCP_OTYPE_")
         def self.list; @@list ||= super() ; end
       end
@@ -83,7 +83,7 @@ module Dnet
 
     # TCP FSM states
     module State
-      include ConstList
+      include ConstMap
       slurp_constants(::Dnet, "TCP_STATE_")
       def self.list; @@list ||= super() ; end
     end

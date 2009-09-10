@@ -249,10 +249,10 @@ module Dnet
 
   # Used for creating various value <=> constant mapping modules such as 
   # Ip::Hdr::Proto for IP protocols.
-  module ConstList
+  module ConstMap
 
     def self.included(klass)
-      klass.extend(::Dnet::ConstList)
+      klass.extend(::Dnet::ConstMap)
     end
 
     # A flexible lookup. Takes a Symbol or String as a name to lookup a value, 
