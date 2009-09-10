@@ -7,27 +7,64 @@ module Dnet
 
     # An interface table entry
     class Entry < ::Dnet::SugarStruct
-      layout( :if_len,         :uint,        # length of entry
-              :if_name,        [:uint8, 16], # interface name
-              :if_type,        :ushort,      # interface type
-              :if_flags,       :ushort,      # interface flags
-              :if_mtu,         :uint,        # interface MTU
-              :if_addr,        ::Dnet::Addr, # interface address
-              :if_dst_addr,    ::Dnet::Addr, # point-to-point dst
-              :if_link_addr,   ::Dnet::Addr, # link-layer address
-              :if_alias_num,   :uint )       # number of aliases
-            #  :if_aliases,     ::Dnet::Addr  )   # array of aliases
+      layout( :len,       :uint,        # length of entry
+              :if_name,   [:uint8, INTF_NAME_LEN], # interface name
+              :itype,     :ushort,      # interface type
+              :flags,     :ushort,      # interface flags
+              :mtu,       :uint,        # interface MTU
+              :if_addr,   ::Dnet::Addr, # interface address
+              :dst_addr,  ::Dnet::Addr, # point-to-point dst
+              :link_addr, ::Dnet::Addr, # link-layer address
+              :alias_num, :uint )       # number of aliases
+            #  :if_aliases,  ::Dnet::Addr  ) ## variable-length array of aliases
 
-      # interface name
+      # Constants map for interface flags
+      module Flags
+        include ConstList
+        slurp_constants(::Dnet, "INTF_FLAGS_")
+        def self.list; @@list ||= _list;  end
+      end
+
+      # Constants map for interface types
+      module Itype
+        include ConstList
+        slurp_constants(::Dnet, "INTF_TYPE_")
+        def self.list; @@list ||= super();  end
+      end
+
+      # Returns a newly instantiated and allocated copy of this interface entry
+      def copy
+        xtra = (::Dnet::Addr.size * self.alias_num)
+        if self.len == (Entry.size + xtra)
+          super(xtra)
+        else
+          super()
+        end
+      end
+
+      # returns an array containing all the aliases for this interface
+      def aliases
+        ary = []
+        asz = ::Dnet::Addr.size
+        p = (self.to_ptr() + Entry.size)  # start at end of struct
+        self[:alias_num].times do 
+          ary << ::Dnet::Addr.new(p)
+          p += asz  
+        end
+        return ary
+      end
+
+      # returns the interface name string of this object
       def if_name;  self[:if_name].to_ptr.read_string; end
 
-      def set_name(val)
-        name = ::Dnet.truncate_cstr(val, 16)
+      # sets the interface name string on this object.
+      def if_name=(val)
+        name = ::Dnet.truncate_cstr(val, INTF_NAME_LEN)
         self[:if_name].to_ptr.write_string_length(name.to_s, len)
       end
-      alias if_name= set_name
+      alias set_name if_name=
 
-    end
+    end # class Entry
 
     class Handle < ::Dnet::LoopableHandle
 
@@ -62,7 +99,7 @@ module Dnet
       def get(name, ie=nil)
         _check_open!
         ie ||= Entry.new
-        ie.name = name.to_s
+        ie.if_name = name.to_s
         return ie if ::Dnet.intf_get(@handle, ie) == 0
       end
 
@@ -77,7 +114,7 @@ module Dnet
         return ie if ::Dnet.intf_get_src(@handle, ie, src) == 0
       end
 
-      # retrieves the configuration for the best interface with which to reach
+      # Retrieves the configuration for the best interface with which to reach
       # the specified destination.
       #
       # int intf_get_dst(intf_t *i, struct intf_entry *entry, struct addr *dst);
@@ -88,17 +125,30 @@ module Dnet
         return ie if ::Dnet.intf_get_dst(@handle, ie, dst) == 0
       end
 
+      # Sets the interface configuration entry. Usually requires 'root'
+      # privileges.
+      #
       # int intf_set(intf_t *i, const struct intf_entry *entry);
       def set(entry)
         _check_open!
-        return ie if ::Dnet.intf_set(entry) == 0
+        return true if ::Dnet.intf_set(@handle, entry) == 0
       end
 
     end # Handle
+
+    def self.each_entry(*args)
+      Intf::Handle.each_entry(*args)
+    end
+
+    def self.entries
+      Intf::Handle.entries
+    end
+
   end # Intf
 
   # Alias for Intf::Handle
   class IntfHandle < Intf::Handle ; end
+
 
   callback :intf_handler, [Intf::Entry, :ulong] , :int
 
