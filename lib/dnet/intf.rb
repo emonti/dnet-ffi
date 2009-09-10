@@ -22,7 +22,7 @@ module Dnet
       module Flags
         include ConstList
         slurp_constants(::Dnet, "INTF_FLAGS_")
-        def self.list; @@list ||= _list;  end
+        def self.list; @@list ||= super();  end
       end
 
       # Constants map for interface types

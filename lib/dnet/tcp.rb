@@ -29,7 +29,7 @@ module Dnet
       module Flags
         include ConstList
         slurp_constants(::Dnet, "TH_")
-        def self.list; @@list ||= _list ; end
+        def self.list; @@list ||= super() ; end
       end
 
       #  #define \
@@ -76,18 +76,18 @@ module Dnet
       module Otype
         include ConstList
         slurp_constants(::Dnet, "TCP_OTYPE_")
-        def self.list; @@list ||= _list ; end
+        def self.list; @@list ||= super() ; end
       end
 
-    end # Opt
+    end # class Opt
 
     # TCP FSM states
     module State
       include ConstList
       slurp_constants(::Dnet, "TCP_STATE_")
-      def self.list; @@list ||= _list ; end
+      def self.list; @@list ||= super() ; end
     end
 
-  end # Tcp
-end # Dnet
+  end # module Tcp
+end # module Dnet
 

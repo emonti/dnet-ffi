@@ -39,7 +39,7 @@ module Dnet
       module Tos
         include ConstList
         slurp_constants(::Dnet, "IP_TOS_")
-        def self.list;  @@list ||= _list; end
+        def self.list;  @@list ||= super(); end
       end
 
       # Protocols (proto) - http://www.iana.org/assignments/protocol-numbers
@@ -48,7 +48,7 @@ module Dnet
       module Proto
         include ConstList
         slurp_constants(::Dnet, "IP_PROTO_")
-        def self.list;  @@list ||= _list; end
+        def self.list;  @@list ||= super(); end
       end
 
       # #define ip_pack_hdr(hdr, tos, len, id, off, ttl, p, src, dst) do {  \
@@ -93,7 +93,7 @@ module Dnet
       module Otype
         include ConstList
         slurp_constants(::Dnet, "IP_OTYPE_")
-        def self.list;  @@list ||= _list; end
+        def self.list;  @@list ||= super(); end
       end
 
       # Security option data - RFC 791, 3.1
