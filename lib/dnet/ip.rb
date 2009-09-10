@@ -51,6 +51,7 @@ module Dnet
         def self.list;  @@list ||= super(); end
       end
 
+      # Alias to ::Dnet::Ip::Proto
       Proto = ::Dnet::Ip::Proto
 
       # #define ip_pack_hdr(hdr, tos, len, id, off, ttl, p, src, dst) do {  \
