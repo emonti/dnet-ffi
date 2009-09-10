@@ -211,11 +211,10 @@ module Dnet
     # data. Screw it up, and don't be supprised if you get weird/missing data 
     # or worse -- segfaults and bus error crashes from ruby.
     #
-    # Implementing a correct 'copy' is crucial for structures passed 
+    # Implementing a correct 'copy' is required for structures passed to
     # the looping callbacks. These callbacks are found throughout the dnet(3) 
-    # API since the instances passed into the callback are free'd as soon 
-    # as the yield is finished. This lets us keep copies around when we want 
-    # to. 
+    # API. The instances passed into the callback are free'd as soon as the 
+    # yield is finished.
     #
     # For example:
     #
@@ -233,18 +232,14 @@ module Dnet
     #  
     # Only the entry that was copied is now usable outside the each_entry 
     # block. This is because the entry passed into the block ('en') was freed 
-    # by eth_loop after the FFI did block callback.
+    # by eth_loop after FFI called back to the block.
     # 
     # Copying can get hairy when your structure contains fields that are 
-    # pointers. but that's what overriding is for. Just allocate and copy
-    # over to new pointers, then assign the structure members in these cases.
+    # pointers. But that's what overriding is for. Just allocate and copy
+    # over to new pointers, then assign the structure members.
     # 
     # This method also includes a 'grown' parameter which is added to the
     # size of the struct when allocating and copying over the new data.
-    # If this goes out of bounds, FFI usually raises a bounds error. How
-    # FFI always knows (or *if* it always knows) is totally opaque to the author
-    # so be warned, you could also produce an access violation this way on 
-    # the read.
     def copy(grown=0)
       self.class.new( :raw => self.to_ptr.read_string(self.size+grown) )
     end
@@ -260,15 +255,25 @@ module Dnet
       klass.extend(::Dnet::ConstList)
     end
 
-    def slurp_constants(nspace, prefix)
-      ::Dnet.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
-        const_set $2, ::Dnet.const_get($1)
+    # A flexible lookup. Takes a Symbol or String as a name to lookup a value, 
+    # or an integer to lookup a corresponding name.
+    def [](arg)
+      if arg.is_a? Integer
+        list.invert[arg]
+      elsif arg.is_a? String or arg.is_a? Symbol
+        list[arg.to_s.upcase]
       end
     end
 
+    def list
+      constants.inject({}){|h,c| h.merge! c => const_get(c) }
+    end
+
     private
-      def _list
-        constants.inject({}){|h,c| h.merge! c => const_get(c) }
+      def slurp_constants(nspace, prefix)
+        ::Dnet.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
+          const_set $2, ::Dnet.const_get($1)
+        end
       end
   end
 
