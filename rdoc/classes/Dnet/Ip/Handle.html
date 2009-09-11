@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Dnet::Ip::Handle</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Dnet::Ip::Handle</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/lib/dnet/ip_rb.html">
+                lib/dnet/ip.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                ::Dnet::Handle
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Abstraction around dnet(3)&#8217;s ip_t handle for transmitting raw IP
+packets routed by the kernel.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000046">add_option</a>&nbsp;&nbsp;
+      <a href="#M000047">checksum</a>&nbsp;&nbsp;
+      <a href="#M000044">close</a>&nbsp;&nbsp;
+      <a href="#M000043">ip_send</a>&nbsp;&nbsp;
+      <a href="#M000045">ip_send</a>&nbsp;&nbsp;
+      <a href="#M000042">new</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">ip_send</span><span class="method-args">(buf, len=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Transmits len bytes of the IP packet pointed to by buf through a temporary
+<a href="Handle.html">Ip::Handle</a> which is closed immediately after
+sending.
+</p>
+<p>
+See also <a href="Handle.html#M000043">Ip::Handle#ip_send</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/ip.rb, line 197</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">ip_send</span>(<span class="ruby-identifier">buf</span>, <span class="ruby-identifier">len</span>=<span class="ruby-keyword kw">nil</span>)
+        <span class="ruby-identifier">open</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">ip_send</span>(<span class="ruby-identifier">buf</span>, <span class="ruby-identifier">len</span>)}
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Obtains a handle to transmit raw IP packets, routed by the kernel. Uses
+dnet(3)&#8217;s ip_open() function under the hood.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/ip.rb, line 174</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+        <span class="ruby-keyword kw">if</span> (<span class="ruby-ivar">@handle</span>=<span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">ip_open</span>).<span class="ruby-identifier">address</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-constant">H_ERR</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;unable to open IP raw packet handle&quot;</span>)
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">_handle_opened!</span>
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+          <a href="#M000046" class="method-signature">
+          <span class="method-name">add_option</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Instance alias to ::Dnet.ip_add_option()
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/ip.rb, line 202</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_option</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>);  <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span><span class="ruby-operator">::</span><span class="ruby-constant">Ip</span>.<span class="ruby-identifier">ip_add_option</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>); <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+          <a href="#M000047" class="method-signature">
+          <span class="method-name">checksum</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Instance alias to ::Dnet.ip_checksum()
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/ip.rb, line 205</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">checksum</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>);    <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span><span class="ruby-operator">::</span><span class="ruby-constant">Ip</span>.<span class="ruby-identifier">ip_checksum</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>);  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">close</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+closes the IP raw packet handle
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/ip.rb, line 189</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+        <span class="ruby-identifier">_do_if_open</span> { <span class="ruby-identifier">_handle_closed!</span>; <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">ip_close</span>(<span class="ruby-ivar">@handle</span>) }
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">ip_send</span><span class="method-args">(buf, len=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Transmits len bytes of the IP packet &#8216;buf&#8217;. Len can be left
+blank for String objects, which will use the size of the string.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/ip.rb, line 183</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ip_send</span>(<span class="ruby-identifier">buf</span>, <span class="ruby-identifier">len</span>=<span class="ruby-keyword kw">nil</span>)
+        <span class="ruby-identifier">pbuf</span>, <span class="ruby-identifier">sz</span> = <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span><span class="ruby-operator">::</span><span class="ruby-constant">Util</span>.<span class="ruby-identifier">derive_pointer</span>(<span class="ruby-identifier">buf</span>, <span class="ruby-identifier">len</span>)
+        <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">ip_send</span>(<span class="ruby-ivar">@handle</span>, <span class="ruby-identifier">pbuf</span>, <span class="ruby-identifier">sz</span>)
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

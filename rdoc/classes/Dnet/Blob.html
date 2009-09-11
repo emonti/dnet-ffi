@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Dnet::Blob</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Dnet::Blob</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/dnet/blob_rb.html">
+                lib/dnet/blob.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                FFI::ManagedStruct
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+FFI mapping to dnet(3)&#8217;s &quot;blob_t&quot; binary buffer struct.
+</p>
+<p>
+dnet(3)&#8217;s binary buffers are described by the following C structure:
+</p>
+<pre>
+   typedef struct blob {
+           u_char          *base;          /* start of data */
+           int              off;           /* offset into data */
+           int              end;           /* end of data */
+           int              size;          /* size of allocation */
+   } blob_t;
+</pre>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000108">base</a>&nbsp;&nbsp;
+      <a href="#M000111">blob_end</a>&nbsp;&nbsp;
+      <a href="#M000109">blob_size</a>&nbsp;&nbsp;
+      <a href="#M000113">index</a>&nbsp;&nbsp;
+      <a href="#M000098">new</a>&nbsp;&nbsp;
+      <a href="#M000101">pack</a>&nbsp;&nbsp;
+      <a href="#M000110">pos</a>&nbsp;&nbsp;
+      <a href="#M000107">pos=</a>&nbsp;&nbsp;
+      <a href="#M000115">print_dump</a>&nbsp;&nbsp;
+      <a href="#M000104">read</a>&nbsp;&nbsp;
+      <a href="#M000099">release</a>&nbsp;&nbsp;
+      <a href="#M000100">release</a>&nbsp;&nbsp;
+      <a href="#M000106">rewind</a>&nbsp;&nbsp;
+      <a href="#M000114">rindex</a>&nbsp;&nbsp;
+      <a href="#M000112">seek</a>&nbsp;&nbsp;
+      <a href="#M000105">string</a>&nbsp;&nbsp;
+      <a href="#M000102">unpack</a>&nbsp;&nbsp;
+      <a href="#M000103">write</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="HandleHelpers.html">HandleHelpers</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
+
+        <div class="method-heading">
+          <a href="#M000098" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Initializes a <a href="Blob.html#M000098">new</a> <a
+href="Blob.html">Blob</a> using dnet(3)&#8217;s blob_new under the hood.
+</p>
+<p>
+blob_new is used to allocate a <a href="Blob.html#M000098">new</a> dynamic
+binary buffer, returning NULL on failure.
+</p>
+<p>
+Below is the dnet(3) C function definition:
+</p>
+<pre>
+   blob_t * blob_new(void);
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000098-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 36</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_new</span>())
+      <span class="ruby-identifier">_handle_opened!</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
+
+        <div class="method-heading">
+          <a href="#M000099" class="method-signature">
+          <span class="method-name">release</span><span class="method-args">(blob)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Called by the garbage collector for ::FFI:ManagedStruct objects
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000099-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 42</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">release</span>(<span class="ruby-identifier">blob</span>)
+      <span class="ruby-identifier">blob</span>.<span class="ruby-identifier">release</span>()
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
+
+        <div class="method-heading">
+          <a href="#M000108" class="method-signature">
+          <span class="method-name">base</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Blob.html#M000108">base</a> pointer - start of data
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 150</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">base</span>; 
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:base</span>]
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+          <a href="#M000111" class="method-signature">
+          <span class="method-name">blob_end</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns the end of the blob buffer in use - aka self[:end]
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 168</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blob_end</span>
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:end</span>]
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
+
+        <div class="method-heading">
+          <a href="#M000109" class="method-signature">
+          <span class="method-name">blob_size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+size of allocated data - aka self[:size]
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 156</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">blob_size</span>; 
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:size</span>]
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000113" class="method-detail">
+        <a name="M000113"></a>
+
+        <div class="method-heading">
+          <a href="#M000113" class="method-signature">
+          <span class="method-name">index</span><span class="method-args">(bstr, rewind=false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Uses dnet(3)&#8217;s &quot;blob_index&quot; under the hood. An additional
+&#8216;<a href="Blob.html#M000106">rewind</a>&#8217; argument was added
+which can be used to force a <a href="Blob.html#M000106">rewind</a> before
+searching. The default value for &quot;<a
+href="Blob.html#M000106">rewind</a>&quot; is &quot;false&quot;. nil is
+returned on a failed search.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000113-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 187</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>(<span class="ruby-identifier">bstr</span>, <span class="ruby-identifier">rewind</span>=<span class="ruby-keyword kw">false</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rewind</span>() <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rewind</span>
+      (<span class="ruby-identifier">buf</span> = <span class="ruby-operator">::</span><span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">bstr</span>)).<span class="ruby-identifier">autorelease</span>=<span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">i</span>=<span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_index</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">buf</span>, <span class="ruby-identifier">bstr</span>.<span class="ruby-identifier">size</span>)) <span class="ruby-operator">&gt;</span> <span class="ruby-value">-1</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">i</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
+
+        <div class="method-heading">
+          <a href="#M000101" class="method-signature">
+          <span class="method-name">pack</span><span class="method-args">(sfmt, *args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+blob_pack converts and writes, and blob_unpack() reads and converts data in
+blob b according to the given format fmt as described below, returning 0 on
+success, and -1 on failure.
+</p>
+<p>
+The format <a href="Blob.html#M000105">string</a> is composed of zero or
+more directives: ordinary characters (not % ), which are copied to / <a
+href="Blob.html#M000104">read</a> from the blob, and conversion
+specifications, each of which results in reading / writing zero or more
+subsequent arguments.
+</p>
+<p>
+Each conversion specification is introduced by the character %, and may be
+prefixed by length specifier. The arguments must correspond properly (after
+type promotion) with the length and conversion specifiers.
+</p>
+<p>
+The length specifier is either a a decimal digit <a
+href="Blob.html#M000105">string</a> specifying the length of the following
+argument, or the literal character * indicating that the length should be
+<a href="Blob.html#M000104">read</a> from an integer argument for the
+argument following it.
+</p>
+<p>
+The conversion specifiers and their meanings are:
+</p>
+<pre>
+    D       An unsigned 32-bit integer in network byte order.
+    H       An unsigned 16-bit integer in network byte order.
+    b       A binary buffer (length specifier required).
+    c       An unsigned character.
+    d       An unsigned 32-bit integer in host byte order.
+    h       An unsigned 16-bit integer in host byte order.
+    s       A C-style null-terminated string, whose maximum length must be
+            specified when unpacking.
+</pre>
+<p>
+Custom conversion routines and their specifiers may be registered via
+blob_register_pack, currently undocumented.
+</p>
+<p>
+TODO add ruby wrapper for blob_register_pack.
+</p>
+<p>
+XXX want to wrap varargs FFI for easier type casting?
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000101-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 90</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pack</span>(<span class="ruby-identifier">sfmt</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      (<span class="ruby-identifier">fmt</span> = <span class="ruby-operator">::</span><span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">sfmt</span>)).<span class="ruby-identifier">autorelease</span>=<span class="ruby-keyword kw">true</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_pack</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">fmt</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
+
+        <div class="method-heading">
+          <a href="#M000110" class="method-signature">
+          <span class="method-name">pos</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+returns the current position offset of the blob buffer - aka self[:off]
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 162</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pos</span>
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:off</span>]
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
+
+        <div class="method-heading">
+          <a href="#M000107" class="method-signature">
+          <span class="method-name">pos=</span><span class="method-args">(p)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+sets the blob buffer offset to p. returns -1 on failure
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 144</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pos=</span>(<span class="ruby-identifier">p</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_seek</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">p</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000115" class="method-detail">
+        <a name="M000115"></a>
+
+        <div class="method-heading">
+          <a href="#M000115" class="method-signature">
+          <span class="method-name">print_dump</span><span class="method-args">(rewind=true, len=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Prints a hexdump on standard output using dnet(3)&#8217;s
+&quot;blob_print&quot; under the hood. Can optionally <a
+href="Blob.html#M000106">rewind</a> the blob before dumping using the
+&#8216;<a href="Blob.html#M000106">rewind</a>&#8217; argument (default:
+rewind=true).
+</p>
+<p>
+NOTE: len does not appear to do anything at all for blob_print
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000115-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 218</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">print_dump</span>(<span class="ruby-identifier">rewind</span>=<span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">len</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rewind</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rewind</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>
+      <span class="ruby-identifier">len</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:end</span>] <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:off</span>]
+      <span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_print</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-value str">&quot;hexl&quot;</span>, <span class="ruby-identifier">len</span>.<span class="ruby-identifier">to_i</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
+
+        <div class="method-heading">
+          <a href="#M000104" class="method-signature">
+          <span class="method-name">read</span><span class="method-args">(len=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Reads &#8216;len&#8217; bytes out of the blob from the current offset. If
+len is nil (the default) then all remaining bytes are <a
+href="Blob.html#M000104">read</a>. Moves the offset accordingly. This
+method uses dnet(3)&#8217;s &quot;blob_read&quot; under the hood.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000104-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 118</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">read</span>(<span class="ruby-identifier">len</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-identifier">len</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:end</span>] <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:off</span>]
+      (<span class="ruby-identifier">buf</span> = <span class="ruby-operator">::</span><span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;\x00&quot;</span>, <span class="ruby-identifier">len</span>)).<span class="ruby-identifier">autorelease</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rlen</span>=<span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_read</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">buf</span>, <span class="ruby-identifier">len</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">read_string_length</span>(<span class="ruby-identifier">rlen</span>)
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
+
+        <div class="method-heading">
+          <a href="#M000100" class="method-signature">
+          <span class="method-name">release</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This method calls dnet(3)&#8217;s blob_free behind the scenes. It should
+automatically get run by the garbage collector when a blob is no longer
+referenced.
+</p>
+<p>
+blob_free deallocates the memory associated with blob b and returns NULL.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000100-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 51</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">release</span>
+      <span class="ruby-identifier">_do_if_open</span> { <span class="ruby-identifier">_handle_closed!</span> ; <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_free</span>(<span class="ruby-keyword kw">self</span>) }
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
+
+        <div class="method-heading">
+          <a href="#M000106" class="method-signature">
+          <span class="method-name">rewind</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+rewinds the blob buffer offset to the beginning
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 138</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rewind</span>
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_seek</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-value">0</span>, <span class="ruby-value">0</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000114" class="method-detail">
+        <a name="M000114"></a>
+
+        <div class="method-heading">
+          <a href="#M000114" class="method-signature">
+          <span class="method-name">rindex</span><span class="method-args">(buf, rewind=false)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Uses dnet(3)&#8217;s &quot;blob_rindex&quot; under the hood. An additional
+&#8216;<a href="Blob.html#M000106">rewind</a>&#8217; argument was added
+which can be used to force a <a href="Blob.html#M000106">rewind</a> before
+searching. The default value for &quot;<a
+href="Blob.html#M000106">rewind</a>&quot; is &quot;false&quot;. nil is
+returned on a failed search.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000114-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000114-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 202</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rindex</span>(<span class="ruby-identifier">buf</span>, <span class="ruby-identifier">rewind</span>=<span class="ruby-keyword kw">false</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rewind</span>() <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rewind</span>
+      (<span class="ruby-identifier">buf</span> = <span class="ruby-operator">::</span><span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">bstr</span>)).<span class="ruby-identifier">autorelease</span>=<span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">i</span>=<span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_rindex</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">buf</span>, <span class="ruby-identifier">bstr</span>.<span class="ruby-identifier">size</span>)) <span class="ruby-operator">&gt;</span> <span class="ruby-value">-1</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">i</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
+
+        <div class="method-heading">
+          <a href="#M000112" class="method-signature">
+          <span class="method-name">seek</span><span class="method-args">(off, whence=0)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This method calls dnet(3)&#8217;s blob_seek under the hood.
+</p>
+<p>
+blob_seek repositions the offset within blob b to off, according to the
+directive whence (see lseek(2) for details), returning the <a
+href="Blob.html#M000098">new</a> absolute offset, or -1 on failure.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000112-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 178</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seek</span>(<span class="ruby-identifier">off</span>, <span class="ruby-identifier">whence</span>=<span class="ruby-value">0</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_seek</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">off</span>.<span class="ruby-identifier">to_i</span>, <span class="ruby-identifier">whence</span>.<span class="ruby-identifier">to_i</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
+
+        <div class="method-heading">
+          <a href="#M000105" class="method-signature">
+          <span class="method-name">string</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the entirety of the blob from beginning to end. Note, this will
+also move the offset to the end of the buffer.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 131</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">string</span>()
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-identifier">rewind</span>()
+      <span class="ruby-identifier">read</span>()
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
+
+        <div class="method-heading">
+          <a href="#M000102" class="method-signature">
+          <span class="method-name">unpack</span><span class="method-args">(sfmt, *args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Uses dnet(3)s &#8216;blob_unpack&#8217; under the hood. See <a
+href="Blob.html#M000101">pack</a>() for more information.
+</p>
+<p>
+XXX TODO - want to wrap varargs FFI for easier type casting?
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000102-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 100</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unpack</span>(<span class="ruby-identifier">sfmt</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      (<span class="ruby-identifier">fmt</span> = <span class="ruby-operator">::</span><span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">sfmt</span>)).<span class="ruby-identifier">autorelease</span>=<span class="ruby-keyword kw">true</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_unpack</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">fmt</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
+
+        <div class="method-heading">
+          <a href="#M000103" class="method-signature">
+          <span class="method-name">write</span><span class="method-args">(bstr)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Writes the supplied <a href="Blob.html#M000105">string</a> to the blob at
+the current offset. Uses dnet(3)&#8217;s &quot;blob_write&quot; under the
+hood.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000103-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/blob.rb, line 108</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">bstr</span>)
+      <span class="ruby-identifier">_check_open!</span>
+      <span class="ruby-identifier">buf</span> = <span class="ruby-operator">::</span><span class="ruby-constant">FFI</span><span class="ruby-operator">::</span><span class="ruby-constant">MemoryPointer</span>.<span class="ruby-identifier">from_string</span>(<span class="ruby-identifier">bstr</span>)
+      <span class="ruby-identifier">buf</span>.<span class="ruby-identifier">autorelease</span>=<span class="ruby-keyword kw">true</span>
+      <span class="ruby-operator">::</span><span class="ruby-constant">Dnet</span>.<span class="ruby-identifier">blob_write</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">buf</span>, <span class="ruby-identifier">bstr</span>.<span class="ruby-identifier">size</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
