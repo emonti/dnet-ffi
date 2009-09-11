@@ -10,7 +10,7 @@
 	<style type="text/css">
 		body {
   		margin-top: 1.0em;
-  		background-color: #da9105;
+  		background-color: #404060;
 		  font-family: "Helvetica,Arial,FreeSans"; 
   		color: #ffffff;
     }
@@ -18,12 +18,12 @@
       margin: 0 auto;
       width: 700px;
     }
-		h1 { font-size: 3.8em; color: #256efa; margin-bottom: 3px; }
+		h1 { font-size: 3.8em; color: #000000; margin-bottom: 3px; }
 		h1 .small { font-size: 0.4em; }
 		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #256efa; }
-    h3 { text-align: center; color: #256efa; }
-    a { color: #256efa; }
+		h2 { font-size: 1.5em; color: #000000; }
+    h3 { text-align: center; color: #000000; }
+    a { color: #000000; }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
 		pre { background: #000; color: #fff; padding: 15px;}
@@ -52,8 +52,20 @@
       Ruby FFI bindings for the libdnet network and raw packet injection library.
     </div>
 
+    <h2>Requirements</h2>
+    <p>
+    You'll need the following pre-requisites to use dnet-ffi.
+    <ul>
+      <li>libdnet (tested with v1.11) from 
+          <a href="http://libdnet.sourceforge.net">here</a>
+      </li>
+      <li>Ruby FFI ;gt= 0.5.0 from 
+          <a href="http://github.com/ffi/ffi">github</a> or 
+          <a href="http://rubyforge.org/projects/ffi/">rubyforge</a>
+      </li>
+    </ul>
+    </p>
     
-
     <h2>Download</h2>
     <p>
       You can download this project in either
@@ -64,7 +76,12 @@
       by running:
       <pre>$ git clone git://github.com/emonti/dnet-ffi</pre>
     </p>
-      
+
+     <h2>Documentation</h2>
+    <p>
+      The rdoc documentation is available online <a href="rdoc/">here</a>
+    </p>
+
     <div class="footer">
       get the source code on GitHub : <a href="http://github.com/emonti/dnet-ffi">emonti/dnet-ffi</a>
     </div>
