@@ -19,8 +19,8 @@ module Dnet
   # volatile objects.
   module HandleHelpers
 
-    # shorthand for the ::Dnet::HandleError exception class
-    H_ERR = ::Dnet::HandleError
+    # shorthand for the HandleError exception class
+    H_ERR = HandleError
 
     def open? ; _handle_open? ; end
     def closed? ; (not _handle_open?) ; end
@@ -67,14 +67,14 @@ module Dnet
   class LoopableHandle < Handle
 
     # Yields each entry via a new instance through loop() to a block
-    def self.each_entry
-      open {|a| a.loop {|e| yield e } }
+    def self.each_entry(*args)
+      open(*args) {|a| a.loop {|e| yield e } }
     end
 
     # Returns all entries as an array.
-    def self.entries
+    def self.entries(*args)
       ary = []
-      each_entry {|x| ary << x.copy }
+      each_entry(*args) {|x| ary << x.copy }
       return ary
     end
 
@@ -82,15 +82,15 @@ module Dnet
       # Generic helper for libdnet's *_loop method interfaces.
       # Calls Dnet."loop_meth" to loop through some sort of entry which is cast
       # to a new instance of 'entry_cast' class and yielded to a block.
-      def _loop(loop_meth, entry_cast)
+      def _loop(nspace, loop_meth, entry_cast)
         _check_open!
         b = lambda {|e, i| yield entry_cast.new(e); nil } 
-        ::Dnet.__send__ loop_meth, @handle, b, self.object_id
+        nspace.__send__ loop_meth, @handle, b, self.object_id
       end
 
   end # LoopableHandle
 
-  # A exception class for errors generated through the SugarStruct module
+  # A exception class for errors generated from the SugarStruct module
   class StructError < ::Exception; end
 
   # Adds some sugar to the base FFI::Struct class.
@@ -100,7 +100,7 @@ module Dnet
   class SugarStruct < ::FFI::Struct
 
     # shortcut for ::Dnet::StructError
-    S_ERR = ::Dnet::StructError
+    S_ERR = StructError
 
     # Adds field setting on initialization to ::FFI::Struct.new as well as
     # a "yield(self) if block_given?" at the end.
@@ -170,38 +170,6 @@ module Dnet
       end
     end
 
-    # Attempts to resolve calls as read/write accessors for structure fields 
-    # (i.e. you automatically get a "obj.field" and "obj.field=(x)" method 
-    # for every structure member).
-    #
-    # This convention can be followed in custom accessors that take inputs
-    # or return values in a specific format.
-    #
-    # It can be desirable to have accessors using different formats for calls
-    # between what's returned from "obj.fieldX" and "obj[:fieldX]", as well as 
-    # a difference between what you supply via "obj.fieldX=y" and 
-    # "obj[:field]=y". However, ideally the format for set( obj.fieldX=... ) 
-    # and get( obj.fieldX() ) should always match.
-    def method_missing(m, *args)
-      mstr = m.to_s ;  msym = m.to_sym
-      asz = args.size
-      if( mstr[-1,1] == "=" and (not (mset=mstr[0..-2]).empty?) and 
-          members.include?(:"#{mset}") )
-        if asz != 1
-          raise(::ArgumentError, ("wrong number of arguments (#{asz} for 1)"))
-        end
-        self[:"#{mset}"] = args[0]
-      elsif members().include?(msym)
-        if asz != 0
-          raise(::ArgumentError, "wrong number of arguments (#{asz} for 0)")
-        end
-        self[msym]
-      else
-        raise(::NoMethodError, "undefined method `#{m}' for #{self.inspect}")
-      end
-    end
-
-
     # Returns a new instance of self.class containing a seperately allocated 
     # copy of all our data. This abstract method can be called from overridden 
     # 'copy()' implementations. 
@@ -244,6 +212,36 @@ module Dnet
       self.class.new( :raw => self.to_ptr.read_string(self.size+grown) )
     end
 
+    # Attempts to resolve calls as read/write accessors for structure fields 
+    # (i.e. you automatically get a "obj.field" and "obj.field=(x)" method 
+    # for every structure member).
+    #
+    # This convention can be followed in custom accessors that take inputs
+    # or return values in a specific format.
+    #
+    # It can be desirable to have accessors using different formats for calls
+    # between what's returned from "obj.fieldX" and "obj[:fieldX]", as well as 
+    # a difference between what you supply via "obj.fieldX=y" and 
+    # "obj[:field]=y". However, ideally the format for set( obj.fieldX=... ) 
+    # and get( obj.fieldX() ) should always match.
+    def method_missing(m, *args)
+      mstr = m.to_s ;  msym = m.to_sym
+      asz = args.size
+      if( mstr[-1,1] == "=" and (not (mset=mstr[0..-2]).empty?) and 
+          members.include?(:"#{mset}") )
+        if asz != 1
+          raise(::ArgumentError, "wrong number of arguments (#{asz} for 1)")
+        end
+        return(self[:"#{mset}"] = args[0])
+      elsif members().include?(msym)
+        if asz != 0
+          raise(::ArgumentError, "wrong number of arguments (#{asz} for 0)")
+        end
+        return(self[msym])
+      end
+      raise(::NoMethodError, "undefined method `#{m}' for #{self.inspect}")
+    end
+
   end # SugarStruct
 
 
@@ -252,11 +250,11 @@ module Dnet
   module ConstMap
 
     def self.included(klass)
-      klass.extend(::Dnet::ConstMap)
+      klass.extend(ConstMap)
     end
 
-    # A flexible lookup. Takes a Symbol or String as a name to lookup a value, 
-    # or an integer to lookup a corresponding name.
+    # A flexible lookup. Takes 'arg' as a Symbol or String as a name to lookup 
+    # a value, or an Integer to lookup a corresponding name.
     def [](arg)
       if arg.is_a? Integer
         list.invert[arg]
@@ -265,19 +263,83 @@ module Dnet
       end
     end
 
+    # Generates a hash of all the constant names mapped to value. Usually,
+    # it's a good idea to override this like so in derived modules:
+    #
+    #   def list; @@list = super() ; end
+    #
     def list
       constants.inject({}){|h,c| h.merge! c => const_get(c) }
     end
 
     private
-      def slurp_constants(nspace, prefix, excludes=nil)
-        excludes ||= []
+      # When called from a module, this method imports all the constants from 
+      # namespace 'nspace' that start with into the local namespace as 
+      # constants named with whatever follows the prefix. Only constant names
+      # that match [A-Z][A-Z0-9_]+ are imported, the rest are ignored.
+      #
+      # This method also yields the (short) constant name and value to a block
+      # if one is provided. The block works like [...].select {|c,v| ... } in
+      # that the value is not mapped if the block returns nil or false.
+      def slurp_constants(nspace, prefix)
         nspace.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
-          next if excludes.include? $1
-          const_set $2, nspace.const_get($1)
+          c = $2
+          v = nspace.const_get($1)
+          next if block_given? and not yield(c,v)
+          const_set c, v
         end
       end
   end
 
+
+  # Behaves just like ConstFlags, except that the [nnn] returns a list
+  # of names for the flags set on nnn. Name string lookups work same way as 
+  # ConstFlags.
+  module ConstFlagsMap
+    def self.included(klass)
+      klass.extend(ConstFlagsMap)
+    end
+
+    # A flexible lookup. Takes 'arg' as a Symbol or String as a name to lookup 
+    # a value, or an Integer to lookup a corresponding names for the flags 
+    # present in it.
+    def [](arg)
+      if arg.is_a? Integer
+        ret = []
+        list.invert.sort.each {|v,n| ret << n if (v & arg) == v }
+        return ret
+      elsif arg.is_a? String or arg.is_a? Symbol
+        list[arg.to_s.upcase]
+      end
+    end
+
+    # Generates a hash of all the constant names mapped to value. Usually,
+    # it's a good idea to override this like so in derived modules:
+    #
+    #   def list; @@list = super() ; end
+    #
+    def list
+      constants.inject({}){|h,c| h.merge! c => const_get(c) }
+    end
+
+    private
+      # When called from a module, this method imports all the constants from 
+      # namespace 'nspace' that start with into the local namespace as 
+      # constants named with whatever follows the prefix. Only constant names
+      # that match [A-Z][A-Z0-9_]+ are imported, the rest are ignored.
+      #
+      # This method also yields the (short) constant name and value to a block
+      # if one is provided. The block works like [...].select {|c,v| ... } in
+      # that the value is not mapped if the block returns nil or false.
+      def slurp_constants(nspace, prefix)
+        nspace.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
+          c = $2
+          v = nspace.const_get($1)
+          next if block_given? and not yield(c,v)
+          const_set c, v
+        end
+      end
+
+  end
 end
 

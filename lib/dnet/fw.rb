@@ -70,7 +70,7 @@ module Dnet
       # block with each rule cast as a Rule object.  Uses dnet(3)'s fw_loop() 
       # function under the hood.
       def loop &block
-        _loop :fw_loop, Rule, &block
+        _loop ::Dnet, :fw_loop, Rule, &block
       end
 
       # Adds the specified Rule entry to the ruleset. Uses dnet(3)'s 

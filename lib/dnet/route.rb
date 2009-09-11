@@ -39,7 +39,7 @@ module Dnet
       # with each route cast as a Entry object. Uses dnet(3)'s route_loop() 
       # function under the hood.
       def loop &block
-        _loop :route_loop, Entry, &block
+        _loop ::Dnet, :route_loop, Entry, &block
       end
 
       # Retrieves the routing table entry for the destination 'dst' (supplied as

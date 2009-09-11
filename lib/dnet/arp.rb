@@ -86,7 +86,7 @@ module Dnet
       # Iterates over the kernel arp cache, yielding each entry (cast as an
       # Entry) to a block. Uses dnet(3)'s arp_loop() function under the hood.
       def loop &block
-        _loop :arp_loop, Entry, &block
+        _loop ::Dnet, :arp_loop, Entry, &block
       end
 
       # Retrieves the ARP entry for the protocol address specified by 'addr'

@@ -18,12 +18,17 @@ module Dnet
               :alias_num, :uint )       # number of aliases
             #  :if_aliases,  ::Dnet::Addr  ) ## variable-length array of aliases
 
-      # Constants map for interface flags
+      # Constants map for interface flags. This is a map of flags, so
+      # lookups for integers using [nnn] return a list of flags present in nnn.
+      # Lookups for names using ["XX"], ["xx"] or [:xx] still return the value 
+      # of the constant named XX.
       module Flags
-        include ConstMap
-        slurp_constants(::Dnet, "INTF_FLAGS_")
+        include ConstFlagsMap
+        slurp_constants(::Dnet, "INTF_FLAG_")
         def self.list; @@list ||= super();  end
       end
+
+      def lookup_flags; Flags[self[:flags]]; end
 
       # Constants map for interface types
       module Itype
@@ -31,6 +36,8 @@ module Dnet
         slurp_constants(::Dnet, "INTF_TYPE_")
         def self.list; @@list ||= super();  end
       end
+
+      def lookup_itype; Flags[self[:itype]]; end
 
       # Returns a newly instantiated and allocated copy of this interface entry
       def copy
@@ -66,6 +73,9 @@ module Dnet
 
     end # class Entry
 
+    # A handle to the network interface configuration.
+    # This class manages a dnet(3) intf_t handle through intf_open() and
+    # intf_close() and wraps several libdnet functions as ruby methods.
     class Handle < ::Dnet::LoopableHandle
 
       # Obtains a handle to access the network interface configuration.
@@ -85,7 +95,7 @@ module Dnet
       # Intf::Entry) to a block. Uses dnet(3)'s intf_loop() function under the
       # hood.
       def loop &block
-        _loop :intf_loop, Entry, &block
+        _loop ::Dnet, :intf_loop, Entry, &block
       end
 
       # intf_get() retrieves an interface configuration entry, keyed on
