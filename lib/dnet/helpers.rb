@@ -270,9 +270,11 @@ module Dnet
     end
 
     private
-      def slurp_constants(nspace, prefix)
-        ::Dnet.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
-          const_set $2, ::Dnet.const_get($1)
+      def slurp_constants(nspace, prefix, excludes=nil)
+        excludes ||= []
+        nspace.constants.grep(/^(#{prefix}([A-Z][A-Z0-9_]+))$/) do
+          next if excludes.include? $1
+          const_set $2, nspace.const_get($1)
         end
       end
   end
