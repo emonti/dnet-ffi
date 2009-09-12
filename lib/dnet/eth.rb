@@ -95,6 +95,14 @@ module Dnet
       end
 
     end # Handle
+
+    def self.open(*args)
+      Handle.open(*args){|*y| yield(*y) if block_given? }
+    end
+
+    def self.eth_send(dev, *args)
+      Handle.open(dev){|h| h.eth_send(*args) }
+    end
   end # Eth
 
   # This is just an alias for ::Dnet::Eth::Handle

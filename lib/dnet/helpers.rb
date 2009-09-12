@@ -66,6 +66,12 @@ module Dnet
 
   class LoopableHandle < Handle
 
+    def entries
+      ary = []
+      self.loop {|e| ary << e.copy }
+      return ary
+    end
+
     # Yields each entry via a new instance through loop() to a block
     def self.each_entry(*args)
       open(*args) {|a| a.loop {|e| yield e } }
@@ -73,9 +79,7 @@ module Dnet
 
     # Returns all entries as an array.
     def self.entries(*args)
-      ary = []
-      each_entry(*args) {|x| ary << x.copy }
-      return ary
+      open(*args) {|a| a.entries }
     end
 
     private

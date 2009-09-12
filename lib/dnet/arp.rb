@@ -132,6 +132,18 @@ module Dnet
     #   memmove(pack_ethip_p->ar_tpa, &(tpa), IP_ADDR_LEN); \
     # } while (0)
 
+    def self.open(*args)
+      Handle.open(*args) {|*y| yield(*y) if block_given? }
+    end
+
+    def self.each_entry(*args)
+      Handle.each_entry(*args) {|*y| yield(*y) }
+    end
+
+    def self.entries(*args)
+      Handle.entries(*args)
+    end
+
   end # Arp
 
   # This is just an alias for Arp::Handle

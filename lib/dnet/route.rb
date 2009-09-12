@@ -71,9 +71,23 @@ module Dnet
           return re 
         end
       end
-
     end # Handle
+
+    def self.open(*args)
+      Handle.open(*args){|*y| yield(*y) if block_given? }
+    end
+
+    def self.entries
+      Handle.entries
+    end
+
+    def self.each_entry(*args)
+      Handle.each_entry(*args){|*y| yield(*y) }
+    end
   end # Route
+
+  # just an alias for Route::Handle
+  RouteHandle = Route::Handle
 
   callback :route_handler, [:route_t, :string], :int
   attach_function :route_open, [], :route_t

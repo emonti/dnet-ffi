@@ -146,8 +146,12 @@ module Dnet
 
     end # Handle
 
+    def self.open(*args)
+      Handle.open(*args) {|*y| yield(*y) if block_given? }
+    end
+
     def self.each_entry(*args)
-      Intf::Handle.each_entry(*args)
+      Intf::Handle.each_entry(*args){|*y| yield(*y) }
     end
 
     def self.entries
@@ -171,3 +175,4 @@ module Dnet
   attach_function :intf_close, [:intf_t], :intf_t
 
 end
+
