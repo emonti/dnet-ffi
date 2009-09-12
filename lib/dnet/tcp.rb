@@ -27,7 +27,7 @@ module Dnet
 
       # TCP control flags (flags)
       module Flags
-        include ConstMap
+        include ConstFlagsMap
         slurp_constants(::Dnet, "TH_")
         def self.list; @@list ||= super() ; end
       end
