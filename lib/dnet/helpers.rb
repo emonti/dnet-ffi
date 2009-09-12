@@ -167,7 +167,7 @@ module Dnet
           end
           raise(S_ERR, "cant use set_fields with '#{p}': #{msg}")
         elsif members().include?(p)
-          self.__send__ :"#{p}=", params[p]
+          self.__send__(:"#{p}=", params[p])
         else
           raise S_ERR.new("#{self.class} does not have a '#{p}' field")
         end
