@@ -6,7 +6,7 @@ require 'ffi'
 
 module Dnet
   extend FFI::Library
-  ffi_lib 'dnet'
+  ffi_lib 'libdnet'
 end
 
 require 'dnet/typedefs.rb'
