@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Dnet::Arp</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Dnet::Arp</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/dnet/arp_rb.html">
+                lib/dnet/arp.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000079">each_entry</a>&nbsp;&nbsp;
+      <a href="#M000080">entries</a>&nbsp;&nbsp;
+      <a href="#M000078">open</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Arp/Entry.html" class="link">Dnet::Arp::Entry</a><br />
+Class <a href="Arp/Ethip.html" class="link">Dnet::Arp::Ethip</a><br />
+Class <a href="Arp/Handle.html" class="link">Dnet::Arp::Handle</a><br />
+Class <a href="Arp/Hdr.html" class="link">Dnet::Arp::Hdr</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000079" class="method-detail">
+        <a name="M000079"></a>
+
+        <div class="method-heading">
+          <a href="#M000079" class="method-signature">
+          <span class="method-name">each_entry</span><span class="method-args">(*args) {|*y| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000079-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/arp.rb, line 139</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">each_entry</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-constant">Handle</span>.<span class="ruby-identifier">each_entry</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) {<span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">y</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">y</span>) }
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
+
+        <div class="method-heading">
+          <a href="#M000080" class="method-signature">
+          <span class="method-name">entries</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000080-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/arp.rb, line 143</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-constant">Handle</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000078" class="method-detail">
+        <a name="M000078"></a>
+
+        <div class="method-heading">
+          <a href="#M000078" class="method-signature">
+          <span class="method-name">open</span><span class="method-args">(*args) {|*y| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+define arp_pack_hdr_ethip(hdr, op, sha, spa, tha, tpa) do { # struct
+arp_hdr *pack_arp_p = (struct arp_hdr *)(hdr); # struct arp_ethip
+*pack_ethip_p = (struct arp_ethip *) # ((uint8_t *)(hdr) + ARP_HDR_LEN); #
+pack_arp_p-&gt;ar_hrd = htons(ARP_HRD_ETH); # pack_arp_p-&gt;ar_pro =
+htons(ARP_PRO_IP); # pack_arp_p-&gt;ar_hln = ETH_ADDR_LEN; #
+pack_arp_p-&gt;ar_pln = IP_ADDR_LEN; # pack_arp_p-&gt;ar_op = htons(op); #
+memmove(pack_ethip_p-&gt;ar_sha, &amp;(sha), ETH_ADDR_LEN); #
+memmove(pack_ethip_p-&gt;ar_spa, &amp;(spa), IP_ADDR_LEN); #
+memmove(pack_ethip_p-&gt;ar_tha, &amp;(tha), ETH_ADDR_LEN); #
+memmove(pack_ethip_p-&gt;ar_tpa, &amp;(tpa), IP_ADDR_LEN); # } while (0)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000078-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/dnet/arp.rb, line 135</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">open</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+      <span class="ruby-constant">Handle</span>.<span class="ruby-identifier">open</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) {<span class="ruby-operator">|</span><span class="ruby-operator">*</span><span class="ruby-identifier">y</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">yield</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">y</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> }
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

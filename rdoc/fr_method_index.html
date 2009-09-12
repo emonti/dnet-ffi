@@ -1,0 +1,163 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/Dnet/Addr.html#M000103"><=> (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/ConstFlagsMap.html#M000025">[] (Dnet::ConstFlagsMap)</a><br />
+    <a href="classes/Dnet/ConstMap.html#M000065">[] (Dnet::ConstMap)</a><br />
+    <a href="classes/Dnet/Arp/Handle.html#M000086">add (Dnet::Arp::Handle)</a><br />
+    <a href="classes/Dnet/Route/Handle.html#M000076">add (Dnet::Route::Handle)</a><br />
+    <a href="classes/Dnet/Fw/Handle.html#M000044">add (Dnet::Fw::Handle)</a><br />
+    <a href="classes/Dnet/Ip.html#M000046">add_option (Dnet::Ip)</a><br />
+    <a href="classes/Dnet/Ip/Handle.html#M000054">add_option (Dnet::Ip::Handle)</a><br />
+    <a href="classes/Dnet/Addr.html#M000098">addr (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000108">addr= (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000095">addr_type (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000011">aliases (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/Addr.html#M000105">aton (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Blob.html#M000123">base (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Addr.html#M000099">bcast (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000111">bcast (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Blob.html#M000126">blob_end (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000124">blob_size (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Addr.html#M000100">broadcast (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/EthAddr.html#M000136">chars (Dnet::EthAddr)</a><br />
+    <a href="classes/Dnet/Ip/Handle.html#M000055">checksum (Dnet::Ip::Handle)</a><br />
+    <a href="classes/Dnet/Ip.html#M000047">checksum (Dnet::Ip)</a><br />
+    <a href="classes/Dnet/Arp/Handle.html#M000083">close (Dnet::Arp::Handle)</a><br />
+    <a href="classes/Dnet/Route/Handle.html#M000073">close (Dnet::Route::Handle)</a><br />
+    <a href="classes/Dnet/Fw/Handle.html#M000042">close (Dnet::Fw::Handle)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000018">close (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Eth/Handle.html#M000030">close (Dnet::Eth::Handle)</a><br />
+    <a href="classes/Dnet/Ip/Handle.html#M000052">close (Dnet::Ip::Handle)</a><br />
+    <a href="classes/Dnet/HandleHelpers.html#M000068">closed? (Dnet::HandleHelpers)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000010">copy (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/SugarStruct.html#M000090">copy (Dnet::SugarStruct)</a><br />
+    <a href="classes/Dnet/Route/Handle.html#M000077">delete (Dnet::Route::Handle)</a><br />
+    <a href="classes/Dnet/Fw/Handle.html#M000045">delete (Dnet::Fw::Handle)</a><br />
+    <a href="classes/Dnet/Arp/Handle.html#M000087">delete (Dnet::Arp::Handle)</a><br />
+    <a href="classes/Dnet/Util.html#M000036">derive_pointer (Dnet::Util)</a><br />
+    <a href="classes/Dnet/Fw/Rule.html#M000037">device (Dnet::Fw::Rule)</a><br />
+    <a href="classes/Dnet/Fw/Rule.html#M000038">device= (Dnet::Fw::Rule)</a><br />
+    <a href="classes/Dnet/Intf.html#M000006">each_entry (Dnet::Intf)</a><br />
+    <a href="classes/Dnet/Arp.html#M000079">each_entry (Dnet::Arp)</a><br />
+    <a href="classes/Dnet/Route.html#M000071">each_entry (Dnet::Route)</a><br />
+    <a href="classes/Dnet/LoopableHandle.html#M000133">each_entry (Dnet::LoopableHandle)</a><br />
+    <a href="classes/Dnet/LoopableHandle.html#M000134">entries (Dnet::LoopableHandle)</a><br />
+    <a href="classes/Dnet/LoopableHandle.html#M000132">entries (Dnet::LoopableHandle)</a><br />
+    <a href="classes/Dnet/Arp.html#M000080">entries (Dnet::Arp)</a><br />
+    <a href="classes/Dnet/Intf.html#M000007">entries (Dnet::Intf)</a><br />
+    <a href="classes/Dnet/Route.html#M000070">entries (Dnet::Route)</a><br />
+    <a href="classes/Dnet/Eth/Handle.html#M000033">eth_send (Dnet::Eth::Handle)</a><br />
+    <a href="classes/Dnet/Eth.html#M000028">eth_send (Dnet::Eth)</a><br />
+    <a href="classes/Dnet/Addr.html#M000110">from_string (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000107">from_string (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Route/Handle.html#M000075">get (Dnet::Route::Handle)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000020">get (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Arp/Handle.html#M000085">get (Dnet::Arp::Handle)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000022">get_dst (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000021">get_src (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000012">if_name (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000013">if_name= (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/ConstMap.html#M000064">included (Dnet::ConstMap)</a><br />
+    <a href="classes/Dnet/ConstFlagsMap.html#M000024">included (Dnet::ConstFlagsMap)</a><br />
+    <a href="classes/Dnet/Blob.html#M000128">index (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Ip/Handle.html#M000051">ip_send (Dnet::Ip::Handle)</a><br />
+    <a href="classes/Dnet/Ip/Handle.html#M000053">ip_send (Dnet::Ip::Handle)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpType.html#M000063">list (Dnet::Icmp::Hdr::IcmpType)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpCode/PHOTURIS.html#M000062">list (Dnet::Icmp::Hdr::IcmpCode::PHOTURIS)</a><br />
+    <a href="classes/Dnet/Ip/Hdr/Tos.html#M000049">list (Dnet::Ip::Hdr::Tos)</a><br />
+    <a href="classes/Dnet/ConstMap.html#M000066">list (Dnet::ConstMap)</a><br />
+    <a href="classes/Dnet/Ip/Proto.html#M000048">list (Dnet::Ip::Proto)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpCode/REDIRECT.html#M000061">list (Dnet::Icmp::Hdr::IcmpCode::REDIRECT)</a><br />
+    <a href="classes/Dnet/Fw/Rule/Op.html#M000039">list (Dnet::Fw::Rule::Op)</a><br />
+    <a href="classes/Dnet/ConstFlagsMap.html#M000026">list (Dnet::ConstFlagsMap)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpCode/PARAMPROB.html#M000060">list (Dnet::Icmp::Hdr::IcmpCode::PARAMPROB)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpCode/TIMEEXCEED.html#M000059">list (Dnet::Icmp::Hdr::IcmpCode::TIMEEXCEED)</a><br />
+    <a href="classes/Dnet/Intf/Entry/Flags.html#M000016">list (Dnet::Intf::Entry::Flags)</a><br />
+    <a href="classes/Dnet/Intf/Entry/Itype.html#M000015">list (Dnet::Intf::Entry::Itype)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpCode/UNREACH.html#M000058">list (Dnet::Icmp::Hdr::IcmpCode::UNREACH)</a><br />
+    <a href="classes/Dnet/Icmp/Hdr/IcmpCode/RTRADVERT.html#M000057">list (Dnet::Icmp::Hdr::IcmpCode::RTRADVERT)</a><br />
+    <a href="classes/Dnet/Ip/Opt/Otype.html#M000056">list (Dnet::Ip::Opt::Otype)</a><br />
+    <a href="classes/Dnet/Tcp/Opt/Otype.html#M000004">list (Dnet::Tcp::Opt::Otype)</a><br />
+    <a href="classes/Dnet/Tcp/Hdr/Flags.html#M000003">list (Dnet::Tcp::Hdr::Flags)</a><br />
+    <a href="classes/Dnet/Tcp/State.html#M000002">list (Dnet::Tcp::State)</a><br />
+    <a href="classes/Dnet/Arp/Hdr/Op.html#M000081">list (Dnet::Arp::Hdr::Op)</a><br />
+    <a href="classes/Dnet/Fw/Rule/Dir.html#M000040">list (Dnet::Fw::Rule::Dir)</a><br />
+    <a href="classes/Dnet/AF.html#M000034">list (Dnet::AF)</a><br />
+    <a href="classes/Dnet/SockAddrFamily.html#M000092">lookup_family (Dnet::SockAddrFamily)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000008">lookup_flags (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000009">lookup_itype (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/Route/Handle.html#M000074">loop (Dnet::Route::Handle)</a><br />
+    <a href="classes/Dnet/Fw/Handle.html#M000043">loop (Dnet::Fw::Handle)</a><br />
+    <a href="classes/Dnet/Arp/Handle.html#M000084">loop (Dnet::Arp::Handle)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000019">loop (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Eth/Handle.html#M000031">macaddr (Dnet::Eth::Handle)</a><br />
+    <a href="classes/Dnet/Eth/Handle.html#M000032">macaddr= (Dnet::Eth::Handle)</a><br />
+    <a href="classes/Dnet/SugarStruct.html#M000091">method_missing (Dnet::SugarStruct)</a><br />
+    <a href="classes/Dnet/Addr.html#M000112">net (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000101">net (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000102">network (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Arp/Handle.html#M000082">new (Dnet::Arp::Handle)</a><br />
+    <a href="classes/Dnet/Ip/Handle.html#M000050">new (Dnet::Ip::Handle)</a><br />
+    <a href="classes/Dnet/Blob.html#M000113">new (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Fw/Handle.html#M000041">new (Dnet::Fw::Handle)</a><br />
+    <a href="classes/Dnet/Eth/Handle.html#M000029">new (Dnet::Eth::Handle)</a><br />
+    <a href="classes/Dnet/SugarStruct.html#M000088">new (Dnet::SugarStruct)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000017">new (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Addr.html#M000093">new (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Route/Handle.html#M000072">new (Dnet::Route::Handle)</a><br />
+    <a href="classes/Dnet/EthAddr.html#M000135">new (Dnet::EthAddr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000096">ntoa (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000109">ntop (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Eth.html#M000027">open (Dnet::Eth)</a><br />
+    <a href="classes/Dnet/Route.html#M000069">open (Dnet::Route)</a><br />
+    <a href="classes/Dnet/Arp.html#M000078">open (Dnet::Arp)</a><br />
+    <a href="classes/Dnet/Intf.html#M000005">open (Dnet::Intf)</a><br />
+    <a href="classes/Dnet/Handle.html#M000131">open (Dnet::Handle)</a><br />
+    <a href="classes/Dnet/HandleHelpers.html#M000067">open? (Dnet::HandleHelpers)</a><br />
+    <a href="classes/Dnet/Blob.html#M000116">pack (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000125">pos (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000122">pos= (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000130">print_dump (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Addr.html#M000106">pton (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Blob.html#M000119">read (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000114">release (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000115">release (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000121">rewind (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000129">rindex (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000127">seek (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Intf/Handle.html#M000023">set (Dnet::Intf::Handle)</a><br />
+    <a href="classes/Dnet/Addr.html#M000094">set_fields (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/SugarStruct.html#M000089">set_fields (Dnet::SugarStruct)</a><br />
+    <a href="classes/Dnet/Intf/Entry.html#M000014">set_name (Dnet::Intf::Entry)</a><br />
+    <a href="classes/Dnet/Addr.html#M000104">set_string (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Addr.html#M000097">string (Dnet::Addr)</a><br />
+    <a href="classes/Dnet/Blob.html#M000120">string (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/EthAddr.html#M000137">string (Dnet::EthAddr)</a><br />
+    <a href="classes/Dnet.html#M000001">truncate_cstr (Dnet)</a><br />
+    <a href="classes/Dnet/Util.html#M000035">unhexify (Dnet::Util)</a><br />
+    <a href="classes/Dnet/Blob.html#M000117">unpack (Dnet::Blob)</a><br />
+    <a href="classes/Dnet/Blob.html#M000118">write (Dnet::Blob)</a><br />
+  </div>
+</div>
+</body>
+</html>
