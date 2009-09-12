@@ -15,6 +15,8 @@ require 'dnet/constants.rb' unless defined?(Dnet::DNET_CONSTANTS)
 require 'dnet/util.rb'
 require 'dnet/helpers.rb'
 
+require 'dnet/bsd' # bsd sockaddr structs
+
 require 'dnet/addr'
 require 'dnet/eth'
 require 'dnet/arp'
