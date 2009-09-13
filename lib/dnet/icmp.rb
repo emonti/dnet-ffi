@@ -13,7 +13,7 @@ module Dnet::Icmp
     include ::FFI::DRY::StructHelper
     
     dsl_layout do
-      field :icmp_type,   :uint8
+      field :icmp_type,    :uint8
       field :icmp_code,    :uint8
       field :icmp_cksum,   :uint16
     end
@@ -133,7 +133,6 @@ module Dnet::Icmp
       # 
       class RtrAdvert < ::FFI::Struct
         include ::FFI::DRY::StructHelper
-      
 
         class RtrData < ::FFI::Struct
           include ::FFI::DRY::StructHelper
