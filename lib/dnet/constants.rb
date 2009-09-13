@@ -194,14 +194,14 @@ module Dnet
   IP_TOS_ECT                  = 0x02    # ECN-capable transport
   IP_TOS_CE                   = 0x01    # congestion experienced
 
-  IP_TOS_PREC_ROUTINE         = 0x00
-  IP_TOS_PREC_PRIORITY        = 0x20
-  IP_TOS_PREC_IMMEDIATE       = 0x40
-  IP_TOS_PREC_FLASH           = 0x60
-  IP_TOS_PREC_FLASHOVERRIDE   = 0x80
-  IP_TOS_PREC_CRITIC_ECP      = 0xa0
-  IP_TOS_PREC_INTERNETCONTROL = 0xc0
-  IP_TOS_PREC_NETCONTROL      = 0xe0
+  IP_TOS__PREC_ROUTINE         = 0x00
+  IP_TOS__PREC_PRIORITY        = 0x20
+  IP_TOS__PREC_IMMEDIATE       = 0x40
+  IP_TOS__PREC_FLASH           = 0x60
+  IP_TOS__PREC_FLASHOVERRIDE   = 0x80
+  IP_TOS__PREC_CRITIC_ECP      = 0xa0
+  IP_TOS__PREC_INTERNETCONTROL = 0xc0
+  IP_TOS__PREC_NETCONTROL      = 0xe0
 
   IP_RF                       = 0x8000 # reserved
   IP_DF                       = 0x4000 # don't fragment
