@@ -94,5 +94,65 @@ module Dnet
 
   end # LoopableHandle
 
+  # A special helper for network packet structures which use big-endian or
+  # "network" byte-order. This helper generates read/write accessors that
+  # automatically call the appropriate byte conversion function, ntohs/ntohl
+  # for 'reading' a 16/32 bit field, and htons/htonl for writing to one.
+  #
+  # NOTE this helper does not currently do anything special for 64-bit values 
+  # at all.
+  #
+  # This helper relies on a included loaded FFI::DRY::StructHelper module
+  # to do its magic. Always include this module as follows:
+  #
+  #   class YourStruct < ::FFI::Struct # or ::FFI::ManagedStruct, (or Union?)
+  #     include ::FFI::DRY::StructHelper
+  #     include ::Dnet::NetStructBE
+  #     ...
+  #
+  module NetStructBE
+
+    I16_convert = [::Dnet.method(:ntohs), ::Dnet.method(:htons)]
+    U16_convert = [::Dnet.method(:ntohs), ::Dnet.method(:htons)]
+    I32_convert = [::Dnet.method(:ntohl), ::Dnet.method(:htonl)]
+    U32_convert = [::Dnet.method(:ntohl), ::Dnet.method(:htonl)]
+
+    BYTE_ORDER_METH = {
+      Dnet.find_type(:uint16) => I16_convert,
+      Dnet.find_type(:int16)  => I16_convert,
+      Dnet.find_type(:int32)  => I32_convert,
+      Dnet.find_type(:uint32) => I32_convert,
+    }
+
+    module ClassMethods
+      private
+      def _class_do_dsl_metadata(meta)
+        (@dsl_metadata = meta).each do |spec|
+          name = spec[:name]
+          type = spec[:type]
+          if type.kind_of? Symbol and mp=BYTE_ORDER_METH[ Dnet.find_type(type) ]
+            unless instance_methods.include?(:"#{name}")
+              define_method(:"#{name}"){ mp[0].call(self[name]) }
+            end
+            unless instance_methods.include?(:"#{name}=")
+              define_method(:"#{name}="){|val| self[name] = mp[1].call(val) }
+            end
+          else
+            unless instance_methods.include?(:"#{name}")
+              define_method(:"#{name}"){ self[name] } 
+            end
+            unless instance_methods.include?(:"#{name}=")
+              define_method(:"#{name}="){|val| self[name]=val }
+            end 
+          end
+        end
+      end
+    end
+
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
+  end
 end
 

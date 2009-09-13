@@ -30,6 +30,7 @@ module Dnet
     #
     class Hdr < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
     
       dsl_layout do
         field :v_hl,    :uint8,   :desc => 'v=vers(. & 0xf0) / '+
@@ -76,6 +77,7 @@ module Dnet
     #
     class Opt < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
 
       DATA_LEN = IP_OPT_LEN_MAX - IP_OPT_LEN
     
@@ -103,7 +105,8 @@ module Dnet
       #
       class DataSEC < ::FFI::Struct
         include ::FFI::DRY::StructHelper
-      
+        include ::Dnet::NetStructBE
+ 
         dsl_layout do
           field :sec,   :uint16,     :desc => 'security'
           field :cpt,   :uint16,     :desc => 'compartments'
@@ -122,7 +125,7 @@ module Dnet
       #
       class DataTS < ::FFI::Struct
         include ::FFI::DRY::StructHelper
-      
+        include ::Dnet::NetStructBE 
         dsl_layout do
           field :ptr,       :uint8,  :desc => 'from start of option'
           field :oflw_flg,  :uint8,  :desc => 'oflw = number of IPs skipped /'+
@@ -139,6 +142,7 @@ module Dnet
       #
       class DataRR < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :ptr,     :uint8,   :desc => 'from start of option'
@@ -158,6 +162,7 @@ module Dnet
       #
       class DataTR < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :id,      :uint16, :desc => 'ID number'

@@ -40,6 +40,7 @@ module Dnet
     #
     class Hdr < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
       
       dsl_layout do
         struct :dst,   EthAddr, :desc => 'destination address'

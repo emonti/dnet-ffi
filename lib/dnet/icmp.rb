@@ -11,6 +11,7 @@ module Dnet::Icmp
   #
   class Hdr < ::FFI::Struct
     include ::FFI::DRY::StructHelper
+    include ::Dnet::NetStructBE
     
     dsl_layout do
       field :icmp_type,    :uint8
@@ -76,6 +77,7 @@ module Dnet::Icmp
       # 
       class Echo < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_id, :uint16
@@ -94,6 +96,7 @@ module Dnet::Icmp
       # 
       class NeedFrag < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_void, :uint16
@@ -112,6 +115,7 @@ module Dnet::Icmp
       # 
       class Quote < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_void, :uint32 
@@ -133,9 +137,11 @@ module Dnet::Icmp
       # 
       class RtrAdvert < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
 
         class RtrData < ::FFI::Struct
           include ::FFI::DRY::StructHelper
+          include ::Dnet::NetStructBE
         
           dsl_layout do
             field :icmp_void, :uint32
@@ -163,6 +169,7 @@ module Dnet::Icmp
       # 
       class Timestamp < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_id, :uint32
@@ -183,6 +190,7 @@ module Dnet::Icmp
       # 
       class Mask < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
 
         dsl_layout do
           field :icmp_id, :uint32
@@ -204,6 +212,7 @@ module Dnet::Icmp
       # 
       class Traceroute < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_id,   :uint16
@@ -226,6 +235,7 @@ module Dnet::Icmp
       # 
       class DnsReply < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_id, :uint16
@@ -244,6 +254,7 @@ module Dnet::Icmp
       # 
       class IdSeq < ::FFI::Struct
         include ::FFI::DRY::StructHelper
+        include ::Dnet::NetStructBE
       
         dsl_layout do
           field :icmp_id, :uint16

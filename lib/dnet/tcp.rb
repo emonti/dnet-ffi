@@ -15,6 +15,7 @@ module Dnet
     #
     class Hdr < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
     
       dsl_layout do
         field :sport,  :uint16, :desc => 'source port'
@@ -71,6 +72,8 @@ module Dnet
     #
     class Opt < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
+
       DATA_LEN = TCP_OPT_LEN_MAX - TCP_OPT_LEN
     
       dsl_layout do

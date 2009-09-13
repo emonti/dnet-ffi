@@ -11,6 +11,7 @@ module Dnet
     #   field :op,  :uint16, :desc => 'operation'
     class Hdr < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
       
       dsl_layout do
         field :hrd, :uint16, :desc => 'format of hardware address'
@@ -42,6 +43,7 @@ module Dnet
     #
     class Ethip < ::FFI::Struct
       include ::FFI::DRY::StructHelper
+      include ::Dnet::NetStructBE
 
       dsl_layout do
         array :sha, [:uint8, ETH_ADDR_LEN], :desc => 'sender hardware address'
