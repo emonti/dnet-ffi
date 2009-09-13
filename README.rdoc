@@ -11,6 +11,10 @@ Ruby FFI bindings for libdnet.
 * Ruby ffi  >= 0.5.0
     http://github.com/ffi/ffi or http://rubyforge.org/projects/ffi/
 
+* ffi_dry 
+    http://github.com/emonti/ffi_dry
+
+
 == LICENSE
 
 Copyright (c) 2009 Eric Monti

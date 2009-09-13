@@ -6,24 +6,40 @@ module Dnet
   module Intf
 
     # An interface table entry
-    class Entry < ::Dnet::SugarStruct
-      layout( :len,       :uint,        # length of entry
-              :if_name,   [:uint8, INTF_NAME_LEN], # interface name
-              :itype,     :ushort,      # interface type
-              :flags,     :ushort,      # interface flags
-              :mtu,       :uint,        # interface MTU
-              :if_addr,   ::Dnet::Addr, # interface address
-              :dst_addr,  ::Dnet::Addr, # point-to-point dst
-              :link_addr, ::Dnet::Addr, # link-layer address
-              :alias_num, :uint )       # number of aliases
-            #  :if_aliases,  ::Dnet::Addr  ) ## variable-length array of aliases
+    #
+    #   field  :len,       :uint,        :desc => 'length of entry'
+    #   array  :if_name,   [:uint8, INTF_NAME_LEN], :desc => 'interface name'
+    #   field  :itype,     :ushort,      :desc => 'interface type'
+    #   field  :flags,     :ushort,      :desc => 'interface flags'
+    #   field  :mtu,       :uint,        :desc => 'interface MTU'
+    #   struct :if_addr,   ::Dnet::Addr, :desc => 'interface address'
+    #   struct :dst_addr,  ::Dnet::Addr, :desc => 'point-to-point dst'
+    #   struct :link_addr, ::Dnet::Addr, :desc => 'link-layer address'
+    #   field  :alias_num, :uint,        :desc => 'number of aliases'
+    #   #  :if_aliases,  ::Dnet::Addr  ) ## variable-length array of aliases
+    #
+    class Entry < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+    
+      dsl_layout do
+        field  :len,       :uint,        :desc => 'length of entry'
+        array  :if_name,   [:uint8, INTF_NAME_LEN], :desc => 'interface name'
+        field  :itype,     :ushort,      :desc => 'interface type'
+        field  :flags,     :ushort,      :desc => 'interface flags'
+        field  :mtu,       :uint,        :desc => 'interface MTU'
+        struct :if_addr,   ::Dnet::Addr, :desc => 'interface address'
+        struct :dst_addr,  ::Dnet::Addr, :desc => 'point-to-point dst'
+        struct :link_addr, ::Dnet::Addr, :desc => 'link-layer address'
+        field  :alias_num, :uint,        :desc => 'number of aliases'
+        #  :if_aliases,  ::Dnet::Addr  ) ## variable-length array of aliases
+      end
 
       # Constants map for interface flags. This is a map of flags, so
       # lookups for integers using [nnn] return a list of flags present in nnn.
       # Lookups for names using ["XX"], ["xx"] or [:xx] still return the value 
       # of the constant named XX.
       module Flags
-        include ConstFlagsMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "INTF_FLAG_")
         def self.list; @@list ||= super();  end
       end
@@ -32,7 +48,7 @@ module Dnet
 
       # Constants map for interface types
       module Itype
-        include ConstMap
+        include ::FFI::DRY::ConstMap
         slurp_constants(::Dnet, "INTF_TYPE_")
         def self.list; @@list ||= super();  end
       end

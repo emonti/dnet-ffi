@@ -4,19 +4,21 @@ module Dnet
   module Arp
     # ARP header
     # 
-    #   struct arp_hdr {
-    #     uint16_t  hrd;  /* format of hardware address */
-    #     uint16_t  pro;  /* format of protocol address */
-    #     uint8_t   hln;  /* length of hardware address (ETH_ADDR_LEN) */
-    #     uint8_t   pln;  /* length of protocol address (IP_ADDR_LEN) */
-    #     uint16_t  op;  /* operation */
-    #   };
-    class Hdr < ::Dnet::SugarStruct
-      layout( :pro,   :uint16,
-              :hrd,   :uint16,
-              :hln,   :uint8,
-              :pln,   :uint8,
-              :op,    :uint16 )
+    #   field :hrd, :uint16, :desc => 'format of hardware address'
+    #   field :pro, :uint16, :desc => 'format of protocol address'
+    #   field :hln, :uint16, :desc => 'length of hw address (ETH_ADDR_LEN)'
+    #   field :pln, :uint16, :desc => 'length of proto address (IP_ADDR_LEN)'
+    #   field :op,  :uint16, :desc => 'operation'
+    class Hdr < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+      
+      dsl_layout do
+        field :hrd, :uint16, :desc => 'format of hardware address'
+        field :pro, :uint16, :desc => 'format of protocol address'
+        field :hln, :uint16, :desc => 'length of hw address (ETH_ADDR_LEN)'
+        field :pln, :uint16, :desc => 'length of proto address (IP_ADDR_LEN)'
+        field :op,  :uint16, :desc => 'operation'
+      end
 
       # ARP operations
       module Op
@@ -33,17 +35,20 @@ module Dnet
 
     # Ethernet/IP ARP message
     #
-    #   struct arp_ethip {
-    #     uint8_t    ar_sha[ETH_ADDR_LEN];  /* sender hardware address */
-    #     uint8_t    ar_spa[IP_ADDR_LEN];  /* sender protocol address */
-    #     uint8_t    ar_tha[ETH_ADDR_LEN];  /* target hardware address */
-    #     uint8_t    ar_tpa[IP_ADDR_LEN];  /* target protocol address */
-    #   };
-    class Ethip < ::Dnet::SugarStruct
-      layout( :sha,   [:uint8, ETH_ADDR_LEN],
-              :spa,   [:uint8, IP_ADDR_LEN],
-              :tha,   [:uint8, ETH_ADDR_LEN],
-              :tpa,   [:uint8, IP_ADDR_LEN] )
+    #   array :sha, [:uint8, ETH_ADDR_LEN], :desc => 'sender hardware address'
+    #   array :spa, [:uint8, IP_ADDR_LEN],  :desc => 'sender protocol address'
+    #   array :tha, [:uint8, ETH_ADDR_LEN], :desc => 'target hardware address'
+    #   array :tpa, [:uint8, IP_ADDR_LEN],  :desc => 'target protocol address'
+    #
+    class Ethip < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+
+      dsl_layout do
+        array :sha, [:uint8, ETH_ADDR_LEN], :desc => 'sender hardware address'
+        array :spa, [:uint8, IP_ADDR_LEN],  :desc => 'sender protocol address'
+        array :tha, [:uint8, ETH_ADDR_LEN], :desc => 'target hardware address'
+        array :tpa, [:uint8, IP_ADDR_LEN],  :desc => 'target protocol address'
+      end
 
     end # Ethip
 
@@ -52,16 +57,16 @@ module Dnet
     #
     # dnet(3)'s ARP cache entries are described by the following C structure:
     # 
-    #   struct arp_entry {
-    #          struct addr     pa;         /* protocol address */
-    #          struct addr     ha;         /* hardware address */
-    #   };
+    #   struct  :pa,  ::Dnet::Addr, :desc => 'protocol address'
+    #   struct  :ha,  ::Dnet::Addr, :desc => 'hardware address'
     #
-    class Entry < ::Dnet::SugarStruct
+    class Entry < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
 
-      # struct arp_entry { ... };
-      layout( :pa, ::Dnet::Addr,   # protocol address
-              :ha, ::Dnet::Addr )  # hardware address
+      dsl_layout do
+        struct  :pa,  ::Dnet::Addr, :desc => 'protocol address'
+        struct  :ha,  ::Dnet::Addr, :desc => 'hardware address'
+      end
 
     end # Entry
 

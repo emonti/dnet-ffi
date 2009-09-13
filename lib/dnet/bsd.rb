@@ -10,59 +10,114 @@ module Dnet
 
   # contains AF_* constants culled from Ruby's ::Socket
   module AF
-    include ConstMap
+    include ::FFI::DRY::ConstMap
     slurp_constants(::Socket, "AF_")
     def self.list; @@list ||= super() ; end
   end
 
-  class SockAddrFamily < SugarStruct
+  # Common superclass for all sockaddr struct classes
+  #
+  class SockAddrFamily < ::FFI::Struct
+    include ::FFI::DRY::StructHelper
+    
+    # returns an address family name for the :family struct member value
     def lookup_family
       ::Dnet::AF[ self[:family] ]
     end
   end
 
-  # sockaddr, always good to have around
+  # generic sockaddr, always good to have around
+  #
+  #   field :len,    :uint8,        :desc => 'total length of struct'
+  #   field :family, :sa_family_t,  :desc => 'address family (AF_*)'
+  #   field :data,   :char,         :desc => 'variable length bound by :len'
+  #
   class SockAddr < SockAddrFamily
-    layout( :len,      :uint8,        # total length of struct
-            :family,   :sa_family_t,  # AF_* (values may differ by platform)
-            :data,     :char )        # variable length by :sa_len
+    dsl_layout do
+      field :len,    :uint8,        :desc => 'total length of struct'
+      field :family, :sa_family_t,  :desc => 'address family (AF_*)'
+      field :data,   :char,         :desc => 'variable length bound by :len'
+    end
   end
 
 
-  class InAddr < SockAddrFamily
-    layout( :s_addr,  :in_addr_t )
+  # Used to represent a 32-bit IPv4 address in a sock_addr_in structure
+  # 
+  #   field :in_addr,  :in_addr_t, :desc => 'inet address' }
+  #
+  class InAddr < ::FFI::Struct
+    include ::FFI::DRY::StructHelper
+    dsl_layout { field :in_addr,  :in_addr_t, :desc => 'inet address' }
   end
 
-  # sockaddr, always good to have around
+  # sockaddr inet, always good to have around
+  #
+  #   field :len,    :uint8,        :desc => 'length of structure (16)'
+  #   field :family, :sa_family_t,  :desc => 'address family (AF_INET)'
+  #   field :port,   :in_port_t,    :desc => '16-bit TCP or UDP port number'
+  #   field :addr,   :in_addr_t,    :desc => '32-bit IPv4 address'
+  #   field :_sa_zero, [:uint8,8],  :desc => 'unused'
+  #
   class SockAddrIn < SockAddrFamily
-    layout( :len,      :uint8,         # length of structure(16)
-            :family,  :sa_family_t,   # AF_INET
-            :port,     :in_port_t,     # 16-bit TCP or UDP port number
-            :addr,     :in_addr_t,     # 32-bit IPv4 address
-            :_sa_zero,  [:char, 8] )    # unused
+    dsl_layout do
+      field :len,    :uint8,        :desc => 'length of structure (16)'
+      field :family, :sa_family_t,  :desc => 'address family (AF_INET)'
+      field :port,   :in_port_t,    :desc => '16-bit TCP or UDP port number'
+      field :addr,   :in_addr_t,    :desc => '32-bit IPv4 address'
+      array :_sa_zero, [:uint8,8],  :desc => 'unused'
+    end
   end
 
-  class In6Addr < SockAddrFamily
-    layout( :s6_addr, [:uint, 16])
+  # Used to represent an IPv6 address in a sock_addr_in6 structure
+  #
+  #   field :s6_addr, [:uint, 16], :desc => 'IPv6 address'
+  #
+  class In6Addr < ::FFI::Struct
+    include ::FFI::DRY::StructHelper
+    dsl_layout { array :s6_addr, [:uint8, 16], :desc => 'IPv6 address' }
   end
 
+  # IPv6 socket address
+  #
+  #   field :len,      :uint8,       :desc => 'length of structure(24)'
+  #   field :family,   :sa_family_t, :desc => 'address family (AF_INET6)'
+  #   field :port,     :in_port_t,   :desc => 'transport layer port'
+  #   field :flowinfo, :uint32,      :desc => 'priority & flow label'
+  #   struct :addr,     In6Addr      :desc => 'IPv6 address'
+  #
   class SockAddrIn6 < SockAddrFamily
-    layout( :len,        :uint8,       # length of structure(24))
-            :family,     :sa_family_t, # AF_INET6
-            :port,       :in_port_t,   # transport layer port#
-            :flowinfo,   :uint32,      # priority & flow label
-            :addr,       In6Addr )   # IPv6 address
+    dsl_layout do
+      field :len,      :uint8,       :desc => 'length of structure(24)'
+      field :family,   :sa_family_t, :desc => 'address family (AF_INET6)'
+      field :port,     :in_port_t,   :desc => 'transport layer port'
+      field :flowinfo, :uint32,      :desc => 'priority & flow label'
+      struct :addr,     In6Addr,     :desc => 'IPv6 address'
+    end
   end
 
+
+  # data-link socket address
+  #
+  #   field :len,       :uint8,   :desc => 'length of structure(variable)'
+  #   field :family,:sa_family_t, :desc => 'address family (AF_LINK)'
+  #   field :sdl_index, :uint16,  :desc => 'system assigned index, if > 0'
+  #   field :dltype,    :uint8,   :desc => 'IFT_ETHER, etc. from net/if_types.h'
+  #   field :nlen,      :uint8,   :desc => 'name length, from :_data'
+  #   field :alen,      :uint8,   :desc => 'link-layer addres-length'
+  #   field :slen,      :uint8,   :desc => 'link-layer selector length'
+  #   field :_data,     :char,    :desc => 'minimum work area=12, can be larger'
+  #
   class SockAddrDl < SockAddrFamily
-    layout( :len,       :uint8,       # length of structure(variable)
-            :family,    :sa_family_t, # AF_LINK
-            :sdl_index, :uint16,      # system assigned index, if > 0
-            :dltype,    :uint8,       # IFT_ETHER, etc. from net/if_types.h
-            :nlen,      :uint8,       # name length, starting in sdl_data[0]
-            :alen,      :uint8,       # link-layer addres-length
-            :slen,      :uint8,       # link-layer selector length
-            :_data,     :char )       # minimum work area=12, can be larger
+    dsl_layout do
+      field :len,       :uint8,   :desc => 'length of structure(variable)'
+      field :family, :sa_family_t, :desc => 'address family (AF_LINK)'
+      field :sdl_index, :uint16,  :desc => 'system assigned index, if > 0'
+      field :dltype,    :uint8,   :desc => 'IFT_ETHER, etc. from net/if_types.h'
+      field :nlen,      :uint8,   :desc => 'name length, from :_data'
+      field :alen,      :uint8,   :desc => 'link-layer addres-length'
+      field :slen,      :uint8,   :desc => 'link-layer selector length'
+      field :_data,     :char,    :desc => 'minimum work area=12, can be larger'
+    end
   end
 
 end

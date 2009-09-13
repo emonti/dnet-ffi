@@ -3,9 +3,11 @@
 module Dnet
   
   # FFI implementation of dnet(3)'s eth_addr struct.
-  class EthAddr < ::Dnet::SugarStruct
+  class EthAddr < ::FFI::Struct
+    include ::FFI::DRY::StructHelper
+    
     # struct eth_addr { ... } eth_addr_t;
-    layout( :data, [:uchar, ETH_ADDR_LEN] )
+    dsl_layout{ array :data, [:uchar, ETH_ADDR_LEN] }
 
     MAC_RX = /^[a-f0-9]{1,2}([:-]?)(?:[a-f0-9]{1,2}\1){4}[a-f0-9]{1,2}$/i
 
@@ -32,18 +34,18 @@ module Dnet
 
   module Eth
     #
-    #   struct eth_hdr {
-    #     eth_addr_t	dst;	/* destination address */
-    #     eth_addr_t	src;	/* source address */
-    #     uint16_t	  etype;	/* payload type */
-    #   };
+    #   struct :dst,   EthAddr, :desc => 'destination address'
+    #   struct :src,   EthAddr, :desc => 'source address'
+    #   field  :etype, :ushort, :desc => 'ethernet payload type'
     #
-    class Hdr < ::Dnet::SugarStruct
-      # struct eth_hdr { ... };
-      layout( :dst,   EthAddr,
-              :src,   EthAddr,
-              :etype, :ushort )
-
+    class Hdr < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+      
+      dsl_layout do
+        struct :dst,   EthAddr, :desc => 'destination address'
+        struct :src,   EthAddr, :desc => 'source address'
+        field  :etype, :ushort, :desc => 'ethernet payload type'
+      end
     end
 
 

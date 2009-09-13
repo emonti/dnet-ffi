@@ -20,19 +20,20 @@ module Dnet
   #            } __addr_u;
   #    };
   #
-  class Addr < ::Dnet::SugarStruct
+  class Addr < ::FFI::Struct
+    include ::FFI::DRY::StructHelper
 
     ADDR_TYPES = [ nil, :eth, :ip, :ip6 ] # A mapping of dnet address types
 
     # struct addr { ... };
-    layout( :atype,     :uint16,
-            :bits,      :uint16,
-            :addr,      [:uchar, 16])
-
+    dsl_layout do
+      field :atype, :uint16
+      field :bits,  :uint16
+      array :addr,  [:uchar, 16]
+    end
 
     # If passed a String argument (and only 1 arg), it will be parsed as 
-    # an address using set_string(). Otherwise, see ::Dnet::SugarStruct for
-    # more info.
+    # an address using set_string(). 
     #
     # The fields :bits and :addr aren't allowed to be used together.
     # Instead, just use :addr => 'n.n.n.n/bits'. See also set_string()
@@ -45,8 +46,8 @@ module Dnet
       end
     end
 
-    # Overrides SugarStruct.set_fields to reject :bits fields when :addr
-    # is supplied as well.
+    # Overrides set_fields to reject :bits fields when :addr is supplied as 
+    # well.
     #
     # Forces you to use :addr => 'x.x.x.x/nn' instead. Having both together
     # leaves setting :bits up to chance depending on which hash key gets
@@ -54,8 +55,9 @@ module Dnet
     # the hood.
     def set_fields(params)
       if params[:bits] and params[:addr]
-        raise S_ERR, "Don't use :addr and :bits fields together. "+
-                     "Just use :addr => 'x.x.x.x/nn' where nn are the bits"
+        raise( ::ArgumentError, 
+           "Don't use :addr and :bits fields together. "+
+           "Just use :addr => 'x.x.x.x/nn' where nn are the bits." )
       else
         super(params)
       end

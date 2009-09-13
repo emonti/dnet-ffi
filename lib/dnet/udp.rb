@@ -8,10 +8,12 @@ module Dnet
       #  	uint16_t	uh_ulen;	/* udp length (including header) */
       #  	uint16_t	uh_sum;		/* udp checksum */
       # };
-      layout( :sport,   :uint16,
-              :dport,   :uint16,
-              :len,     :uint16,
-              :sum,     :uint16 )
+      dsl_layout do
+        field :sport,   :uint16
+        field :dport,   :uint16
+        field :len,     :uint16
+        field :sum,     :uint16
+      end
     end
   end
 

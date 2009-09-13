@@ -9,50 +9,54 @@ module Dnet::Icmp
   #     uint16_t  icmp_cksum;  /* ones complement cksum of struct */
   #   };
   #
-  class Hdr < ::Dnet::SugarStruct
-    layout( :icmp_type,   :uint8,
-            :icmp_code,    :uint8,
-            :icmp_cksum,   :uint16 )
+  class Hdr < ::FFI::Struct
+    include ::FFI::DRY::StructHelper
+    
+    dsl_layout do
+      field :icmp_type,   :uint8
+      field :icmp_code,    :uint8
+      field :icmp_cksum,   :uint16
+    end
 
     module IcmpType
-      include ::Dnet::ConstMap
+      include ::FFI::DRY::ConstFlagsMap
       slurp_constants(::Dnet, "ICMP_TYPE_")
       def list; @@list ||= super(); end
     end
 
     module IcmpCode
       module UNREACH
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "ICMP_UNREACH_")
         def list; @@list ||= super(); end
       end
 
       module REDIRECT
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "ICMP_REDIRECT_")
         def list; @@list ||= super(); end
       end
 
       module RTRADVERT
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "ICMP_RTRADVERT_")
         def list; @@list ||= super(); end
       end
 
       module TIMEEXCEED
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "ICMP_TIMEEXCEED_")
         def list; @@list ||= super(); end
       end
 
       module PARAMPROB
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "ICMP_PARAMPROB_")
         def list; @@list ||= super(); end
       end
 
       module PHOTURIS
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "ICMP_PHOTURIS_")
         def list; @@list ||= super(); end
       end
@@ -70,10 +74,14 @@ module Dnet::Icmp
       #     uint8_t   icmp_data __flexarr;  /* optional data */
       #   };
       # 
-      class Echo < ::Dnet::SugarStruct
-        layout( :icmp_id, :uint16,
-                :seq,     :uint16,
-                :data,    :uint8 )  # flexarr ... optional data
+      class Echo < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_id, :uint16
+          field :seq,     :uint16
+          field :data,    :uint8    # flexarr ... optional data
+        end
       end
 
       # Fragmentation-needed (unreachable) message data structure
@@ -84,10 +92,14 @@ module Dnet::Icmp
       #     uint8_t   icmp_ip __flexarr;  /* IP hdr + 8 bytes of pkt */
       #   };
       # 
-      class NeedFrag < ::Dnet::SugarStruct
-        layout( :icmp_void, :uint16,
-                :mtu,       :uint16,
-                :ip,        :uint8 )  # flexarr ... IP hdr + 8 bytes of pkt
+      class NeedFrag < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_void, :uint16
+          field :mtu,       :uint16
+          field :ip,        :uint8    # flexarr ... IP hdr + 8 bytes of pkt
+        end
       end
 
       # Unreachable, source quench, redirect, time exceeded,
@@ -98,9 +110,13 @@ module Dnet::Icmp
       #     uint8_t   icmp_ip __flexarr;  /* IP hdr + 8 bytes of pkt */
       #   };
       # 
-      class Quote < ::Dnet::SugarStruct
-        layout( :icmp_void, :uint32,
-                :ip,        :uint8 )   # flexxarr ... IP hdr + 8 bytes of pkt
+      class Quote < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_void, :uint32 
+          field :ip,        :uint8     # flexxarr ... IP hdr + 8 bytes of pkt
+        end
       end
 
       # Router advertisement message data structure, RFC 1256
@@ -115,17 +131,25 @@ module Dnet::Icmp
       #     } icmp_rtr __flexarr;      /* variable # of routers */
       #   };
       # 
-      class RtrAdvert < ::Dnet::SugarStruct
+      class RtrAdvert < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
 
-        class RtrData < ::Dnet::SugarStruct
-          layout( :icmp_void, :uint32,
-                  :pref,      :uint32 )
+        class RtrData < ::FFI::Struct
+          include ::FFI::DRY::StructHelper
+        
+          dsl_layout do
+            field :icmp_void, :uint32
+            field :pref,      :uint32
+          end
         end
 
-        layout( :num_addrs, :uint8,
-                :wpa,       :uint8,
-                :lifetime,  :uint16,
-                :router,    RtrData )  # flexarr ... variable # of routers
+        dsl_layout do
+          field  :num_addrs, :uint8
+          field  :wpa,       :uint8
+          field  :lifetime,  :uint16
+          struct :router,    RtrData    # flexarr ... variable # of routers
+        end
       end
 
       # Timestamp message data structure
@@ -138,12 +162,16 @@ module Dnet::Icmp
       #     uint32_t  icmp_ts_tx;    /* transmit timestamp */
       #   };
       # 
-      class Timestamp < ::Dnet::SugarStruct
-        layout( :icmp_id, :uint32,
-                :seq,     :uint32,
-                :ts_orig, :uint32,
-                :ts_rx,   :uint32,
-                :ts_tx,   :uint32 )
+      class Timestamp < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_id, :uint32
+          field :seq,     :uint32
+          field :ts_orig, :uint32
+          field :ts_rx,   :uint32
+          field :ts_tx,   :uint32
+        end
       end
 
       # Address mask message data structure, RFC 950
@@ -154,10 +182,14 @@ module Dnet::Icmp
       #     uint32_t  icmp_mask;    /* address mask */
       #   };
       # 
-      class Mask < ::Dnet::SugarStruct
-        layout( :icmp_id, :uint32,
-                :seq,     :uint32,
-                :mask,    :uint32 )
+      class Mask < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+
+        dsl_layout do
+          field :icmp_id, :uint32
+          field :seq,     :uint32
+          field :mask,    :uint32
+        end
       end
 
       # Traceroute message data structure, RFC 1393, RFC 1812
@@ -171,13 +203,17 @@ module Dnet::Icmp
       #     uint32_t  icmp_mtu;    /* MTU in bytes */
       #   };
       # 
-      class Traceroute < ::Dnet::SugarStruct
-        layout( :icmp_id,   :uint16,
-                :icmp_void, :uint16,
-                :ohc,       :uint16,
-                :rhc,       :uint16,
-                :speed,     :uint16,
-                :mtu,       :uint16 )
+      class Traceroute < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_id,   :uint16
+          field :icmp_void, :uint16
+          field :ohc,       :uint16
+          field :rhc,       :uint16
+          field :speed,     :uint16
+          field :mtu,       :uint16
+        end
       end
 
       # Domain name reply message data structure, RFC 1788
@@ -189,11 +225,15 @@ module Dnet::Icmp
       #     uint8_t    icmp_names __flexarr;  /* variable number of names */
       #   };
       # 
-      class DnsReply < ::Dnet::SugarStruct
-        layout( :icmp_id, :uint16,
-                :seq,     :uint16,
-                :ttl,     :uint16,
-                :names,   :uint8 )  # flexarr ... variable # of names
+      class DnsReply < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_id, :uint16
+          field :seq,     :uint16
+          field :ttl,     :uint16
+          field :names,   :uint8    # flexarr ... variable # of names
+        end
       end
 
       # Generic identifier, sequence number data structure
@@ -203,9 +243,13 @@ module Dnet::Icmp
       #     uint16_t  icmp_seq;
       #   };
       # 
-      class IdSeq < ::Dnet::SugarStruct
-        layout( :icmp_id, :uint16,
-                :seq,     :uint16 )
+      class IdSeq < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :icmp_id, :uint16
+          field :seq,     :uint16
+        end
       end
 
     end # module Msg

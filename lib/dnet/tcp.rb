@@ -2,32 +2,35 @@ module Dnet
   module Tcp
 
     # TCP header, without options
-    class Hdr < ::Dnet::SugarStruct
-      #  struct tcp_hdr {
-      #      uint16_t    th_sport;    /* source port */
-      #      uint16_t    th_dport;    /* destination port */
-      #      uint32_t    th_seq;      /* sequence number */
-      #      uint32_t    th_ack;      /* acknowledgment number */
-      #      uint8_t     th_off:4,    /* data offset */
-      #                  th_x2:4;     /* (unused) */
-      #      uint8_t     th_flags;    /* control flags */
-      #      uint16_t    th_win;      /* window */
-      #      uint16_t    th_sum;      /* checksum */
-      #      uint16_t    th_urp;      /* urgent pointer */
-      #  };
-      layout( :sport,   :uint16,
-              :dport,   :uint16,
-              :seq,     :uint32,
-              :ack,     :uint32,
-              :off,     :uint8,   # data offset(. & 0xf0) unused (. & 0x0f)
-              :flags,   :uint8,
-              :win,     :uint16,
-              :sum,     :uint16,
-              :urgp,    :uint16 ) # urgent pointer
+    #
+    #   field :sport,  :uint16, :desc => 'source port'
+    #   field :dport,  :uint16, :desc => 'destination port'
+    #   field :seq,    :uint32, :desc => 'sequence number'
+    #   field :ack,    :uint32, :desc => 'acknowledgment number'
+    #   field :off_x2, :uint8,  :desc => 'data offset(& 0xf0) unused (& 0x0f)'
+    #   field :flags,  :uint8,  :desc => 'control flags'
+    #   field :win,    :uint16, :desc => 'window'
+    #   field :sum,    :uint16, :desc => 'checksum'
+    #   field :urgp,   :uint16, :desc => 'urgent pointer'
+    #
+    class Hdr < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+    
+      dsl_layout do
+        field :sport,  :uint16, :desc => 'source port'
+        field :dport,  :uint16, :desc => 'destination port'
+        field :seq,    :uint32, :desc => 'sequence number'
+        field :ack,    :uint32, :desc => 'acknowledgment number'
+        field :off_x2, :uint8,  :desc => 'data offset(& 0xf0) unused (& 0x0f)'
+        field :flags,  :uint8,  :desc => 'control flags'
+        field :win,    :uint16, :desc => 'window'
+        field :sum,    :uint16, :desc => 'checksum'
+        field :urgp,   :uint16, :desc => 'urgent pointer'
+      end
 
       # TCP control flags (flags)
       module Flags
-        include ConstFlagsMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "TH_")
         def self.list; @@list ||= super() ; end
       end
@@ -66,15 +69,19 @@ module Dnet
     #      } opt_data;
     #   } __attribute__((__packed__));
     #
-    class Opt < ::Dnet::SugarStruct
-      layout( :otype,   :uint8,
-              :len,     :uint8,
-              :data8,   [:uint8, (TCP_OPT_LEN_MAX - TCP_OPT_LEN)] )
-
+    class Opt < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+      DATA_LEN = TCP_OPT_LEN_MAX - TCP_OPT_LEN
+    
+      dsl_layout do
+        field :otype,  :uint8
+        field :len,    :uint8
+        array :data8,  [:uint8, DATA_LEN]
+      end
 
       # Options (otype) - http://www.iana.org/assignments/tcp-parameters
       module Otype
-        include ConstMap
+        include ::FFI::DRY::ConstMap
         slurp_constants(::Dnet, "TCP_OTYPE_")
         def self.list; @@list ||= super() ; end
       end
@@ -83,7 +90,7 @@ module Dnet
 
     # TCP FSM states
     module State
-      include ConstMap
+      include ::FFI::DRY::ConstMap
       slurp_constants(::Dnet, "TCP_STATE_")
       def self.list; @@list ||= super() ; end
     end

@@ -4,38 +4,42 @@
 module Dnet
 
   module Fw
-    #  struct fw_rule {
-    #          char            fw_device[INTF_NAME_LEN]; /* interface name */
-    #          uint8_t         fw_op;                    /* operation */
-    #          uint8_t         fw_dir;                   /* direction */
-    #          uint8_t         fw_proto;                 /* IP protocol */
-    #          struct addr     fw_src;                   /* src address / net */
-    #          struct addr     fw_dst;                   /* dst address / net */
-    #          uint16_t        fw_sport[2];              /* range / ICMP type */
-    #          uint16_t        fw_dport[2];              /* range / ICMP code */
-    #  };
-    class Rule < ::Dnet::SugarStruct
-      layout( :device,  [:uint8, INTF_NAME_LEN], # interface name
-              :op,      :uint8,                  # operation
-              :dir,     :uint8,                  # direction
-              :proto,   :uint8,                  # IP protocol
-              :src,     ::Dnet::Addr,            # src address / net
-              :dst,     ::Dnet::Addr,            # dst address / net
-              :sport,   [:uint16, 2],            # src port-range / ICMP type
-              :dport,   [:uint16, 2] )           # dst port-range / ICMP code
+    #
+    #   array  :device,  [:uint8, INTF_NAME_LEN], :desc => 'interface name'
+    #   field  :op,      :uint8,        :desc => 'operation'
+    #   field  :dir,     :uint8,        :desc => 'direction'
+    #   field  :proto,   :uint8,        :desc => 'IP protocol'
+    #   struct :src,     ::Dnet::Addr,  :desc => 'src address / net'
+    #   struct :dst,     ::Dnet::Addr,  :desc => 'dst address / net'
+    #   array  :sport,   [:uint16, 2],  :desc => 'src port-range / ICMP type'
+    #   array  :dport,   [:uint16, 2],  :desc => 'dst port-range / ICMP code'
+    #
+    class Rule < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+      
+      dsl_layout do
+        array  :device,  [:uint8, INTF_NAME_LEN], :desc => 'interface name'
+        field  :op,      :uint8,        :desc => 'operation'
+        field  :dir,     :uint8,        :desc => 'direction'
+        field  :proto,   :uint8,        :desc => 'IP protocol'
+        struct :src,     ::Dnet::Addr,  :desc => 'src address / net'
+        struct :dst,     ::Dnet::Addr,  :desc => 'dst address / net'
+        array  :sport,   [:uint16, 2],  :desc => 'src port-range / ICMP type'
+        array  :dport,   [:uint16, 2],  :desc => 'dst port-range / ICMP code'
+      end
 
       # Alias to ::Dnet::Ip::Proto
       Proto = ::Dnet::Ip::Proto
 
       module Op 
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         ALLOW = 1
         BLOCK = 2
         def self.list ; @@list ||= super(); end
       end
 
       module Dir
-        include ::Dnet::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         IN  = 1
         OUT = 2
         def self.list ; @@list ||= super(); end

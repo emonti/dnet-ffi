@@ -9,44 +9,47 @@ module Dnet
     # Contains mappings for all the IP_PROTO_[A-Z].* constants 
     # (defined in constants.rb)
     module Proto
-      include ConstMap
+      include ::FFI::DRY::ConstMap
       slurp_constants(::Dnet, "IP_PROTO_")
       def self.list;  @@list ||= super(); end
     end
 
     # IP header, without options
     #
-    #   struct ip_hdr {
-    #     uint8_t    ip_v:4,   /* version */
-    #                ip_hl:4;  /* header length (incl any options) */
-    #     uint8_t    ip_tos;   /* type of service */
-    #     uint16_t   ip_len;   /* total length (incl header) */
-    #     uint16_t   ip_id;    /* identification */
-    #     uint16_t   ip_off;   /* fragment offset and flags */
-    #     uint8_t    ip_ttl;   /* time to live */
-    #     uint8_t    ip_p;     /* protocol */
-    #     uint16_t   ip_sum;   /* checksum */
-    #     ip_addr_t  ip_src;   /* source address */
-    #     ip_addr_t  ip_dst;   /* destination address */
-    #   };
+    #   field :v_hl,    :uint8,   :desc => 'v=vers(. & 0xf0) / '+
+    #                                      'hl=hdr len(. & 0x0f)'
+    #   field :tos,     :uint8,   :desc => 'type of service'
+    #   field :len,     :uint16,  :desc => 'total length (incl header)'
+    #   field :id,      :uint16,  :desc => 'identification'
+    #   field :off,     :uint16,  :desc => 'fragment offset and flags'
+    #   field :ttl,     :uint8,   :desc => 'time to live'
+    #   field :proto,   :uint8,   :desc => 'protocol'
+    #   field :sum,     :uint16,  :desc => 'checksum'
+    #   field :src,     :uint32,  :desc => 'source address'
+    #   field :dst,     :uint32,  :desc => 'destination address'
     #
-    class Hdr < ::Dnet::SugarStruct
-      layout( :v_hl,    :uint8,       # v=vers(. & 0xf0) / hl=hdr len(. & 0x0f)
-              :tos,     :uint8,       # type of service
-              :len,     :uint16,      # total length (incl header)
-              :id,      :uint16,      # identification
-              :off,     :uint16,      # fragment offset and flags
-              :ttl,     :uint8,       # time to live
-              :proto,   :uint8,       # protocol
-              :sum,     :uint16,      # checksum
-              :src,     :uint32,      # source address
-              :dst,     :uint32 )     # destination address
+    class Hdr < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
+    
+      dsl_layout do
+        field :v_hl,    :uint8,   :desc => 'v=vers(. & 0xf0) / '+
+                                           'hl=hdr len(. & 0x0f)'
+        field :tos,     :uint8,   :desc => 'type of service'
+        field :len,     :uint16,  :desc => 'total length (incl header)'
+        field :id,      :uint16,  :desc => 'identification'
+        field :off,     :uint16,  :desc => 'fragment offset and flags'
+        field :ttl,     :uint8,   :desc => 'time to live'
+        field :proto,   :uint8,   :desc => 'protocol'
+        field :sum,     :uint16,  :desc => 'checksum'
+        field :src,     :uint32,  :desc => 'source address'
+        field :dst,     :uint32,  :desc => 'destination address'
+      end
 
       # Type of service (ip_tos), RFC 1349 ("obsoleted by RFC 2474")
       #
       # Contains mappings for all the IP_TOS_[A-Z].* constants
       module Tos
-        include ConstMap
+        include ::FFI::DRY::ConstMap
         slurp_constants(::Dnet, "IP_TOS_")
         def self.list;  @@list ||= super(); end
       end
@@ -67,81 +70,80 @@ module Dnet
 
     # IP option (following IP header)
     #
-    #   struct ip_opt {
-    #     uint8_t    opt_type;  /* option type */
-    #     uint8_t    opt_len;   /* option length >= IP_OPT_LEN */
-    #     union ip_opt_data {
-    #       struct ip_opt_data_sec  sec;        /* IP_OPT_SEC */
-    #       struct ip_opt_data_rr   rr;         /* IP_OPT_{L,S}RR */
-    #       struct ip_opt_data_ts   ts;         /* IP_OPT_TS */
-    #       uint16_t                satid;      /* IP_OPT_SATID */
-    #       uint16_t                mtu;        /* IP_OPT_MTU{P,R} */
-    #       struct ip_opt_data_tr   tr;         /* IP_OPT_TR */
-    #       uint32_t                addext[2];  /* IP_OPT_ADDEXT */
-    #       uint16_t                rtralt;     /* IP_OPT_RTRALT */
-    #       uint32_t                sdb[9];     /* IP_OPT_SDB */
-    #       uint8_t                 data8[IP_OPT_LEN_MAX - IP_OPT_LEN];
-    #     } opt_data;
-    #   } __attribute__((__packed__));
+    #   array :otype, :uint8,            :desc => 'option type'
+    #   array :len,   :uint8,            :desc => 'option length >= IP_OPE_LEN'
+    #   array :data, [:uint8, DATA_LEN], :desc => 'option message data '
     #
-    class Opt < ::Dnet::SugarStruct
-      layout( :otype,   :uint8,     # option type
-              :len,     :uint8,     # option length
-              :data,    [:uint8, (IP_OPT_LEN_MAX - IP_OPT_LEN)] )
+    class Opt < ::FFI::Struct
+      include ::FFI::DRY::StructHelper
 
+      DATA_LEN = IP_OPT_LEN_MAX - IP_OPT_LEN
+    
+      dsl_layout do
+        field :otype, :uint8,   :desc => 'option type'
+        field :len,   :uint8,   :desc => 'option length >= IP_OPE_LEN'
+        array :data, [:uint8, DATA_LEN], :desc => 'option message data '
+      end
 
       # Option types (otype) - http://www.iana.org/assignments/ip-parameters
       #
       # Contains mappings for all the IP_OTYPE_[A-Z].* constants
       module Otype
-        include ConstMap
+        include ::FFI::DRY::ConstMap
         slurp_constants(::Dnet, "IP_OTYPE_")
         def self.list;  @@list ||= super(); end
       end
 
       # Security option data - RFC 791, 3.1
       #
-      #   struct ip_opt_data_sec {
-      #     uint16_t  sec;    /* security */
-      #     uint16_t  cpt;    /* compartments */
-      #     uint16_t  hr;     /* handling restrictions */
-      #     uint8_t   tcc[3]; /* transmission control code */
-      #   } __attribute__((__packed__));
+      #   field :sec,   :uint16,     :desc => 'security'
+      #   field :cpt,   :uint16,     :desc => 'compartments'
+      #   field :hr,    :uint16,     :desc => 'handling restrictions'
+      #   array :tcc,   [:uint8, 3], :desc => 'transmission control code'
       #
-      class DataSEC < ::Dnet::SugarStruct
-        layout( :sec,   :uint16,
-                :cpt,   :uint16,
-                :hr,    :uint16,
-                :tcc,   [:uint8, 3] )
+      class DataSEC < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :sec,   :uint16,     :desc => 'security'
+          field :cpt,   :uint16,     :desc => 'compartments'
+          field :hr,    :uint16,     :desc => 'handling restrictions'
+          array :tcc,   [:uint8, 3], :desc => 'transmission control code'
+        end
 
       end
 
       # Timestamp option data - RFC 791, 3.1
       #
-      #   struct ip_opt_data_ts {
-      #     uint8_t    ptr;    /* from start of option, >= 5 */
-      #     uint8_t    oflw:4,    /* number of IPs skipped */
-      #                flg:4;    /* address[ / timestamp] flag */
-      #     uint32_t   ipts __flexarr;  /* IP address [/ timestamp] pairs */
-      #   } __attribute__((__packed__));
+      #   field :ptr,       :uint8,  :desc => 'from start of option'
+      #   field :oflw_flg,  :uint8,  :desc => 'oflw = number of IPs skipped /'+
+      #                                       'flg  = address/timestamp flag'
+      #   field :iptspairs, :uint32, :desc => 'ip addr/ts pairs, var-length'
       #
-      class DataTS < ::Dnet::SugarStruct
-        layout( :ptr,       :uint8,
-                :oflw_flg,  :uint8,
-                :iptspairs, :uint32 )
+      class DataTS < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :ptr,       :uint8,  :desc => 'from start of option'
+          field :oflw_flg,  :uint8,  :desc => 'oflw = number of IPs skipped /'+
+                                              'flg  = address/timestamp flag'
+          field :iptspairs, :uint32, :desc => 'ip addr/ts pairs, var-length'
+        end
 
       end
 
       # (Loose Source/Record/Strict Source) Route option data - RFC 791, 3.1
       #
-      #   struct ip_opt_data_rr {
-      #     uint8_t    ptr;    /* from start of option, >= 4 */
-      #     uint32_t  iplist __flexarr; /* list of IP addresses */
-      #   } __attribute__((__packed__));
+      #   field :ptr,     :uint8,   :desc => 'from start of option'
+      #   field :iplist,  :uint32,  :desc => 'var-length list of IPs'
       #
-      class DataRR < ::Dnet::SugarStruct
-        layout( :ptr,     :uint8,
-                :iplist,  :uint32 )
+      class DataRR < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :ptr,     :uint8,   :desc => 'from start of option'
+          field :iplist,  :uint32,  :desc => 'var-length list of IPs'
+        end
 
       end
 
@@ -154,12 +156,15 @@ module Dnet
       #     uint32_t  origip; /* originator IP address */
       #   } __attribute__((__packed__));
       #
-      class DataTR < ::Dnet::SugarStruct
-        layout( :id,      :uint16,
-                :ohc,     :uint16,
-                :rhc,     :uint16,
-                :origip,  :uint32 )
-
+      class DataTR < ::FFI::Struct
+        include ::FFI::DRY::StructHelper
+      
+        dsl_layout do
+          field :id,      :uint16, :desc => 'ID number'
+          field :ohc,     :uint16, :desc => 'outbound hop count'
+          field :rhc,     :uint16, :desc => 'return hop count'
+          field :origip,  :uint32, :desc => 'originator IP address'
+        end
       end
 
     end # class Opt

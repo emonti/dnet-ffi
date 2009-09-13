@@ -5,24 +5,21 @@ module Dnet
 
   # FFI mapping to dnet(3)'s "blob_t" binary buffer struct.
   #
-  # dnet(3)'s binary buffers are described by the following C structure:
-  #
-  #    typedef struct blob {
-  #            u_char          *base;          /* start of data */
-  #            int              off;           /* offset into data */
-  #            int              end;           /* end of data */
-  #            int              size;          /* size of allocation */
-  #    } blob_t;
+  #   field :base, :pointer, :desc => 'start of data'
+  #   field :off,  :pointer, :desc => 'offset into data'
+  #   field :end,  :pointer, :desc => 'end of data'
+  #   field :size, :pointer, :desc => 'size of allocation'
   #
   class Blob < FFI::ManagedStruct
+    include ::FFI::DRY::StructHelper
     include HandleHelpers
 
-    # struct blob { ... } blob_t;
-    layout( :base, :pointer,
-            :off,  :int,
-            :end,  :int,
-            :size, :int )
-
+    dsl_layout do
+      field :base, :pointer, :desc => 'start of data'
+      field :off,  :int,     :desc => 'offset into data'
+      field :end,  :int,     :desc => 'end of data'
+      field :size, :int,     :desc => 'size of allocation'
+    end
 
     # Initializes a new Blob using dnet(3)'s blob_new under the hood.
     #
