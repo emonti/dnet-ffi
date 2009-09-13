@@ -107,10 +107,10 @@ module Dnet
   #
   #   class YourStruct < ::FFI::Struct # or ::FFI::ManagedStruct, (or Union?)
   #     include ::FFI::DRY::StructHelper
-  #     include ::Dnet::NetStructBE
+  #     include ::Dnet::NetEndianHelper
   #     ...
   #
-  module NetStructBE
+  module NetEndianHelper
 
     I16_convert = [::Dnet.method(:ntohs), ::Dnet.method(:htons)]
     U16_convert = [::Dnet.method(:ntohs), ::Dnet.method(:htons)]
