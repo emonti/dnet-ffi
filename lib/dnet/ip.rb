@@ -46,26 +46,59 @@ module Dnet
         field :dst,     :uint32,  :desc => 'destination address'
       end
 
+      def set_fields(params=nil)
+        params ||= {}
+        super({:v_hl => 0x45}.merge(params))
+      end
+
       # Type of service (ip_tos), RFC 1349 ("obsoleted by RFC 2474")
       #
-      # Contains mappings for all the IP_TOS_[A-Z].* constants
+      # Contains mappings for all the IP_TOS_[A-Z].* flags constants
       module Tos
-        include ::FFI::DRY::ConstMap
+        include ::FFI::DRY::ConstFlagsMap
         slurp_constants(::Dnet, "IP_TOS_")
         def self.list;  @@list ||= super(); end
       end
 
+      def lookup_tos;  Tos[ self.tos ]; end
+
       # Alias to ::Dnet::Ip::Proto
       Proto = ::Dnet::Ip::Proto
 
-      # #define ip_pack_hdr(hdr, tos, len, id, off, ttl, p, src, dst) do {  \
-      # struct ip_hdr *ip_pack_p = (struct ip_hdr *)(hdr);    \
-      #   ip_pack_p->ip_v = 4; ip_pack_p->ip_hl = 5;      \
-      #   ip_pack_p->ip_tos = tos; ip_pack_p->ip_len = htons(len);  \
-      #   ip_pack_p->ip_id = htons(id); ip_pack_p->ip_off = htons(off);  \
-      #   ip_pack_p->ip_ttl = ttl; ip_pack_p->ip_p = p;      \
-      #   ip_pack_p->ip_src = src; ip_pack_p->ip_dst = dst;    \
-      # } while (0)
+      def lookup_proto; Proto[ self.proto ]; end
+
+      alias _divert_src= src=
+      alias _divert_src src
+
+      # Sets source IP address in the header from an IPv4 address string or 
+      # 32-bit number.
+      def src=(val)
+        val = ::Dnet::Util.ipv4_atol(val) if val.kind_of? String
+        _divert_src=val
+      end
+
+      # Returns the source IP address as an IPv4 address string as an IPv4 
+      # address string.
+      def src
+        ::Dnet::Util.ipv4_ltoa(_divert_dst)
+      end
+
+      alias _divert_dst= dst=
+      alias _divert_dst dst
+
+      # Sets destination IP address in the header from an IPv4 address string 
+      # or 32-bit number.
+      def dst=(val)
+        val = ::Dnet::Util.ipv4_atol(val) if val.kind_of? String
+        _divert_dst=val
+      end
+
+      # Returns the destination IP address from the header as an IPv4 address 
+      # string.
+      def dst
+        ::Dnet::Util.ipv4_ltoa(_divert_dst)
+      end
+
     end # class Hdr
 
 
@@ -121,7 +154,7 @@ module Dnet
       #   field :ptr,       :uint8,  :desc => 'from start of option'
       #   field :oflw_flg,  :uint8,  :desc => 'oflw = number of IPs skipped /'+
       #                                       'flg  = address/timestamp flag'
-      #   field :iptspairs, :uint32, :desc => 'ip addr/ts pairs, var-length'
+      #   field :iptspairs, :uint32, :desc => 'IP addr/ts pairs, var-length'
       #
       class DataTS < ::FFI::Struct
         include ::FFI::DRY::StructHelper
@@ -130,7 +163,7 @@ module Dnet
           field :ptr,       :uint8,  :desc => 'from start of option'
           field :oflw_flg,  :uint8,  :desc => 'oflw = number of IPs skipped /'+
                                               'flg  = address/timestamp flag'
-          field :iptspairs, :uint32, :desc => 'ip addr/ts pairs, var-length'
+          field :iptspairs, :uint32, :desc => 'IP addr/ts pairs, var-length'
         end
 
       end
@@ -254,8 +287,7 @@ module Dnet
   IpHandle = Ip::Handle
 
   attach_function :ip_open, [], :ip_t
-  attach_function :ip_add_option, [ :pointer, :size_t, :int, :pointer, 
-    :size_t ], :ssize_t
+  attach_function :ip_add_option, [:pointer, :size_t, :int, :pointer, :size_t], :ssize_t
   attach_function :ip_checksum, [:pointer, :size_t], :void
   attach_function :ip_send, [:ip_t, :pointer, :size_t], :ssize_t
   attach_function :ip_close, [:ip_t], :ip_t
