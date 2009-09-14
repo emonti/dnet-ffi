@@ -67,36 +67,30 @@ module Dnet
 
       def lookup_proto; Proto[ self.proto ]; end
 
-      alias _divert_src= src=
-      alias _divert_src src
-
       # Sets source IP address in the header from an IPv4 address string or 
       # 32-bit number.
       def src=(val)
         val = ::Dnet::Util.ipv4_atol(val) if val.kind_of? String
-        _divert_src=val
+        self[:src] = ::Dnet.htonl(val)
       end
 
       # Returns the source IP address as an IPv4 address string as an IPv4 
       # address string.
       def src
-        ::Dnet::Util.ipv4_ltoa(_divert_dst)
+        ::Dnet::Util.ipv4_ltoa( ::Dnet.ntohl( self[:src] ))
       end
-
-      alias _divert_dst= dst=
-      alias _divert_dst dst
 
       # Sets destination IP address in the header from an IPv4 address string 
       # or 32-bit number.
       def dst=(val)
         val = ::Dnet::Util.ipv4_atol(val) if val.kind_of? String
-        _divert_dst=val
+        self[:dst] = ::Dnet.htonl(val)
       end
 
       # Returns the destination IP address from the header as an IPv4 address 
       # string.
       def dst
-        ::Dnet::Util.ipv4_ltoa(_divert_dst)
+        ::Dnet::Util.ipv4_ltoa( ::Dnet.ntohl( self[:dst] ))
       end
 
     end # class Hdr
