@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Intf::Entry</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Intf_Entry">
+  <h1 class="title">Class: Dnet::Intf::Entry</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::Struct</li><ul><li>Dnet::Intf::Entry</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper</p>
+</div>
+<div class="section docstring">
+  <p>
+An interface table entry
+</p>
+<pre class="code">
+  <span class='field identifier id'>field</span>  <span class='symbol val'>:len</span><span class='comma token'>,</span>       <span class='symbol val'>:uint</span><span class='comma token'>,</span>        <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'length of entry'</span>
+  <span class='array identifier id'>array</span>  <span class='symbol val'>:if_name</span><span class='comma token'>,</span>   <span class='lbrack token'>[</span><span class='symbol val'>:uint8</span><span class='comma token'>,</span> <span class='INTF_NAME_LEN constant id'>INTF_NAME_LEN</span><span class='rbrack token'>]</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'interface name'</span>
+  <span class='field identifier id'>field</span>  <span class='symbol val'>:itype</span><span class='comma token'>,</span>     <span class='symbol val'>:ushort</span><span class='comma token'>,</span>      <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'interface type'</span>
+  <span class='field identifier id'>field</span>  <span class='symbol val'>:flags</span><span class='comma token'>,</span>     <span class='symbol val'>:ushort</span><span class='comma token'>,</span>      <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'interface flags'</span>
+  <span class='field identifier id'>field</span>  <span class='symbol val'>:mtu</span><span class='comma token'>,</span>       <span class='symbol val'>:uint</span><span class='comma token'>,</span>        <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'interface MTU'</span>
+  <span class='struct identifier id'>struct</span> <span class='symbol val'>:if_addr</span><span class='comma token'>,</span>   <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Addr constant id'>Addr</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'interface address'</span>
+  <span class='struct identifier id'>struct</span> <span class='symbol val'>:dst_addr</span><span class='comma token'>,</span>  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Addr constant id'>Addr</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'point-to-point dst'</span>
+  <span class='struct identifier id'>struct</span> <span class='symbol val'>:link_addr</span><span class='comma token'>,</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Addr constant id'>Addr</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'link-layer address'</span>
+  <span class='field identifier id'>field</span>  <span class='symbol val'>:alias_num</span><span class='comma token'>,</span> <span class='symbol val'>:uint</span><span class='comma token'>,</span>        <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'number of aliases'</span>
+  <span class='comment val'>#  :if_aliases,  ::Dnet::Addr  ) ## variable-length array of aliases</span>
+</pre>
+<p>
+class Entry
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#aliases-instance_method" title="#aliases">#aliases</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns an array containing all the aliases for this interface.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#copy-instance_method" title="#copy">#copy</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns a newly instantiated and allocated copy of this interface entry.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#if_name-instance_method" title="#if_name">#if_name</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns the interface name string of this object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#if_name%3D-instance_method" title="#if_name=">#if_name=</a></span><span class='args'>(val)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+          <span class='alias'>#set_name</span>
+        
+      </th>
+      <td class="docstring">
+        <p>
+sets the interface name string on this object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#lookup_flags-instance_method" title="#lookup_flags">#lookup_flags</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#lookup_itype-instance_method" title="#lookup_itype">#lookup_itype</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>aliases</h3>
+</div><div id="aliases-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>aliases</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns an array containing all the aliases for this interface
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/intf.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='aliases identifier id'>aliases</span>
+  <span class='ary identifier id'>ary</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='asz identifier id'>asz</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Addr constant id'>Addr</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+  <span class='p identifier id'>p</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='self self kw'>self</span><span class='dot token'>.</span><span class='to_ptr identifier id'>to_ptr</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='Entry constant id'>Entry</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span>  <span class='comment val'># start at end of struct</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:alias_num</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='times identifier id'>times</span> <span class='do do kw'>do</span> 
+    <span class='ary identifier id'>ary</span> <span class='lshft op'>&lt;&lt;</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Addr constant id'>Addr</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='p identifier id'>p</span><span class='rparen token'>)</span>
+    <span class='p identifier id'>p</span> <span class='opasgn op'>+=</span> <span class='asz identifier id'>asz</span>  
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='ary identifier id'>ary</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>copy</h3>
+</div><div id="copy-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>copy</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Returns a newly instantiated and allocated copy of this interface entry
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/intf.rb', line 59</span>
+
+<span class='def def kw'>def</span> <span class='copy identifier id'>copy</span>
+  <span class='xtra identifier id'>xtra</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Addr constant id'>Addr</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='mult op'>*</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='alias_num identifier id'>alias_num</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='len identifier id'>len</span> <span class='eq op'>==</span> <span class='lparen token'>(</span><span class='Entry constant id'>Entry</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='plus op'>+</span> <span class='xtra identifier id'>xtra</span><span class='rparen token'>)</span>
+    <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='xtra identifier id'>xtra</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>if_name</h3>
+</div><div id="if_name-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>if_name</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns the interface name string of this object
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+81</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/intf.rb', line 81</span>
+
+<span class='def def kw'>def</span> <span class='if_name identifier id'>if_name</span><span class='semicolon token'>;</span>  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:if_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_ptr identifier id'>to_ptr</span><span class='dot token'>.</span><span class='read_string identifier id'>read_string</span> <span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>if_name=</h3>
+</div><div id="if_name=-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>if_name=</span><span class='args'>(val)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+<p class="aliases">
+  <span class="aka">Also known as:</span>
+  
+    <tt id="set_name-instance_method">set_name</tt>
+  
+</p>
+</div><div class="section docstring">
+  <p>
+sets the interface name string on this object.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+84
+85
+86
+87</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/intf.rb', line 84</span>
+
+<span class='def def kw'>def</span> <span class='if_name= identifier id'>if_name=</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='name identifier id'>name</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='truncate_cstr identifier id'>truncate_cstr</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='comma token'>,</span> <span class='INTF_NAME_LEN constant id'>INTF_NAME_LEN</span><span class='rparen token'>)</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:if_name</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='to_ptr identifier id'>to_ptr</span><span class='dot token'>.</span><span class='write_string_length identifier id'>write_string_length</span><span class='lparen token'>(</span><span class='name identifier id'>name</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup_flags</h3>
+</div><div id="lookup_flags-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>lookup_flags</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/intf.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='lookup_flags identifier id'>lookup_flags</span><span class='semicolon token'>;</span> <span class='Flags constant id'>Flags</span><span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:flags</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup_itype</h3>
+</div><div id="lookup_itype-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>lookup_itype</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+56</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/intf.rb', line 56</span>
+
+<span class='def def kw'>def</span> <span class='lookup_itype identifier id'>lookup_itype</span><span class='semicolon token'>;</span> <span class='Flags constant id'>Flags</span><span class='lbrack token'>[</span><span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:itype</span><span class='rbrack token'>]</span><span class='rbrack token'>]</span> <span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Sunday, September 13 2009 at 09:49:29 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

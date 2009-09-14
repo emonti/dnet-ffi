@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Tcp::Hdr</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Tcp_Hdr">
+  <h1 class="title">Class: Dnet::Tcp::Hdr</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::Struct</li><ul><li>Dnet::Tcp::Hdr</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper, <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></p>
+</div>
+<div class="section docstring">
+  <p>
+TCP header, without options
+</p>
+<pre class="code">
+  <span class='field identifier id'>field</span> <span class='symbol val'>:sport</span><span class='comma token'>,</span>  <span class='symbol val'>:uint16</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'source port'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:dport</span><span class='comma token'>,</span>  <span class='symbol val'>:uint16</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'destination port'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:seq</span><span class='comma token'>,</span>    <span class='symbol val'>:uint32</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'sequence number'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:ack</span><span class='comma token'>,</span>    <span class='symbol val'>:uint32</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'acknowledgment number'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:off_x2</span><span class='comma token'>,</span> <span class='symbol val'>:uint8</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'data offset(&amp; 0xf0) unused (&amp; 0x0f)'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:flags</span><span class='comma token'>,</span>  <span class='symbol val'>:uint8</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'control flags'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:win</span><span class='comma token'>,</span>    <span class='symbol val'>:uint16</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'window'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:sum</span><span class='comma token'>,</span>    <span class='symbol val'>:uint16</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'checksum'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:urgp</span><span class='comma token'>,</span>   <span class='symbol val'>:uint16</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'urgent pointer'</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></h1>
+    <p><span class='name'><a href="../NetEndianHelper.html#BYTE_ORDER_METH-constant" title="BYTE_ORDER_METH">BYTE_ORDER_METH</a></span>, <span class='name'><a href="../NetEndianHelper.html#I16_convert-constant" title="I16_convert">I16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#I32_convert-constant" title="I32_convert">I32_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U16_convert-constant" title="U16_convert">U16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U32_convert-constant" title="U32_convert">U32_convert</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Sunday, September 13 2009 at 09:49:34 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

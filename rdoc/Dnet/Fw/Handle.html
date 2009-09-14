@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Fw::Handle</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Fw_Handle">
+  <h1 class="title">Class: Dnet::Fw::Handle</h1>
+  <div class="section inheritance">
+  <ul>
+  <li><a href="../Handle.html" title="Dnet::Handle">Dnet::Handle</a></li><ul><li><a href="../LoopableHandle.html" title="Dnet::LoopableHandle">Dnet::LoopableHandle</a></li><ul><li>Dnet::Fw::Handle</li>
+  </ul></ul></ul>
+</div><div class="section docstring">
+  <p>
+Fw::Handle is used to obtain a handle to access the local network firewall
+configuration.
+</p>
+
+</div><div class="section constants">
+  <div class="inherited">
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>initialize</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Uses dnet(3)&#8217;s fw_open() function under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+61
+62
+63
+64
+65
+66</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/fw.rb', line 61</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='@handle ivar id'>@handle</span> <span class='assign token'>=</span> <span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='fw_open identifier id'>fw_open</span><span class='lparen token'>(</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='address identifier id'>address</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+    <span class='raise identifier id'>raise</span> <span class='H_ERR constant id'>H_ERR</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;unable to open fw handle&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='_handle_opened! fid id'>_handle_opened!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <div class="inherited">
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href="../LoopableHandle.html" title="Dnet::LoopableHandle">Dnet::LoopableHandle</a></h1>
+    <p><span class='name'><a href="../LoopableHandle.html#each_entry-class_method" title="each_entry">each_entry</a></span>, <span class='name'><a href="../LoopableHandle.html#entries-class_method" title="entries">entries</a></span></p>
+  </div>
+  
+  <div>
+    <h1>Public Class Methods Inherited from <a href="../Handle.html" title="Dnet::Handle">Dnet::Handle</a></h1>
+    <p><span class='name'><a href="../Handle.html#open-class_method" title="open">open</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#add-instance_method" title="#add">#add</a></span><span class='args'>(fw_rule)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Adds the specified Rule entry to the ruleset.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#close-instance_method" title="#close">#close</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Closes the firewall handle.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#delete-instance_method" title="#delete">#delete</a></span><span class='args'>(fw_rule)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Deletes the specified firewall rule.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#loop-instance_method" title="#loop">#loop</a></span><span class='args'>(&amp;block)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Iterates over the active firewall ruleset, invoking the specified block
+with each rule cast as a Rule object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+<div class="inherited">
+  
+  <div>
+    <h1>Public Instance Methods Inherited from <a href="../LoopableHandle.html" title="Dnet::LoopableHandle">Dnet::LoopableHandle</a></h1>
+    <p><span class='name'><a href="../LoopableHandle.html#entries-instance_method" title="entries">entries</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add</h3>
+</div><div id="add-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>add</span><span class='args'>(fw_rule)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Adds the specified Rule entry to the ruleset. Uses dnet(3)&#8217;s fw_add()
+function under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+82
+83
+84</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/fw.rb', line 82</span>
+
+<span class='def def kw'>def</span> <span class='add identifier id'>add</span><span class='lparen token'>(</span><span class='fw_rule identifier id'>fw_rule</span><span class='rparen token'>)</span>
+  <span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='fw_add identifier id'>fw_add</span> <span class='@handle ivar id'>@handle</span><span class='comma token'>,</span> <span class='fw_rule identifier id'>fw_rule</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>close</h3>
+</div><div id="close-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>close</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Closes the firewall handle. Uses dnet(3)&#8217;s fw_close() under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/fw.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='close identifier id'>close</span>
+  <span class='_do_if_open identifier id'>_do_if_open</span> <span class='lbrace token'>{</span> <span class='_handle_closed! fid id'>_handle_closed!</span> <span class='semicolon token'>;</span> <span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='fw_close identifier id'>fw_close</span><span class='lparen token'>(</span><span class='@handle ivar id'>@handle</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>delete</h3>
+</div><div id="delete-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>delete</span><span class='args'>(fw_rule)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Deletes the specified firewall rule. Uses dnet(3)&#8217;s fw_delete()
+function under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+88
+89
+90</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/fw.rb', line 88</span>
+
+<span class='def def kw'>def</span> <span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='fw_rule identifier id'>fw_rule</span><span class='rparen token'>)</span>
+  <span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='fw_delete identifier id'>fw_delete</span> <span class='@handle ivar id'>@handle</span><span class='comma token'>,</span> <span class='fw_rule identifier id'>fw_rule</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>loop</h3>
+</div><div id="loop-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>loop</span><span class='args'>(&amp;block)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Iterates over the active firewall ruleset, invoking the specified block
+with each rule cast as a Rule object. Uses dnet(3)&#8217;s fw_loop()
+function under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+76
+77
+78</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/fw.rb', line 76</span>
+
+<span class='def def kw'>def</span> <span class='loop identifier id'>loop</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span>
+  <span class='_loop identifier id'>_loop</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='comma token'>,</span> <span class='symbol val'>:fw_loop</span><span class='comma token'>,</span> <span class='Rule constant id'>Rule</span><span class='comma token'>,</span> <span class='bitand op'>&amp;</span><span class='block identifier id'>block</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Sunday, September 13 2009 at 09:49:34 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,1597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Blob</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Blob">
+  <h1 class="title">Class: Dnet::Blob</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::ManagedStruct</li><ul><li>Dnet::Blob</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper, <a href="Blob/HandleHelpers.html" title="Dnet::HandleHelpers">Dnet::HandleHelpers</a></p>
+</div>
+<div class="section docstring">
+  <p>
+FFI mapping to dnet(3)&#8217;s &quot;blob_t&quot; binary buffer struct.
+</p>
+<pre class="code">
+  <span class='field identifier id'>field</span> <span class='symbol val'>:base</span><span class='comma token'>,</span> <span class='symbol val'>:pointer</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'start of data'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:off</span><span class='comma token'>,</span>  <span class='symbol val'>:pointer</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'offset into data'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:end</span><span class='comma token'>,</span>  <span class='symbol val'>:pointer</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'end of data'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:size</span><span class='comma token'>,</span> <span class='symbol val'>:pointer</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'size of allocation'</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href="Blob/HandleHelpers.html" title="Dnet::HandleHelpers">Dnet::HandleHelpers</a></h1>
+    <p><span class='name'><a href="HandleHelpers.html#H_ERR-constant" title="H_ERR">H_ERR</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div><div class="section constructor">
+<h1>Constructor Summary</h1>
+  <div id="initialize-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>initialize</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Initializes a new Blob using dnet(3)&#8217;s blob_new under the hood.
+</p>
+<p>
+blob_new is used to allocate a new dynamic binary buffer, returning NULL on
+failure.
+</p>
+<p>
+Below is the dnet(3) C function definition:
+</p>
+<pre class="code">
+   <span class='blob_t identifier id'>blob_t</span> <span class='mult op'>*</span> <span class='blob_new identifier id'>blob_new</span><span class='lparen token'>(</span><span class='void identifier id'>void</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+33
+34
+35
+36</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 33</span>
+
+<span class='def def kw'>def</span> <span class='initialize identifier id'>initialize</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_new identifier id'>blob_new</span><span class='lparen token'>(</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+  <span class='_handle_opened! fid id'>_handle_opened!</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#release-class_method" title="release">release</a></span><span class='args'>(blob)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Called by the garbage collector for ::FFI:ManagedStruct objects.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+  <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#base-instance_method" title="#base">#base</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+base pointer - start of data.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#base_ptr-instance_method" title="#base_ptr">#base_ptr</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#blob_end-instance_method" title="#blob_end">#blob_end</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns the end of the blob buffer in use - aka self[:end].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#blob_size-instance_method" title="#blob_size">#blob_size</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+size of allocated data - aka self[:size].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#curr_ptr-instance_method" title="#curr_ptr">#curr_ptr</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#end_ptr-instance_method" title="#end_ptr">#end_ptr</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#index-instance_method" title="#index">#index</a></span><span class='args'>(bstr, rewind = false)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Uses dnet(3)&#8217;s &quot;blob_index&quot; under the hood.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#pack-instance_method" title="#pack">#pack</a></span><span class='args'>(sfmt, *args)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+blob_pack converts and writes, and blob_unpack() reads and converts data in
+blob b according to the given format fmt as described below, returning 0 on
+success, and -1 on failure.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#pos-instance_method" title="#pos">#pos</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns the current position offset of the blob buffer - aka self[:off].
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#pos%3D-instance_method" title="#pos=">#pos=</a></span><span class='args'>(p)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+sets the blob buffer offset to p.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#print_dump-instance_method" title="#print_dump">#print_dump</a></span><span class='args'>(rewind = true, len = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Prints a hexdump on standard output using dnet(3)&#8217;s
+&quot;blob_print&quot; under the hood.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#read-instance_method" title="#read">#read</a></span><span class='args'>(len = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Reads &#8216;len&#8217; bytes out of the blob from the current offset.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#release-instance_method" title="#release">#release</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+This method calls dnet(3)&#8217;s blob_free behind the scenes.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#rewind-instance_method" title="#rewind">#rewind</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+rewinds the blob buffer offset to the beginning.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#rindex-instance_method" title="#rindex">#rindex</a></span><span class='args'>(buf, rewind = false)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Uses dnet(3)&#8217;s &quot;blob_rindex&quot; under the hood.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#seek-instance_method" title="#seek">#seek</a></span><span class='args'>(off, whence = 0)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+This method calls dnet(3)&#8217;s blob_seek under the hood.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#string-instance_method" title="#string">#string</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the entirety of the blob from beginning to end.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#unpack-instance_method" title="#unpack">#unpack</a></span><span class='args'>(sfmt, *args)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Uses dnet(3)s &#8216;blob_unpack&#8217; under the hood.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#write-instance_method" title="#write">#write</a></span><span class='args'>(buf, bsz = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Writes the data supplied from a string or pointer to the blob at the
+current offset.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+<div class="included">
+  
+  <div>
+    <h1>Public Instance Methods Included from <a href="Blob/HandleHelpers.html" title="Dnet::HandleHelpers">Dnet::HandleHelpers</a></h1>
+    <p><span class='name'><a href="HandleHelpers.html#closed%3F-instance_method" title="closed?">closed?</a></span>, <span class='name'><a href="HandleHelpers.html#open%3F-instance_method" title="open?">open?</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>release</h3>
+</div><div id="release-class_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>release</span><span class='args'>(blob)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Called by the garbage collector for ::FFI:ManagedStruct objects
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+39
+40
+41</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 39</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='release identifier id'>release</span><span class='lparen token'>(</span><span class='blob identifier id'>blob</span><span class='rparen token'>)</span>
+  <span class='blob identifier id'>blob</span><span class='dot token'>.</span><span class='release identifier id'>release</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div><div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>base</h3>
+</div><div id="base-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>base</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+base pointer - start of data
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+159
+160
+161
+162</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 159</span>
+
+<span class='def def kw'>def</span> <span class='base identifier id'>base</span><span class='semicolon token'>;</span> 
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:base</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>base_ptr</h3>
+</div><div id="base_ptr-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>base_ptr</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 43</span>
+
+<span class='def def kw'>def</span> <span class='base_ptr identifier id'>base_ptr</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:base</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>blob_end</h3>
+</div><div id="blob_end-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>blob_end</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns the end of the blob buffer in use - aka self[:end]
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+177
+178
+179
+180</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 177</span>
+
+<span class='def def kw'>def</span> <span class='blob_end identifier id'>blob_end</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:end</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>blob_size</h3>
+</div><div id="blob_size-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>blob_size</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+size of allocated data - aka self[:size]
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+165
+166
+167
+168</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 165</span>
+
+<span class='def def kw'>def</span> <span class='blob_size identifier id'>blob_size</span><span class='semicolon token'>;</span> 
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:size</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>curr_ptr</h3>
+</div><div id="curr_ptr-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>curr_ptr</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 47</span>
+
+<span class='def def kw'>def</span> <span class='curr_ptr identifier id'>curr_ptr</span>
+  <span class='safe identifier id'>safe</span><span class='lbrack token'>[</span><span class='symbol val'>:base</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:off</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>end_ptr</h3>
+</div><div id="end_ptr-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>end_ptr</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+51
+52
+53</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='end_ptr identifier id'>end_ptr</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:base</span><span class='rbrack token'>]</span> <span class='plus op'>+</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:end</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>index</h3>
+</div><div id="index-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>index</span><span class='args'>(bstr, rewind = false)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Uses dnet(3)&#8217;s &quot;blob_index&quot; under the hood. An additional
+&#8216;rewind&#8217; argument was added which can be used to force a rewind
+before searching. The default value for &quot;rewind&quot; is
+&quot;false&quot;. nil is returned on a failed search.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 196</span>
+
+<span class='def def kw'>def</span> <span class='index identifier id'>index</span><span class='lparen token'>(</span><span class='bstr identifier id'>bstr</span><span class='comma token'>,</span> <span class='rewind identifier id'>rewind</span><span class='assign token'>=</span><span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='rewind identifier id'>rewind</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='rewind identifier id'>rewind</span>
+  <span class='lparen token'>(</span><span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='MemoryPointer constant id'>MemoryPointer</span><span class='dot token'>.</span><span class='from_string identifier id'>from_string</span><span class='lparen token'>(</span><span class='bstr identifier id'>bstr</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='autorelease identifier id'>autorelease</span><span class='assign token'>=</span><span class='true true kw'>true</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='i identifier id'>i</span><span class='assign token'>=</span><span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_index identifier id'>blob_index</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='bstr identifier id'>bstr</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='gt op'>&gt;</span> <span class='integer val'>-1</span>
+    <span class='return return kw'>return</span> <span class='i identifier id'>i</span>
+  <span class='else else kw'>else</span>
+    <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pack</h3>
+</div><div id="pack-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>pack</span><span class='args'>(sfmt, *args)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+blob_pack converts and writes, and blob_unpack() reads and converts data in
+blob b according to the given format fmt as described below, returning 0 on
+success, and -1 on failure.
+</p>
+<p>
+The format string is composed of zero or more directives: ordinary
+characters (not % ), which are copied to / read from the blob, and
+conversion specifications, each of which results in reading / writing zero
+or more subsequent arguments.
+</p>
+<p>
+Each conversion specification is introduced by the character %, and may be
+prefixed by length specifier. The arguments must correspond properly (after
+type promotion) with the length and conversion specifiers.
+</p>
+<p>
+The length specifier is either a a decimal digit string specifying the
+length of the following argument, or the literal character * indicating
+that the length should be read from an integer argument for the argument
+following it.
+</p>
+<p>
+The conversion specifiers and their meanings are:
+</p>
+<pre class="code">
+    <span class='D constant id'>D</span>       <span class='An constant id'>An</span> <span class='unsigned identifier id'>unsigned</span> <span class='integer val'>32</span><span class='minus op'>-</span><span class='bit identifier id'>bit</span> <span class='integer identifier id'>integer</span> <span class='in in kw'>in</span> <span class='network identifier id'>network</span> <span class='byte identifier id'>byte</span> <span class='order identifier id'>order</span><span class='dot token'>.</span>
+    <span class='H constant id'>H</span>       <span class='An constant id'>An</span> <span class='unsigned identifier id'>unsigned</span> <span class='integer val'>16</span><span class='minus op'>-</span><span class='bit identifier id'>bit</span> <span class='integer identifier id'>integer</span> <span class='in in kw'>in</span> <span class='network identifier id'>network</span> <span class='byte identifier id'>byte</span> <span class='order identifier id'>order</span><span class='dot token'>.</span>
+    <span class='b identifier id'>b</span>       <span class='A constant id'>A</span> <span class='binary identifier id'>binary</span> <span class='buffer identifier id'>buffer</span> <span class='lparen token'>(</span><span class='length identifier id'>length</span> <span class='specifier identifier id'>specifier</span> <span class='required identifier id'>required</span><span class='rparen token'>)</span><span class='dot token'>.</span>
+    <span class='c identifier id'>c</span>       <span class='An constant id'>An</span> <span class='unsigned identifier id'>unsigned</span> <span class='character identifier id'>character</span><span class='dot token'>.</span>
+    <span class='d identifier id'>d</span>       <span class='An constant id'>An</span> <span class='unsigned identifier id'>unsigned</span> <span class='integer val'>32</span><span class='minus op'>-</span><span class='bit identifier id'>bit</span> <span class='integer identifier id'>integer</span> <span class='in in kw'>in</span> <span class='host identifier id'>host</span> <span class='byte identifier id'>byte</span> <span class='order identifier id'>order</span><span class='dot token'>.</span>
+    <span class='h identifier id'>h</span>       <span class='An constant id'>An</span> <span class='unsigned identifier id'>unsigned</span> <span class='integer val'>16</span><span class='minus op'>-</span><span class='bit identifier id'>bit</span> <span class='integer identifier id'>integer</span> <span class='in in kw'>in</span> <span class='host identifier id'>host</span> <span class='byte identifier id'>byte</span> <span class='order identifier id'>order</span><span class='dot token'>.</span>
+    <span class='s identifier id'>s</span>       <span class='A constant id'>A</span> <span class='C constant id'>C</span><span class='minus op'>-</span><span class='style identifier id'>style</span> <span class='null identifier id'>null</span><span class='minus op'>-</span><span class='terminated identifier id'>terminated</span> <span class='string identifier id'>string</span><span class='comma token'>,</span> <span class='whose identifier id'>whose</span> <span class='maximum identifier id'>maximum</span> <span class='length identifier id'>length</span> <span class='must identifier id'>must</span> <span class='be identifier id'>be</span>
+            <span class='specified identifier id'>specified</span> <span class='when when kw'>when</span> <span class='unpacking identifier id'>unpacking</span><span class='dot token'>.</span>
+</pre>
+<p>
+Custom conversion routines and their specifiers may be registered via
+blob_register_pack, currently undocumented.
+</p>
+<p>
+TODO add ruby wrapper for blob_register_pack.
+</p>
+<p>
+XXX want to wrap varargs FFI for easier type casting?
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+99
+100
+101
+102
+103</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 99</span>
+
+<span class='def def kw'>def</span> <span class='pack identifier id'>pack</span><span class='lparen token'>(</span><span class='sfmt identifier id'>sfmt</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='lparen token'>(</span><span class='fmt identifier id'>fmt</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='MemoryPointer constant id'>MemoryPointer</span><span class='dot token'>.</span><span class='from_string identifier id'>from_string</span><span class='lparen token'>(</span><span class='sfmt identifier id'>sfmt</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='autorelease identifier id'>autorelease</span><span class='assign token'>=</span><span class='true true kw'>true</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_pack identifier id'>blob_pack</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='fmt identifier id'>fmt</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pos</h3>
+</div><div id="pos-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>pos</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns the current position offset of the blob buffer - aka self[:off]
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+171
+172
+173
+174</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 171</span>
+
+<span class='def def kw'>def</span> <span class='pos identifier id'>pos</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:off</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>pos=</h3>
+</div><div id="pos=-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>pos=</span><span class='args'>(p)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+sets the blob buffer offset to p. returns -1 on failure
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+153
+154
+155
+156</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 153</span>
+
+<span class='def def kw'>def</span> <span class='pos= identifier id'>pos=</span><span class='lparen token'>(</span><span class='p identifier id'>p</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_seek identifier id'>blob_seek</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='p identifier id'>p</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>print_dump</h3>
+</div><div id="print_dump-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>print_dump</span><span class='args'>(rewind = true, len = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Prints a hexdump on standard output using dnet(3)&#8217;s
+&quot;blob_print&quot; under the hood. Can optionally rewind the blob
+before dumping using the &#8216;rewind&#8217; argument (default:
+rewind=true).
+</p>
+<p>
+NOTE: len does not appear to do anything at all for blob_print
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+227
+228
+229
+230
+231
+232</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 227</span>
+
+<span class='def def kw'>def</span> <span class='print_dump identifier id'>print_dump</span><span class='lparen token'>(</span><span class='rewind identifier id'>rewind</span><span class='assign token'>=</span><span class='true true kw'>true</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='rewind identifier id'>rewind</span> <span class='if if_mod kw'>if</span> <span class='rewind identifier id'>rewind</span><span class='eq op'>==</span><span class='true true kw'>true</span>
+  <span class='len identifier id'>len</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:end</span><span class='rbrack token'>]</span> <span class='minus op'>-</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:off</span><span class='rbrack token'>]</span>
+  <span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_print identifier id'>blob_print</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='string val'>&quot;hexl&quot;</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>read</h3>
+</div><div id="read-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>read</span><span class='args'>(len = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Reads &#8216;len&#8217; bytes out of the blob from the current offset. If
+len is nil (the default) then all remaining bytes are read. Moves the
+offset accordingly. This method uses dnet(3)&#8217;s &quot;blob_read&quot;
+under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 127</span>
+
+<span class='def def kw'>def</span> <span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='len identifier id'>len</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='len identifier id'>len</span> <span class='opasgn op'>||=</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:end</span><span class='rbrack token'>]</span> <span class='minus op'>-</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:off</span><span class='rbrack token'>]</span>
+  <span class='lparen token'>(</span><span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='MemoryPointer constant id'>MemoryPointer</span><span class='dot token'>.</span><span class='new identifier id'>new</span><span class='lparen token'>(</span><span class='string val'>&quot;\x00&quot;</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='autorelease identifier id'>autorelease</span> <span class='assign token'>=</span> <span class='true true kw'>true</span>
+  <span class='if if kw'>if</span> <span class='rlen identifier id'>rlen</span><span class='assign token'>=</span><span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_read identifier id'>blob_read</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='rparen token'>)</span>
+    <span class='return return kw'>return</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='read_string_length identifier id'>read_string_length</span><span class='lparen token'>(</span><span class='rlen identifier id'>rlen</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>release</h3>
+</div><div id="release-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>release</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+This method calls dnet(3)&#8217;s blob_free behind the scenes. It should
+automatically get run by the garbage collector when a blob is no longer
+referenced.
+</p>
+<p>
+blob_free deallocates the memory associated with blob b and returns NULL.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 60</span>
+
+<span class='def def kw'>def</span> <span class='release identifier id'>release</span>
+  <span class='_do_if_open identifier id'>_do_if_open</span> <span class='lbrace token'>{</span> <span class='_handle_closed! fid id'>_handle_closed!</span> <span class='semicolon token'>;</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_free identifier id'>blob_free</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rewind</h3>
+</div><div id="rewind-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>rewind</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+rewinds the blob buffer offset to the beginning
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+147
+148
+149
+150</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 147</span>
+
+<span class='def def kw'>def</span> <span class='rewind identifier id'>rewind</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_seek identifier id'>blob_seek</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='comma token'>,</span> <span class='integer val'>0</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>rindex</h3>
+</div><div id="rindex-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>rindex</span><span class='args'>(buf, rewind = false)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Uses dnet(3)&#8217;s &quot;blob_rindex&quot; under the hood. An additional
+&#8216;rewind&#8217; argument was added which can be used to force a rewind
+before searching. The default value for &quot;rewind&quot; is
+&quot;false&quot;. nil is returned on a failed search.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 211</span>
+
+<span class='def def kw'>def</span> <span class='rindex identifier id'>rindex</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='rewind identifier id'>rewind</span><span class='assign token'>=</span><span class='false false kw'>false</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='self self kw'>self</span><span class='dot token'>.</span><span class='rewind identifier id'>rewind</span><span class='lparen token'>(</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='rewind identifier id'>rewind</span>
+  <span class='lparen token'>(</span><span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='MemoryPointer constant id'>MemoryPointer</span><span class='dot token'>.</span><span class='from_string identifier id'>from_string</span><span class='lparen token'>(</span><span class='bstr identifier id'>bstr</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='autorelease identifier id'>autorelease</span><span class='assign token'>=</span><span class='true true kw'>true</span>
+  <span class='if if kw'>if</span> <span class='lparen token'>(</span><span class='i identifier id'>i</span><span class='assign token'>=</span><span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_rindex identifier id'>blob_rindex</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='bstr identifier id'>bstr</span><span class='dot token'>.</span><span class='size identifier id'>size</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='gt op'>&gt;</span> <span class='integer val'>-1</span>
+    <span class='return return kw'>return</span> <span class='i identifier id'>i</span>
+  <span class='else else kw'>else</span>
+    <span class='return return kw'>return</span> <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>seek</h3>
+</div><div id="seek-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>seek</span><span class='args'>(off, whence = 0)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+This method calls dnet(3)&#8217;s blob_seek under the hood.
+</p>
+<p>
+blob_seek repositions the offset within blob b to off, according to the
+directive whence (see lseek(2) for details), returning the new absolute
+offset, or -1 on failure.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+187
+188
+189
+190</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 187</span>
+
+<span class='def def kw'>def</span> <span class='seek identifier id'>seek</span><span class='lparen token'>(</span><span class='off identifier id'>off</span><span class='comma token'>,</span> <span class='whence identifier id'>whence</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_seek identifier id'>blob_seek</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='off identifier id'>off</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='comma token'>,</span> <span class='whence identifier id'>whence</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>string</h3>
+</div><div id="string-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>string</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Returns the entirety of the blob from beginning to end. Note, this will
+also move the offset to the end of the buffer.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+140
+141
+142
+143
+144</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 140</span>
+
+<span class='def def kw'>def</span> <span class='string identifier id'>string</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='rewind identifier id'>rewind</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+  <span class='read identifier id'>read</span><span class='lparen token'>(</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unpack</h3>
+</div><div id="unpack-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>unpack</span><span class='args'>(sfmt, *args)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Uses dnet(3)s &#8216;blob_unpack&#8217; under the hood. See pack() for more
+information.
+</p>
+<p>
+XXX TODO - want to wrap varargs FFI for easier type casting?
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+109
+110
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 109</span>
+
+<span class='def def kw'>def</span> <span class='unpack identifier id'>unpack</span><span class='lparen token'>(</span><span class='sfmt identifier id'>sfmt</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='lparen token'>(</span><span class='fmt identifier id'>fmt</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='MemoryPointer constant id'>MemoryPointer</span><span class='dot token'>.</span><span class='from_string identifier id'>from_string</span><span class='lparen token'>(</span><span class='sfmt identifier id'>sfmt</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='autorelease identifier id'>autorelease</span><span class='assign token'>=</span><span class='true true kw'>true</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_unpack identifier id'>blob_unpack</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='fmt identifier id'>fmt</span><span class='comma token'>,</span> <span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>write</h3>
+</div><div id="write-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>write</span><span class='args'>(buf, bsz = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Writes the data supplied from a string or pointer to the blob at the
+current offset. If a pointer is supplied, a size must accompany it. Uses
+dnet(3)&#8217;s &quot;blob_write&quot; under the hood.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+118
+119
+120
+121
+122</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/blob.rb', line 118</span>
+
+<span class='def def kw'>def</span> <span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='bsz identifier id'>bsz</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='_check_open! fid id'>_check_open!</span>
+  <span class='ptr identifier id'>ptr</span><span class='comma token'>,</span> <span class='psz identifier id'>psz</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='derive_pointer identifier id'>derive_pointer</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='bsz identifier id'>bsz</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='blob_write identifier id'>blob_write</span><span class='lparen token'>(</span><span class='self self kw'>self</span><span class='comma token'>,</span> <span class='ptr identifier id'>ptr</span><span class='comma token'>,</span> <span class='psz identifier id'>psz</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Sunday, September 13 2009 at 09:49:32 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Dnet::NetEndianHelper</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Dnet_NetEndianHelper">
+  <h1 class="title">Module: Dnet::NetEndianHelper</h1>
+  <div class="section docstring">
+  <p>
+A special helper for network packet structures which use big-endian or
+&quot;network&quot; byte-order. This helper generates read/write accessors
+that automatically call the appropriate byte conversion function,
+ntohs/ntohl for &#8216;reading&#8217; a 16/32 bit field, and htons/htonl
+for writing to one.
+</p>
+<p>
+NOTE this helper does not currently do anything special for 64-bit values
+at all.
+</p>
+<p>
+This helper relies on a included loaded FFI::DRY::StructHelper module to do
+its magic. Always include this module as follows:
+</p>
+<pre class="code">
+  <span class='class class kw'>class</span> <span class='YourStruct constant id'>YourStruct</span> <span class='lt op'>&lt;</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='Struct constant id'>Struct</span> <span class='comment val'># or ::FFI::ManagedStruct, (or Union?)</span>
+    <span class='include identifier id'>include</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='DRY constant id'>DRY</span><span class='colon2 op'>::</span><span class='StructHelper constant id'>StructHelper</span>
+    <span class='include identifier id'>include</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='NetEndianHelper constant id'>NetEndianHelper</span>
+    <span class='dot3 op'>...</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="BYTE_ORDER_METH-constant">BYTE_ORDER_METH</dt>
+      <dd>{
+  Dnet.find_type(:uint16) =&gt; I16_convert,
+  Dnet.find_type(:int16)  =&gt; I16_convert,
+  Dnet.find_type(:int32)  =&gt; I32_convert,
+  Dnet.find_type(:uint32) =&gt; I32_convert,
+}</dd>
+    
+      <dt id="I16_convert-constant">I16_convert</dt>
+      <dd>[::Dnet.method(:ntohs), ::Dnet.method(:htons)]</dd>
+    
+      <dt id="I32_convert-constant">I32_convert</dt>
+      <dd>[::Dnet.method(:ntohl), ::Dnet.method(:htonl)]</dd>
+    
+      <dt id="U16_convert-constant">U16_convert</dt>
+      <dd>[::Dnet.method(:ntohs), ::Dnet.method(:htons)]</dd>
+    
+      <dt id="U32_convert-constant">U32_convert</dt>
+      <dd>[::Dnet.method(:ntohl), ::Dnet.method(:htonl)]</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#included-class_method" title="included">included</a></span><span class='args'>(base)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>included</h3>
+</div><div id="included-class_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>included</span><span class='args'>(base)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+157
+158
+159</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/helpers.rb', line 157</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='included identifier id'>included</span><span class='lparen token'>(</span><span class='base identifier id'>base</span><span class='rparen token'>)</span>
+  <span class='base identifier id'>base</span><span class='dot token'>.</span><span class='extend identifier id'>extend</span><span class='lparen token'>(</span><span class='ClassMethods constant id'>ClassMethods</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Sunday, September 13 2009 at 09:49:32 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

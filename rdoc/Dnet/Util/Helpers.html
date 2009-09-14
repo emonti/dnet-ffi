@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Dnet::Util::Helpers</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Dnet_Util_Helpers">
+  <h1 class="title">Module: Dnet::Util::Helpers</h1>
+  <div class="section docstring">
+  <p>
+A number of helper methods which can be used to extend class, instance, or
+module module Helpers
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#derive_pointer-instance_method" title="#derive_pointer">#derive_pointer</a></span><span class='args'>(buf, bsz = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Attempts to derive a memory pointer and length from an
+&quot;anonymous&quot; object.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#ipv4_atol-instance_method" title="#ipv4_atol">#ipv4_atol</a></span><span class='args'>(str)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+takes a IPv4 number and returns it as a 32-bit number.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#ipv4_ltoa-instance_method" title="#ipv4_ltoa">#ipv4_ltoa</a></span><span class='args'>(int)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+takes a 32-bit number and returns it as an IPv4 address string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#unhexify-instance_method" title="#unhexify">#unhexify</a></span><span class='args'>(str, d = /\s*/)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>derive_pointer</h3>
+</div><div id="derive_pointer-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>derive_pointer</span><span class='args'>(buf, bsz = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Attempts to derive a memory pointer and length from an
+&quot;anonymous&quot; object. Returns an an array object containing [len,
+pointer]
+</p>
+<p>
+buf can be a String or FFI::Pointer. If it is a Pointer, bsz must also be
+supplied for the length. If bsz is included with a String, the string will
+be truncated if it is longer.
+</p>
+<p>
+This is mostly used to support multiple argument types in various
+functions.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/util.rb', line 23</span>
+
+<span class='def def kw'>def</span> <span class='derive_pointer identifier id'>derive_pointer</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='bsz identifier id'>bsz</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='case case kw'>case</span> <span class='buf identifier id'>buf</span>
+  <span class='when when kw'>when</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='Pointer constant id'>Pointer</span>
+    <span class='raise identifier id'>raise</span> <span class='string val'>&quot;no length specified for pointer&quot;</span> <span class='if if_mod kw'>if</span> <span class='bsz identifier id'>bsz</span><span class='dot token'>.</span><span class='nil? fid id'>nil?</span>
+    <span class='raise identifier id'>raise</span> <span class='string val'>&quot;size must be a number &gt;= 0&quot;</span> <span class='unless unless_mod kw'>unless</span> <span class='bsz identifier id'>bsz</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Numeric constant id'>Numeric</span> <span class='and and kw'>and</span> <span class='bsz identifier id'>bsz</span> <span class='geq op'>&gt;=</span> <span class='integer val'>0</span>
+    <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;null pointer #{buf.inspect}&quot;</span> <span class='if if_mod kw'>if</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='address identifier id'>address</span> <span class='eq op'>==</span> <span class='integer val'>0</span>
+    <span class='pbuf identifier id'>pbuf</span> <span class='assign token'>=</span> <span class='buf identifier id'>buf</span>
+  <span class='when when kw'>when</span> <span class='String constant id'>String</span>
+    <span class='buf identifier id'>buf</span> <span class='assign token'>=</span> <span class='buf identifier id'>buf</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='bsz identifier id'>bsz</span><span class='rbrack token'>]</span> <span class='if if_mod kw'>if</span> <span class='bsz identifier id'>bsz</span>
+    <span class='pbuf identifier id'>pbuf</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='FFI constant id'>FFI</span><span class='colon2 op'>::</span><span class='MemoryPointer constant id'>MemoryPointer</span><span class='dot token'>.</span><span class='from_string identifier id'>from_string</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='rparen token'>)</span>
+    <span class='bsz identifier id'>bsz</span> <span class='assign token'>=</span> <span class='buf identifier id'>buf</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+  <span class='else else kw'>else</span>
+    <span class='raise identifier id'>raise</span> <span class='dstring node'>&quot;cannot derive a pointer and size from a #{buf.class}&quot;</span>
+  <span class='end end kw'>end</span>
+  <span class='return return kw'>return</span> <span class='lbrack token'>[</span><span class='pbuf identifier id'>pbuf</span><span class='comma token'>,</span> <span class='bsz identifier id'>bsz</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ipv4_atol</h3>
+</div><div id="ipv4_atol-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>ipv4_atol</span><span class='args'>(str)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+takes a IPv4 number and returns it as a 32-bit number
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/util.rb', line 41</span>
+
+<span class='def def kw'>def</span> <span class='ipv4_atol identifier id'>ipv4_atol</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='str identifier id'>str</span> <span class='match op'>=~</span> <span class='dregexp node'>/^#{RX_IP4_ADDR}$/</span>
+    <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;invalid IP address #{str.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='else else kw'>else</span>
+    <span class='u32 identifier id'>u32</span><span class='assign token'>=</span><span class='integer val'>0</span>
+    <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='split identifier id'>split</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='comma token'>,</span><span class='integer val'>4</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='o identifier id'>o</span><span class='bitor op'>|</span> <span class='u32 identifier id'>u32</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='u32 identifier id'>u32</span> <span class='lshft op'>&lt;&lt;</span> <span class='integer val'>8</span><span class='rparen token'>)</span> <span class='bitor op'>|</span> <span class='o identifier id'>o</span><span class='dot token'>.</span><span class='to_i identifier id'>to_i</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+    <span class='return return kw'>return</span> <span class='u32 identifier id'>u32</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>ipv4_ltoa</h3>
+</div><div id="ipv4_ltoa-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>ipv4_ltoa</span><span class='args'>(int)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+takes a 32-bit number and returns it as an IPv4 address string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/util.rb', line 52</span>
+
+<span class='def def kw'>def</span> <span class='ipv4_ltoa identifier id'>ipv4_ltoa</span><span class='lparen token'>(</span><span class='int identifier id'>int</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span><span class='lparen token'>(</span><span class='int identifier id'>int</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Numeric constant id'>Numeric</span> <span class='and and kw'>and</span> <span class='int identifier id'>int</span> <span class='leq op'>&lt;=</span> <span class='integer val'>0xffffffff</span><span class='rparen token'>)</span>
+    <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='colon3 op'>::</span><span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='dstring node'>&quot;not a long integer: #{int.inspect}&quot;</span><span class='rparen token'>)</span>
+  <span class='end end kw'>end</span>
+  <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
+  <span class='float val'>4</span><span class='dot token'>.</span><span class='times identifier id'>times</span> <span class='do do kw'>do</span> 
+    <span class='ret identifier id'>ret</span><span class='dot token'>.</span><span class='unshift identifier id'>unshift</span><span class='lparen token'>(</span><span class='int identifier id'>int</span> <span class='bitand op'>&amp;</span> <span class='integer val'>0xff</span><span class='rparen token'>)</span>
+    <span class='int identifier id'>int</span> <span class='opasgn op'>&gt;&gt;=</span> <span class='integer val'>8</span>
+  <span class='end end kw'>end</span>
+  <span class='ret identifier id'>ret</span><span class='dot token'>.</span><span class='join identifier id'>join</span><span class='lparen token'>(</span><span class='string val'>'.'</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>unhexify</h3>
+</div><div id="unhexify-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>unhexify</span><span class='args'>(str, d = /\s*/)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+10
+11
+12</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/util.rb', line 10</span>
+
+<span class='def def kw'>def</span> <span class='unhexify identifier id'>unhexify</span><span class='lparen token'>(</span><span class='str identifier id'>str</span><span class='comma token'>,</span> <span class='d identifier id'>d</span><span class='assign token'>=</span><span class='regexp val'>/\s*/</span><span class='rparen token'>)</span>
+  <span class='str identifier id'>str</span><span class='dot token'>.</span><span class='to_s identifier id'>to_s</span><span class='dot token'>.</span><span class='strip identifier id'>strip</span><span class='dot token'>.</span><span class='gsub identifier id'>gsub</span><span class='lparen token'>(</span><span class='dregexp node'>/([A-Fa-f0-9]{1,2})#{d}?/</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span> <span class='$1 nth_ref id'>$1</span><span class='dot token'>.</span><span class='hex identifier id'>hex</span><span class='dot token'>.</span><span class='chr identifier id'>chr</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Sunday, September 13 2009 at 09:49:33 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>
