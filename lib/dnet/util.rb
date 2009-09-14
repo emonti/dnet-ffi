@@ -62,9 +62,9 @@ module Dnet
         ret.join('.')
       end
 
-    end # module ClassMethods
+    end # module Helpers
 
-    extend(Helpers)
+    extend(::Dnet::Util::Helpers)
   end # module Util
 
 end
