@@ -54,14 +54,13 @@ blob.write(udp_hdr.to_ptr, Udp::Hdr.size)
 blob.write(data)
 
 begin
-  10.times do
-    blob.rewind
-    sent = Ip::Handle.open { |h| h.ip_send(blob.read) }
-    if sent != tot_sz
-      raise "expected #{tot_sz} bytes sent, but got #{sent}"
-    else
-      STDERR.puts "Sent: #{sent} bytes"
-    end
+  blob.rewind
+  sent = Ip::Handle.open { |h| h.ip_send(blob.read) }
+
+  if sent != tot_sz
+    raise "expected #{tot_sz} bytes sent, but got #{sent}"
+  else
+    STDERR.puts "Sent: #{sent} bytes"
   end
 rescue ::Dnet::HandleError => e
   STDERR.puts "Error: <#{e.class}> - #{e}"
