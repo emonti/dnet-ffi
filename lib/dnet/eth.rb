@@ -14,14 +14,21 @@ module Dnet
     # if it is passed as the only String argument.
     def initialize(*args)
       if args.size == 1 and (s=args[0]).is_a? String
-        raise "bad mac address" unless s =~ /^#{Dnet::Util::RX_MAC_ADDR}$/
-        raw = ::Dnet::Util.unhexify(s, /[:-]/)
-        super(::FFI::MemoryPointer.from_string(raw))
+        super()
+        self.addr = s
       else
         super(*args)
       end
     end
     
+    def addr=(val)
+      unless val.to_s =~ /^#{Dnet::Util::RX_MAC_ADDR}$/
+        raise(ArgumentError, "invalid mac address #{val.inspect}")
+      end
+      raw = ::Dnet::Util.unhexify(val, /[:-]/)
+      self[:data].to_ptr.write_string(raw, ETH_ADDR_LEN)
+    end
+
     # Returns the MAC address as an array of unsigned char values.
     def chars; self[:data].to_a ; end
 
@@ -40,13 +47,31 @@ module Dnet
       include ::FFI::DRY::StructHelper
       include ::Dnet::NetEndianHelper
       
+      module Etype
+        include ::FFI::DRY::ConstMap
+        slurp_constants ::Dnet, "ETH_TYPE_"
+        def list; @@list ||= super();  end
+      end
+
       dsl_layout do
         struct :dst,   EthAddr, :desc => 'destination address'
         struct :src,   EthAddr, :desc => 'source address'
         field  :etype, :ushort, :desc => 'ethernet payload type'
       end
-    end
 
+      def lookup_etype
+        Etype[ self.etype ]
+      end
+
+      alias _divert_set_eth etype=
+
+      def etype=(val)
+        if val.kind_of? String or val.kind_of? Symbol
+          val = Etype[ val ] or raise(ArgumentError, "invalid eth type #{val}")
+        end
+        _divert_set_eth(val)
+      end
+    end
 
     # Obtains a new handle to transmit raw Ethernet frames via the specified
     # network device.
