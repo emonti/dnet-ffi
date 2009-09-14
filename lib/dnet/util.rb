@@ -1,12 +1,11 @@
 
 module Dnet
   module Util
+    RX_IP4_ADDR = /(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/
 
     # A number of helper methods which can be used to extend class, instance, 
     # or module
     module Helpers
-      RX_IP4_ADDR = /(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/
-
 
       def unhexify(str, d=/\s*/)
         str.to_s.strip.gsub(/([A-Fa-f0-9]{1,2})#{d}?/) { $1.hex.chr }
