@@ -2,6 +2,11 @@
 # throughout the Dnet FFI bindings.
 
 module Dnet
+  attach_function :htons, [:uint16], :uint16
+  attach_function :ntohs, [:uint16], :uint16
+  attach_function :htonl, [:uint32], :uint32
+  attach_function :ntohl, [:uint32], :uint32
+
 
   # Produces a null-terminated string from 'val', if max is supplied,
   # it is taken as a maximum length. If 'val' is longer than max, it will
@@ -126,7 +131,7 @@ module Dnet
 
     module ClassMethods
       private
-      def _class_do_dsl_metadata(meta)
+      def _class_meths_from_dsl_metadata(meta)
         (@dsl_metadata = meta).each do |spec|
           name = spec[:name]
           type = spec[:type]
@@ -154,5 +159,6 @@ module Dnet
     end
 
   end
+
 end
 
