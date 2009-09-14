@@ -46,9 +46,34 @@ module Dnet
         field :dst,     :uint32,  :desc => 'destination address'
       end
 
+      # Overrides set_fields to supply a default value for the 'v_hl' field.
+      #
+      #   v  = 4
+      #   hl = 5 # number of 32-bit words - 20 bytes (size of hdr without opts)
+      #
       def set_fields(params=nil)
         params ||= {}
         super({:v_hl => 0x45}.merge(params))
+      end
+
+      # Sets the value of the hl field. This field is a 4-bit value occupying
+      # the lower 4 bits of the 'v_hl' field.
+      #
+      # This value is the size of the IP header (including opts if present)
+      # in 32-bit words. The byte size maximum is 15*4 - 60 bytes.
+      def hl=(val)
+        raise(ArgumentError, "value for header length too high") if val > 0xf
+        self[:v_hl] &= 0xf0
+        self[:v_hl] += val
+      end
+
+      # Returns the value of the hl field. This field is a 4-bit value occupying
+      # the lower 4 bits of the 'v_hl' field.
+      #
+      # This value is the size of the IP header (including opts if present)
+      # in 32-bit words. The byte size maximum is 15*4 - 60 bytes.
+      def hl
+        self[:v_hl] & 0x0f
       end
 
       # Type of service (ip_tos), RFC 1349 ("obsoleted by RFC 2474")
