@@ -2,6 +2,7 @@
 module Dnet
   module Util
     RX_IP4_ADDR = /(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/
+    RX_MAC_ADDR = /(?:(?:[a-f0-9]{1,2}[:-]?)?{5}[a-f0-9]{1,2})/i
 
     # A number of helper methods which can be used to extend class, instance, 
     # or module
@@ -39,7 +40,7 @@ module Dnet
       
       # takes a IPv4 number and returns it as a 32-bit number
       def ipv4_atol(str)
-        unless str =~ /^#{RX_IP4_ADDR}$/
+        unless str =~ /^#{::Dnet::Util::RX_IP4_ADDR}$/
           raise(::ArgumentError, "invalid IP address #{str.inspect}")
         else
           u32=0

@@ -9,14 +9,12 @@ module Dnet
     # struct eth_addr { ... } eth_addr_t;
     dsl_layout{ array :data, [:uchar, ETH_ADDR_LEN] }
 
-    MAC_RX = /^[a-f0-9]{1,2}([:-]?)(?:[a-f0-9]{1,2}\1){4}[a-f0-9]{1,2}$/i
-
     # Adds the ability to initialize a new EthAddr with a mac address
     # string such as 'de:ad:be:ef:ba:be'. This argument is only parsed
     # if it is passed as the only String argument.
     def initialize(*args)
       if args.size == 1 and (s=args[0]).is_a? String
-        raise "bad mac address" unless s =~ MAC_RX
+        raise "bad mac address" unless s =~ /^#{Dnet::Util::RX_MAC_ADDR}$/
         raw = ::Dnet::Util.unhexify(s, /[:-]/)
         super(::FFI::MemoryPointer.from_string(raw))
       else
