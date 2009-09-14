@@ -62,12 +62,9 @@ begin
   else
     STDERR.puts "Sent: #{sent} bytes"
   end
-rescue ::Dnet::HandleError => e
-  STDERR.puts "Error: <#{e.class}> - #{e}"
-  STDERR.puts " ** try running as root?"
-  exit 1
 rescue Exception => e
   STDERR.puts "Error: <#{e.class}> - #{e}"
+  STDERR.puts " ** try running as root?" if e.is_a? Dnet::HandleError
   exit 1
 ensure
   blob.release
