@@ -40,6 +40,18 @@ module Dnet
       blob.release()
     end
 
+    def base_ptr
+      self[:base]
+    end
+
+    def curr_ptr
+      safe[:base] + self[:off]
+    end
+
+    def end_ptr
+      self[:base] + self[:end]
+    end
+
     # This method calls dnet(3)'s blob_free behind the scenes. It should 
     # automatically get run by the garbage collector when a blob is no longer
     # referenced.
@@ -100,13 +112,13 @@ module Dnet
       ::Dnet.blob_unpack(self, fmt, *args)
     end
 
-    # Writes the supplied string to the blob at the current offset. Uses
-    # dnet(3)'s "blob_write" under the hood.
-    def write(bstr)
+    # Writes the data supplied from a string or pointer to the blob at the 
+    # current offset. If a pointer is supplied, a size must accompany it.
+    # Uses dnet(3)'s "blob_write" under the hood.
+    def write(buf, bsz=nil)
       _check_open!
-      buf = ::FFI::MemoryPointer.from_string(bstr)
-      buf.autorelease=true
-      ::Dnet.blob_write(self, buf, bstr.size)
+      ptr, psz = ::Dnet::Util.derive_pointer(buf, bsz)
+      ::Dnet.blob_write(self, ptr, psz)
     end
 
     # Reads 'len' bytes out of the blob from the current offset. If len is nil
