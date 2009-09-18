@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Icmp::Hdr::Msg::RtrAdvert</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Icmp_Hdr_Msg_RtrAdvert">
+  <h1 class="title">Class: Dnet::Icmp::Hdr::Msg::RtrAdvert</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::Struct</li><ul><li>Dnet::Icmp::Hdr::Msg::RtrAdvert</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper, <a href="../../../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></p>
+</div>
+<div class="section docstring">
+  <p>
+Router advertisement message data structure, RFC 1256
+</p>
+<pre class="code">
+  <span class='struct identifier id'>struct</span> <span class='icmp_msg_rtradvert identifier id'>icmp_msg_rtradvert</span> <span class='lbrace token'>{</span>
+    <span class='uint8_t identifier id'>uint8_t</span>    <span class='icmp_num_addrs identifier id'>icmp_num_addrs</span><span class='semicolon token'>;</span>    <span class='regexp val'>/* # of address /</span> <span class='pref identifier id'>pref</span> <span class='pairs identifier id'>pairs</span> <span class='mult op'>*</span><span class='regexp val'>/
+    uint8_t    icmp_wpa;    /</span><span class='mult op'>*</span> <span class='words identifier id'>words</span> <span class='div op'>/</span> <span class='address identifier id'>address</span> <span class='eq op'>==</span> <span class='integer val'>2</span> <span class='mult op'>*</span><span class='regexp val'>/
+    uint16_t   icmp_lifetime;    /</span><span class='mult op'>*</span> <span class='route identifier id'>route</span> <span class='lifetime identifier id'>lifetime</span> <span class='in in kw'>in</span> <span class='seconds identifier id'>seconds</span> <span class='mult op'>*</span><span class='regexp val'>/
+    struct icmp_msg_rtr_data {
+      uint32_t  icmp_void;
+      uint32_t  icmp_pref;  /</span><span class='mult op'>*</span> <span class='router identifier id'>router</span> <span class='preference identifier id'>preference</span> <span class='lparen token'>(</span><span class='usu identifier id'>usu</span> <span class='integer val'>0</span><span class='rparen token'>)</span> <span class='mult op'>*</span><span class='regexp val'>/
+    } icmp_rtr __flexarr;      /</span><span class='mult op'>*</span> <span class='variable identifier id'>variable</span> <span class='comment val'># of routers */</span>
+  <span class='rbrace token'>}</span><span class='semicolon token'>;</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href="../../../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></h1>
+    <p><span class='name'><a href="../../../NetEndianHelper.html#BYTE_ORDER_METH-constant" title="BYTE_ORDER_METH">BYTE_ORDER_METH</a></span>, <span class='name'><a href="../../../NetEndianHelper.html#I16_convert-constant" title="I16_convert">I16_convert</a></span>, <span class='name'><a href="../../../NetEndianHelper.html#I32_convert-constant" title="I32_convert">I32_convert</a></span>, <span class='name'><a href="../../../NetEndianHelper.html#U16_convert-constant" title="U16_convert">U16_convert</a></span>, <span class='name'><a href="../../../NetEndianHelper.html#U32_convert-constant" title="U32_convert">U32_convert</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Thursday, September 17 2009 at 10:43:15 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

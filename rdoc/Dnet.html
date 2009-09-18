@@ -1,0 +1,1368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Dnet</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Dnet">
+  <h1 class="title">Module: Dnet</h1>
+  <div class="section mixins">
+  <h1>Extended Modules</h1>
+  <p>FFI::Library</p>
+</div>
+<div class="section docstring">
+  <p>
+libdnet&#8217;s tunnel interface
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="ADDR_TYPE_ETH-constant">ADDR_TYPE_ETH</dt>
+      <dd>1</dd>
+    
+      <dt id="ADDR_TYPE_IP-constant">ADDR_TYPE_IP</dt>
+      <dd>2</dd>
+    
+      <dt id="ADDR_TYPE_IP6-constant">ADDR_TYPE_IP6</dt>
+      <dd>3</dd>
+    
+      <dt id="ADDR_TYPE_NONE-constant">ADDR_TYPE_NONE</dt>
+      <dd>0</dd>
+    
+      <dt id="ARP_ETHIP_LEN-constant">ARP_ETHIP_LEN</dt>
+      <dd>20</dd>
+    
+      <dt id="ARP_HDR_LEN-constant">ARP_HDR_LEN</dt>
+      <dd>8</dd>
+    
+      <dt id="ARP_HRD_ETH-constant">ARP_HRD_ETH</dt>
+      <dd>0x0001</dd>
+    
+      <dt id="ARP_HRD_IEEE802-constant">ARP_HRD_IEEE802</dt>
+      <dd>0x0006</dd>
+    
+      <dt id="ARP_OP_REPLY-constant">ARP_OP_REPLY</dt>
+      <dd>2</dd>
+    
+      <dt id="ARP_OP_REQUEST-constant">ARP_OP_REQUEST</dt>
+      <dd>1</dd>
+    
+      <dt id="ARP_OP_REVREPLY-constant">ARP_OP_REVREPLY</dt>
+      <dd>4</dd>
+    
+      <dt id="ARP_OP_REVREQUEST-constant">ARP_OP_REVREQUEST</dt>
+      <dd>3</dd>
+    
+      <dt id="ARP_PRO_IP-constant">ARP_PRO_IP</dt>
+      <dd>0x0800</dd>
+    
+      <dt id="ArpHandle-constant">ArpHandle</dt>
+      <dd>Arp::Handle</dd>
+    
+      <dt id="DNET_CONSTANTS-constant">DNET_CONSTANTS</dt>
+      <dd>true</dd>
+    
+      <dt id="ETH_ADDR_BITS-constant">ETH_ADDR_BITS</dt>
+      <dd>48</dd>
+    
+      <dt id="ETH_ADDR_BROADCAST-constant">ETH_ADDR_BROADCAST</dt>
+      <dd>&quot;\xff\xff\xff\xff\xff\xff&quot;</dd>
+    
+      <dt id="ETH_ADDR_LEN-constant">ETH_ADDR_LEN</dt>
+      <dd>6</dd>
+    
+      <dt id="ETH_CRC_LEN-constant">ETH_CRC_LEN</dt>
+      <dd>4</dd>
+    
+      <dt id="ETH_HDR_LEN-constant">ETH_HDR_LEN</dt>
+      <dd>14</dd>
+    
+      <dt id="ETH_LEN_MAX-constant">ETH_LEN_MAX</dt>
+      <dd>1518</dd>
+    
+      <dt id="ETH_LEN_MIN-constant">ETH_LEN_MIN</dt>
+      <dd>64</dd>
+    
+      <dt id="ETH_TYPE_8021Q-constant">ETH_TYPE_8021Q</dt>
+      <dd>0x8100</dd>
+    
+      <dt id="ETH_TYPE_ARP-constant">ETH_TYPE_ARP</dt>
+      <dd>0x0806</dd>
+    
+      <dt id="ETH_TYPE_IP-constant">ETH_TYPE_IP</dt>
+      <dd>0x0800</dd>
+    
+      <dt id="ETH_TYPE_IPV6-constant">ETH_TYPE_IPV6</dt>
+      <dd>0x86DD</dd>
+    
+      <dt id="ETH_TYPE_LEN-constant">ETH_TYPE_LEN</dt>
+      <dd>2</dd>
+    
+      <dt id="ETH_TYPE_LOOPBACK-constant">ETH_TYPE_LOOPBACK</dt>
+      <dd>0x9000</dd>
+    
+      <dt id="ETH_TYPE_MPLS-constant">ETH_TYPE_MPLS</dt>
+      <dd>0x8847</dd>
+    
+      <dt id="ETH_TYPE_MPLS_MCAST-constant">ETH_TYPE_MPLS_MCAST</dt>
+      <dd>0x8848</dd>
+    
+      <dt id="ETH_TYPE_PPPOE-constant">ETH_TYPE_PPPOE</dt>
+      <dd>0x8864</dd>
+    
+      <dt id="ETH_TYPE_PPPOEDISC-constant">ETH_TYPE_PPPOEDISC</dt>
+      <dd>0x8863</dd>
+    
+      <dt id="ETH_TYPE_PUP-constant">ETH_TYPE_PUP</dt>
+      <dd>0x0200</dd>
+    
+      <dt id="ETH_TYPE_REVARP-constant">ETH_TYPE_REVARP</dt>
+      <dd>0x8035</dd>
+    
+      <dt id="EthHandle-constant">EthHandle</dt>
+      <dd>Eth::Handle</dd>
+    
+      <dt id="FW_DIR_IN-constant">FW_DIR_IN</dt>
+      <dd>1</dd>
+    
+      <dt id="FW_DIR_OUT-constant">FW_DIR_OUT</dt>
+      <dd>2</dd>
+    
+      <dt id="FW_OP_ALLOW-constant">FW_OP_ALLOW</dt>
+      <dd>1</dd>
+    
+      <dt id="FW_OP_BLOCK-constant">FW_OP_BLOCK</dt>
+      <dd>2</dd>
+    
+      <dt id="ICMP_HDR_LEN-constant">ICMP_HDR_LEN</dt>
+      <dd>4</dd>
+    
+      <dt id="ICMP_LEN_MIN-constant">ICMP_LEN_MIN</dt>
+      <dd>8</dd>
+    
+      <dt id="ICMP_PARAMPROB_ERRATPTR-constant">ICMP_PARAMPROB_ERRATPTR</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_PARAMPROB_LENGTH-constant">ICMP_PARAMPROB_LENGTH</dt>
+      <dd>2</dd>
+    
+      <dt id="ICMP_PARAMPROB_OPTABSENT-constant">ICMP_PARAMPROB_OPTABSENT</dt>
+      <dd>1</dd>
+    
+      <dt id="ICMP_PHOTURIS_AUTH_FAILED-constant">ICMP_PHOTURIS_AUTH_FAILED</dt>
+      <dd>1</dd>
+    
+      <dt id="ICMP_PHOTURIS_DECOMPRESS_FAILED-constant">ICMP_PHOTURIS_DECOMPRESS_FAILED</dt>
+      <dd>2</dd>
+    
+      <dt id="ICMP_PHOTURIS_DECRYPT_FAILED-constant">ICMP_PHOTURIS_DECRYPT_FAILED</dt>
+      <dd>3</dd>
+    
+      <dt id="ICMP_PHOTURIS_NEED_AUTHN-constant">ICMP_PHOTURIS_NEED_AUTHN</dt>
+      <dd>4</dd>
+    
+      <dt id="ICMP_PHOTURIS_NEED_AUTHZ-constant">ICMP_PHOTURIS_NEED_AUTHZ</dt>
+      <dd>5</dd>
+    
+      <dt id="ICMP_PHOTURIS_UNKNOWN_INDEX-constant">ICMP_PHOTURIS_UNKNOWN_INDEX</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_REDIRECT_HOST-constant">ICMP_REDIRECT_HOST</dt>
+      <dd>1</dd>
+    
+      <dt id="ICMP_REDIRECT_NET-constant">ICMP_REDIRECT_NET</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_REDIRECT_TOSHOST-constant">ICMP_REDIRECT_TOSHOST</dt>
+      <dd>3</dd>
+    
+      <dt id="ICMP_REDIRECT_TOSNET-constant">ICMP_REDIRECT_TOSNET</dt>
+      <dd>2</dd>
+    
+      <dt id="ICMP_RTR_PREF_NODEFAULT-constant">ICMP_RTR_PREF_NODEFAULT</dt>
+      <dd>0x80000000</dd>
+    
+      <dt id="ICMP_RTRADVERT_NORMAL-constant">ICMP_RTRADVERT_NORMAL</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_RTRADVERT_NOROUTE_COMMON-constant">ICMP_RTRADVERT_NOROUTE_COMMON</dt>
+      <dd>16</dd>
+    
+      <dt id="ICMP_TIMEXCEED_INTRANS-constant">ICMP_TIMEXCEED_INTRANS</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_TIMEXCEED_REASS-constant">ICMP_TIMEXCEED_REASS</dt>
+      <dd>1</dd>
+    
+      <dt id="ICMP_TYPE_ALTHOSTADDR-constant">ICMP_TYPE_ALTHOSTADDR</dt>
+      <dd>6</dd>
+    
+      <dt id="ICMP_TYPE_DATACONVERR-constant">ICMP_TYPE_DATACONVERR</dt>
+      <dd>31</dd>
+    
+      <dt id="ICMP_TYPE_DNS-constant">ICMP_TYPE_DNS</dt>
+      <dd>37</dd>
+    
+      <dt id="ICMP_TYPE_DNSREPLY-constant">ICMP_TYPE_DNSREPLY</dt>
+      <dd>38</dd>
+    
+      <dt id="ICMP_TYPE_ECHO-constant">ICMP_TYPE_ECHO</dt>
+      <dd>8</dd>
+    
+      <dt id="ICMP_TYPE_ECHOREPLY-constant">ICMP_TYPE_ECHOREPLY</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_TYPE_INFO-constant">ICMP_TYPE_INFO</dt>
+      <dd>15</dd>
+    
+      <dt id="ICMP_TYPE_INFOREPLY-constant">ICMP_TYPE_INFOREPLY</dt>
+      <dd>16</dd>
+    
+      <dt id="ICMP_TYPE_IPV6_IAMHERE-constant">ICMP_TYPE_IPV6_IAMHERE</dt>
+      <dd>34</dd>
+    
+      <dt id="ICMP_TYPE_IPV6_WHEREAREYOU-constant">ICMP_TYPE_IPV6_WHEREAREYOU</dt>
+      <dd>33</dd>
+    
+      <dt id="ICMP_TYPE_MASK-constant">ICMP_TYPE_MASK</dt>
+      <dd>17</dd>
+    
+      <dt id="ICMP_TYPE_MASKREPLY-constant">ICMP_TYPE_MASKREPLY</dt>
+      <dd>18</dd>
+    
+      <dt id="ICMP_TYPE_MOBILE_REDIRECT-constant">ICMP_TYPE_MOBILE_REDIRECT</dt>
+      <dd>32</dd>
+    
+      <dt id="ICMP_TYPE_MOBILE_REG-constant">ICMP_TYPE_MOBILE_REG</dt>
+      <dd>35</dd>
+    
+      <dt id="ICMP_TYPE_MOBILE_REGREPLY-constant">ICMP_TYPE_MOBILE_REGREPLY</dt>
+      <dd>36</dd>
+    
+      <dt id="ICMP_TYPE_PARAMPROB-constant">ICMP_TYPE_PARAMPROB</dt>
+      <dd>12</dd>
+    
+      <dt id="ICMP_TYPE_PHOTURIS-constant">ICMP_TYPE_PHOTURIS</dt>
+      <dd>40</dd>
+    
+      <dt id="ICMP_TYPE_REDIRECT-constant">ICMP_TYPE_REDIRECT</dt>
+      <dd>5</dd>
+    
+      <dt id="ICMP_TYPE_RTRADVERT-constant">ICMP_TYPE_RTRADVERT</dt>
+      <dd>9</dd>
+    
+      <dt id="ICMP_TYPE_RTRSOLICIT-constant">ICMP_TYPE_RTRSOLICIT</dt>
+      <dd>10</dd>
+    
+      <dt id="ICMP_TYPE_SKIP-constant">ICMP_TYPE_SKIP</dt>
+      <dd>39</dd>
+    
+      <dt id="ICMP_TYPE_SRCQUENCH-constant">ICMP_TYPE_SRCQUENCH</dt>
+      <dd>4</dd>
+    
+      <dt id="ICMP_TYPE_TIMEXCEED-constant">ICMP_TYPE_TIMEXCEED</dt>
+      <dd>11</dd>
+    
+      <dt id="ICMP_TYPE_TRACEROUTE-constant">ICMP_TYPE_TRACEROUTE</dt>
+      <dd>30</dd>
+    
+      <dt id="ICMP_TYPE_TSTAMP-constant">ICMP_TYPE_TSTAMP</dt>
+      <dd>13</dd>
+    
+      <dt id="ICMP_TYPE_TSTAMPREPLY-constant">ICMP_TYPE_TSTAMPREPLY</dt>
+      <dd>14</dd>
+    
+      <dt id="ICMP_TYPE_UNREACH-constant">ICMP_TYPE_UNREACH</dt>
+      <dd>3</dd>
+    
+      <dt id="ICMP_UNREACH_FILTER_PROHIB-constant">ICMP_UNREACH_FILTER_PROHIB</dt>
+      <dd>13</dd>
+    
+      <dt id="ICMP_UNREACH_HOST-constant">ICMP_UNREACH_HOST</dt>
+      <dd>1</dd>
+    
+      <dt id="ICMP_UNREACH_HOST_PRECEDENCE-constant">ICMP_UNREACH_HOST_PRECEDENCE</dt>
+      <dd>14</dd>
+    
+      <dt id="ICMP_UNREACH_HOST_PROHIB-constant">ICMP_UNREACH_HOST_PROHIB</dt>
+      <dd>10</dd>
+    
+      <dt id="ICMP_UNREACH_HOST_UNKNOWN-constant">ICMP_UNREACH_HOST_UNKNOWN</dt>
+      <dd>7</dd>
+    
+      <dt id="ICMP_UNREACH_ISOLATED-constant">ICMP_UNREACH_ISOLATED</dt>
+      <dd>8</dd>
+    
+      <dt id="ICMP_UNREACH_NEEDFRAG-constant">ICMP_UNREACH_NEEDFRAG</dt>
+      <dd>4</dd>
+    
+      <dt id="ICMP_UNREACH_NET-constant">ICMP_UNREACH_NET</dt>
+      <dd>0</dd>
+    
+      <dt id="ICMP_UNREACH_NET_PROHIB-constant">ICMP_UNREACH_NET_PROHIB</dt>
+      <dd>9</dd>
+    
+      <dt id="ICMP_UNREACH_NET_UNKNOWN-constant">ICMP_UNREACH_NET_UNKNOWN</dt>
+      <dd>6</dd>
+    
+      <dt id="ICMP_UNREACH_PORT-constant">ICMP_UNREACH_PORT</dt>
+      <dd>3</dd>
+    
+      <dt id="ICMP_UNREACH_PRECEDENCE_CUTOFF-constant">ICMP_UNREACH_PRECEDENCE_CUTOFF</dt>
+      <dd>15</dd>
+    
+      <dt id="ICMP_UNREACH_PROTO-constant">ICMP_UNREACH_PROTO</dt>
+      <dd>2</dd>
+    
+      <dt id="ICMP_UNREACH_SRCFAIL-constant">ICMP_UNREACH_SRCFAIL</dt>
+      <dd>5</dd>
+    
+      <dt id="ICMP_UNREACH_TOSHOST-constant">ICMP_UNREACH_TOSHOST</dt>
+      <dd>12</dd>
+    
+      <dt id="ICMP_UNREACH_TOSNET-constant">ICMP_UNREACH_TOSNET</dt>
+      <dd>11</dd>
+    
+      <dt id="INTF_FLAG_BROADCAST-constant">INTF_FLAG_BROADCAST</dt>
+      <dd>0x10</dd>
+    
+      <dt id="INTF_FLAG_LOOPBACK-constant">INTF_FLAG_LOOPBACK</dt>
+      <dd>0x02</dd>
+    
+      <dt id="INTF_FLAG_MULTICAST-constant">INTF_FLAG_MULTICAST</dt>
+      <dd>0x20</dd>
+    
+      <dt id="INTF_FLAG_NOARP-constant">INTF_FLAG_NOARP</dt>
+      <dd>0x08</dd>
+    
+      <dt id="INTF_FLAG_POINTOPOINT-constant">INTF_FLAG_POINTOPOINT</dt>
+      <dd>0x04</dd>
+    
+      <dt id="INTF_FLAG_UP-constant">INTF_FLAG_UP</dt>
+      <dd>0x01</dd>
+    
+      <dt id="INTF_NAME_LEN-constant">INTF_NAME_LEN</dt>
+      <dd>16</dd>
+    
+      <dt id="INTF_TYPE_ETH-constant">INTF_TYPE_ETH</dt>
+      <dd>6</dd>
+    
+      <dt id="INTF_TYPE_FDDI-constant">INTF_TYPE_FDDI</dt>
+      <dd>15</dd>
+    
+      <dt id="INTF_TYPE_LOOPBACK-constant">INTF_TYPE_LOOPBACK</dt>
+      <dd>24</dd>
+    
+      <dt id="INTF_TYPE_OTHER-constant">INTF_TYPE_OTHER</dt>
+      <dd>1</dd>
+    
+      <dt id="INTF_TYPE_PPP-constant">INTF_TYPE_PPP</dt>
+      <dd>23</dd>
+    
+      <dt id="INTF_TYPE_SLIP-constant">INTF_TYPE_SLIP</dt>
+      <dd>28</dd>
+    
+      <dt id="INTF_TYPE_TOKENRING-constant">INTF_TYPE_TOKENRING</dt>
+      <dd>9</dd>
+    
+      <dt id="INTF_TYPE_TUN-constant">INTF_TYPE_TUN</dt>
+      <dd>53</dd>
+    
+      <dt id="IntfHandle-constant">IntfHandle</dt>
+      <dd>Intf::Handle</dd>
+    
+      <dt id="IP6_ADDR_BITS-constant">IP6_ADDR_BITS</dt>
+      <dd>128</dd>
+    
+      <dt id="IP6_ADDR_LEN-constant">IP6_ADDR_LEN</dt>
+      <dd>16</dd>
+    
+      <dt id="IP6_HDR_LEN-constant">IP6_HDR_LEN</dt>
+      <dd>40</dd>
+    
+      <dt id="IP6_HLIM_DEFAULT-constant">IP6_HLIM_DEFAULT</dt>
+      <dd>64</dd>
+    
+      <dt id="IP6_HLIM_MAX-constant">IP6_HLIM_MAX</dt>
+      <dd>255</dd>
+    
+      <dt id="IP6_LEN_MAX-constant">IP6_LEN_MAX</dt>
+      <dd>65535</dd>
+    
+      <dt id="IP6_LEN_MIN-constant">IP6_LEN_MIN</dt>
+      <dd>IP6_HDR_LEN</dd>
+    
+      <dt id="IP6_MORE_FRAG-constant">IP6_MORE_FRAG</dt>
+      <dd>0x0001</dd>
+    
+      <dt id="IP6_MTU_MIN-constant">IP6_MTU_MIN</dt>
+      <dd>1280</dd>
+    
+      <dt id="IP6_OFF_MASK-constant">IP6_OFF_MASK</dt>
+      <dd>0xfff8</dd>
+    
+      <dt id="IP6_OPT_JUMBO-constant">IP6_OPT_JUMBO</dt>
+      <dd>0xC2</dd>
+    
+      <dt id="IP6_OPT_JUMBO_LEN-constant">IP6_OPT_JUMBO_LEN</dt>
+      <dd>6</dd>
+    
+      <dt id="IP6_OPT_LEN_MIN-constant">IP6_OPT_LEN_MIN</dt>
+      <dd>2</dd>
+    
+      <dt id="IP6_OPT_MUTABLE-constant">IP6_OPT_MUTABLE</dt>
+      <dd>0x20</dd>
+    
+      <dt id="IP6_OPT_PAD1-constant">IP6_OPT_PAD1</dt>
+      <dd>0x00</dd>
+    
+      <dt id="IP6_OPT_PADN-constant">IP6_OPT_PADN</dt>
+      <dd>0x01</dd>
+    
+      <dt id="IP6_OPT_RTALERT-constant">IP6_OPT_RTALERT</dt>
+      <dd>0x05</dd>
+    
+      <dt id="IP6_OPT_RTALERT_ACTNET-constant">IP6_OPT_RTALERT_ACTNET</dt>
+      <dd>2</dd>
+    
+      <dt id="IP6_OPT_RTALERT_LEN-constant">IP6_OPT_RTALERT_LEN</dt>
+      <dd>4</dd>
+    
+      <dt id="IP6_OPT_RTALERT_MLD-constant">IP6_OPT_RTALERT_MLD</dt>
+      <dd>0</dd>
+    
+      <dt id="IP6_OPT_RTALERT_RSVP-constant">IP6_OPT_RTALERT_RSVP</dt>
+      <dd>1</dd>
+    
+      <dt id="IP6_OPT_TYPE_DISCARD-constant">IP6_OPT_TYPE_DISCARD</dt>
+      <dd>0x40</dd>
+    
+      <dt id="IP6_OPT_TYPE_FORCEICMP-constant">IP6_OPT_TYPE_FORCEICMP</dt>
+      <dd>0x80</dd>
+    
+      <dt id="IP6_OPT_TYPE_ICMP-constant">IP6_OPT_TYPE_ICMP</dt>
+      <dd>0xC0</dd>
+    
+      <dt id="IP6_OPT_TYPE_SKIP-constant">IP6_OPT_TYPE_SKIP</dt>
+      <dd>0x00</dd>
+    
+      <dt id="IP6_RESERVED_MASK-constant">IP6_RESERVED_MASK</dt>
+      <dd>0x0006</dd>
+    
+      <dt id="IP6_VERSION-constant">IP6_VERSION</dt>
+      <dd>0x60</dd>
+    
+      <dt id="IP6_VERSION_MASK-constant">IP6_VERSION_MASK</dt>
+      <dd>0xf0</dd>
+    
+      <dt id="IP_ADDR_BITS-constant">IP_ADDR_BITS</dt>
+      <dd>32</dd>
+    
+      <dt id="IP_ADDR_LEN-constant">IP_ADDR_LEN</dt>
+      <dd>4</dd>
+    
+      <dt id="IP_DF-constant">IP_DF</dt>
+      <dd>0x4000</dd>
+    
+      <dt id="IP_HDR_LEN-constant">IP_HDR_LEN</dt>
+      <dd>20</dd>
+    
+      <dt id="IP_HDR_LEN_MAX-constant">IP_HDR_LEN_MAX</dt>
+      <dd>(IP_HDR_LEN + IP_OPT_LEN_MAX)</dd>
+    
+      <dt id="IP_LEN_MAX-constant">IP_LEN_MAX</dt>
+      <dd>65535</dd>
+    
+      <dt id="IP_LEN_MIN-constant">IP_LEN_MIN</dt>
+      <dd>IP_HDR_LEN</dd>
+    
+      <dt id="IP_MF-constant">IP_MF</dt>
+      <dd>0x2000</dd>
+    
+      <dt id="IP_OFFMASK-constant">IP_OFFMASK</dt>
+      <dd>0x1fff</dd>
+    
+      <dt id="IP_OPT_CONTROL-constant">IP_OPT_CONTROL</dt>
+      <dd>0x00</dd>
+    
+      <dt id="IP_OPT_COPY-constant">IP_OPT_COPY</dt>
+      <dd>0x80</dd>
+    
+      <dt id="IP_OPT_DEBMEAS-constant">IP_OPT_DEBMEAS</dt>
+      <dd>0x40</dd>
+    
+      <dt id="IP_OPT_LEN-constant">IP_OPT_LEN</dt>
+      <dd>2</dd>
+    
+      <dt id="IP_OPT_LEN_MAX-constant">IP_OPT_LEN_MAX</dt>
+      <dd>40</dd>
+    
+      <dt id="IP_OPT_RESERVED1-constant">IP_OPT_RESERVED1</dt>
+      <dd>0x20</dd>
+    
+      <dt id="IP_OPT_RESERVED2-constant">IP_OPT_RESERVED2</dt>
+      <dd>0x60</dd>
+    
+      <dt id="IP_OPT_SEC_CONFID-constant">IP_OPT_SEC_CONFID</dt>
+      <dd>0xf135</dd>
+    
+      <dt id="IP_OPT_SEC_EFTO-constant">IP_OPT_SEC_EFTO</dt>
+      <dd>0x789a</dd>
+    
+      <dt id="IP_OPT_SEC_MMMM-constant">IP_OPT_SEC_MMMM</dt>
+      <dd>0xbc4d</dd>
+    
+      <dt id="IP_OPT_SEC_PROG-constant">IP_OPT_SEC_PROG</dt>
+      <dd>0x5e26</dd>
+    
+      <dt id="IP_OPT_SEC_RESTR-constant">IP_OPT_SEC_RESTR</dt>
+      <dd>0xaf13</dd>
+    
+      <dt id="IP_OPT_SEC_SECRET-constant">IP_OPT_SEC_SECRET</dt>
+      <dd>0xd788</dd>
+    
+      <dt id="IP_OPT_SEC_TOPSECRET-constant">IP_OPT_SEC_TOPSECRET</dt>
+      <dd>0x6bc5</dd>
+    
+      <dt id="IP_OPT_SEC_UNCLASS-constant">IP_OPT_SEC_UNCLASS</dt>
+      <dd>0x0000</dd>
+    
+      <dt id="IP_OPT_TS_PRESPEC-constant">IP_OPT_TS_PRESPEC</dt>
+      <dd>3</dd>
+    
+      <dt id="IP_OPT_TS_TSADDR-constant">IP_OPT_TS_TSADDR</dt>
+      <dd>1</dd>
+    
+      <dt id="IP_OPT_TS_TSONLY-constant">IP_OPT_TS_TSONLY</dt>
+      <dd>0</dd>
+    
+      <dt id="IP_OTYPE_ADDEXT-constant">IP_OTYPE_ADDEXT</dt>
+      <dd>(19|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_CIPSO-constant">IP_OTYPE_CIPSO</dt>
+      <dd>(6|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_DPS-constant">IP_OTYPE_DPS</dt>
+      <dd>(23|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_EIP-constant">IP_OTYPE_EIP</dt>
+      <dd>(17|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_ENCODE-constant">IP_OTYPE_ENCODE</dt>
+      <dd>15</dd>
+    
+      <dt id="IP_OTYPE_EOL-constant">IP_OTYPE_EOL</dt>
+      <dd>0</dd>
+    
+      <dt id="IP_OTYPE_ESEC-constant">IP_OTYPE_ESEC</dt>
+      <dd>(5|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_FINN-constant">IP_OTYPE_FINN</dt>
+      <dd>(13|IP_OPT_COPY|IP_OPT_DEBMEAS)</dd>
+    
+      <dt id="IP_OTYPE_IMITD-constant">IP_OTYPE_IMITD</dt>
+      <dd>(16|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_LSRR-constant">IP_OTYPE_LSRR</dt>
+      <dd>(3|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_MAX-constant">IP_OTYPE_MAX</dt>
+      <dd>25</dd>
+    
+      <dt id="IP_OTYPE_MTUP-constant">IP_OTYPE_MTUP</dt>
+      <dd>11</dd>
+    
+      <dt id="IP_OTYPE_MTUR-constant">IP_OTYPE_MTUR</dt>
+      <dd>12</dd>
+    
+      <dt id="IP_OTYPE_NOP-constant">IP_OTYPE_NOP</dt>
+      <dd>1</dd>
+    
+      <dt id="IP_OTYPE_NSAPA-constant">IP_OTYPE_NSAPA</dt>
+      <dd>(22|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_RR-constant">IP_OTYPE_RR</dt>
+      <dd>7</dd>
+    
+      <dt id="IP_OTYPE_RTRALT-constant">IP_OTYPE_RTRALT</dt>
+      <dd>(20|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_SATID-constant">IP_OTYPE_SATID</dt>
+      <dd>(8|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_SDB-constant">IP_OTYPE_SDB</dt>
+      <dd>(21|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_SEC-constant">IP_OTYPE_SEC</dt>
+      <dd>(2|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_SSRR-constant">IP_OTYPE_SSRR</dt>
+      <dd>(9|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_TR-constant">IP_OTYPE_TR</dt>
+      <dd>(18|IP_OPT_DEBMEAS)</dd>
+    
+      <dt id="IP_OTYPE_TS-constant">IP_OTYPE_TS</dt>
+      <dd>(4|IP_OPT_DEBMEAS)</dd>
+    
+      <dt id="IP_OTYPE_UMP-constant">IP_OTYPE_UMP</dt>
+      <dd>(24|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_VISA-constant">IP_OTYPE_VISA</dt>
+      <dd>(14|IP_OPT_COPY)</dd>
+    
+      <dt id="IP_OTYPE_ZSU-constant">IP_OTYPE_ZSU</dt>
+      <dd>10</dd>
+    
+      <dt id="IP_PROTO_3PC-constant">IP_PROTO_3PC</dt>
+      <dd>IP_PROTO_THIRDPC</dd>
+    
+      <dt id="IP_PROTO__HOPOPTS-constant">IP_PROTO__HOPOPTS</dt>
+      <dd>IP_PROTO_IP</dd>
+    
+      <dt id="IP_PROTO__RESERVED-constant">IP_PROTO__RESERVED</dt>
+      <dd>IP_PROTO_RAW</dd>
+    
+      <dt id="IP_PROTO_AH-constant">IP_PROTO_AH</dt>
+      <dd>51</dd>
+    
+      <dt id="IP_PROTO_AN-constant">IP_PROTO_AN</dt>
+      <dd>107</dd>
+    
+      <dt id="IP_PROTO_ANY0HOP-constant">IP_PROTO_ANY0HOP</dt>
+      <dd>114</dd>
+    
+      <dt id="IP_PROTO_ANYENC-constant">IP_PROTO_ANYENC</dt>
+      <dd>99</dd>
+    
+      <dt id="IP_PROTO_ANYHOST-constant">IP_PROTO_ANYHOST</dt>
+      <dd>61</dd>
+    
+      <dt id="IP_PROTO_ANYNET-constant">IP_PROTO_ANYNET</dt>
+      <dd>63</dd>
+    
+      <dt id="IP_PROTO_ARGUS-constant">IP_PROTO_ARGUS</dt>
+      <dd>13</dd>
+    
+      <dt id="IP_PROTO_ARIS-constant">IP_PROTO_ARIS</dt>
+      <dd>104</dd>
+    
+      <dt id="IP_PROTO_AX25-constant">IP_PROTO_AX25</dt>
+      <dd>93</dd>
+    
+      <dt id="IP_PROTO_BBNRCC-constant">IP_PROTO_BBNRCC</dt>
+      <dd>10</dd>
+    
+      <dt id="IP_PROTO_BRSATMON-constant">IP_PROTO_BRSATMON</dt>
+      <dd>76</dd>
+    
+      <dt id="IP_PROTO_CBT-constant">IP_PROTO_CBT</dt>
+      <dd>7</dd>
+    
+      <dt id="IP_PROTO_CFTP-constant">IP_PROTO_CFTP</dt>
+      <dd>62</dd>
+    
+      <dt id="IP_PROTO_CHAOS-constant">IP_PROTO_CHAOS</dt>
+      <dd>16</dd>
+    
+      <dt id="IP_PROTO_CMTP-constant">IP_PROTO_CMTP</dt>
+      <dd>38</dd>
+    
+      <dt id="IP_PROTO_COMPAQPEER-constant">IP_PROTO_COMPAQPEER</dt>
+      <dd>110</dd>
+    
+      <dt id="IP_PROTO_CPHB-constant">IP_PROTO_CPHB</dt>
+      <dd>73</dd>
+    
+      <dt id="IP_PROTO_CPNX-constant">IP_PROTO_CPNX</dt>
+      <dd>72</dd>
+    
+      <dt id="IP_PROTO_CRTP-constant">IP_PROTO_CRTP</dt>
+      <dd>126</dd>
+    
+      <dt id="IP_PROTO_CRUDP-constant">IP_PROTO_CRUDP</dt>
+      <dd>127</dd>
+    
+      <dt id="IP_PROTO_DCNMEAS-constant">IP_PROTO_DCNMEAS</dt>
+      <dd>19</dd>
+    
+      <dt id="IP_PROTO_DDP-constant">IP_PROTO_DDP</dt>
+      <dd>37</dd>
+    
+      <dt id="IP_PROTO_DDX-constant">IP_PROTO_DDX</dt>
+      <dd>116</dd>
+    
+      <dt id="IP_PROTO_DGP-constant">IP_PROTO_DGP</dt>
+      <dd>86</dd>
+    
+      <dt id="IP_PROTO_DISTFS-constant">IP_PROTO_DISTFS</dt>
+      <dd>68</dd>
+    
+      <dt id="IP_PROTO_DSTOPTS-constant">IP_PROTO_DSTOPTS</dt>
+      <dd>60</dd>
+    
+      <dt id="IP_PROTO_EGP-constant">IP_PROTO_EGP</dt>
+      <dd>8</dd>
+    
+      <dt id="IP_PROTO_EIGRP-constant">IP_PROTO_EIGRP</dt>
+      <dd>88</dd>
+    
+      <dt id="IP_PROTO_EMCON-constant">IP_PROTO_EMCON</dt>
+      <dd>14</dd>
+    
+      <dt id="IP_PROTO_ENA-constant">IP_PROTO_ENA</dt>
+      <dd>49</dd>
+    
+      <dt id="IP_PROTO_ENCAP-constant">IP_PROTO_ENCAP</dt>
+      <dd>98</dd>
+    
+      <dt id="IP_PROTO_EON-constant">IP_PROTO_EON</dt>
+      <dd>80</dd>
+    
+      <dt id="IP_PROTO_ESP-constant">IP_PROTO_ESP</dt>
+      <dd>50</dd>
+    
+      <dt id="IP_PROTO_ETHERIP-constant">IP_PROTO_ETHERIP</dt>
+      <dd>97</dd>
+    
+      <dt id="IP_PROTO_EXPAK-constant">IP_PROTO_EXPAK</dt>
+      <dd>64</dd>
+    
+      <dt id="IP_PROTO_FC-constant">IP_PROTO_FC</dt>
+      <dd>133</dd>
+    
+      <dt id="IP_PROTO_FIRE-constant">IP_PROTO_FIRE</dt>
+      <dd>125</dd>
+    
+      <dt id="IP_PROTO_FRAGMENT-constant">IP_PROTO_FRAGMENT</dt>
+      <dd>44</dd>
+    
+      <dt id="IP_PROTO_GGP-constant">IP_PROTO_GGP</dt>
+      <dd>3</dd>
+    
+      <dt id="IP_PROTO_GMTP-constant">IP_PROTO_GMTP</dt>
+      <dd>100</dd>
+    
+      <dt id="IP_PROTO_GRE-constant">IP_PROTO_GRE</dt>
+      <dd>47</dd>
+    
+      <dt id="IP_PROTO_HMP-constant">IP_PROTO_HMP</dt>
+      <dd>20</dd>
+    
+      <dt id="IP_PROTO_IATP-constant">IP_PROTO_IATP</dt>
+      <dd>117</dd>
+    
+      <dt id="IP_PROTO_ICMP-constant">IP_PROTO_ICMP</dt>
+      <dd>1</dd>
+    
+      <dt id="IP_PROTO_ICMPV6-constant">IP_PROTO_ICMPV6</dt>
+      <dd>58</dd>
+    
+      <dt id="IP_PROTO_IDP-constant">IP_PROTO_IDP</dt>
+      <dd>22</dd>
+    
+      <dt id="IP_PROTO_IDPR-constant">IP_PROTO_IDPR</dt>
+      <dd>35</dd>
+    
+      <dt id="IP_PROTO_IFMP-constant">IP_PROTO_IFMP</dt>
+      <dd>101</dd>
+    
+      <dt id="IP_PROTO_IGMP-constant">IP_PROTO_IGMP</dt>
+      <dd>2</dd>
+    
+      <dt id="IP_PROTO_IGP-constant">IP_PROTO_IGP</dt>
+      <dd>9</dd>
+    
+      <dt id="IP_PROTO_IL-constant">IP_PROTO_IL</dt>
+      <dd>40</dd>
+    
+      <dt id="IP_PROTO_INLSP-constant">IP_PROTO_INLSP</dt>
+      <dd>52</dd>
+    
+      <dt id="IP_PROTO_IP-constant">IP_PROTO_IP</dt>
+      <dd>0</dd>
+    
+      <dt id="IP_PROTO_IPCOMP-constant">IP_PROTO_IPCOMP</dt>
+      <dd>108</dd>
+    
+      <dt id="IP_PROTO_IPCV-constant">IP_PROTO_IPCV</dt>
+      <dd>71</dd>
+    
+      <dt id="IP_PROTO_IPIP-constant">IP_PROTO_IPIP</dt>
+      <dd>4</dd>
+    
+      <dt id="IP_PROTO_IPIPENCAP-constant">IP_PROTO_IPIPENCAP</dt>
+      <dd>94</dd>
+    
+      <dt id="IP_PROTO_IPLT-constant">IP_PROTO_IPLT</dt>
+      <dd>129</dd>
+    
+      <dt id="IP_PROTO_IPPC-constant">IP_PROTO_IPPC</dt>
+      <dd>67</dd>
+    
+      <dt id="IP_PROTO_IPV6-constant">IP_PROTO_IPV6</dt>
+      <dd>41</dd>
+    
+      <dt id="IP_PROTO_IPXIP-constant">IP_PROTO_IPXIP</dt>
+      <dd>111</dd>
+    
+      <dt id="IP_PROTO_IRTP-constant">IP_PROTO_IRTP</dt>
+      <dd>28</dd>
+    
+      <dt id="IP_PROTO_ISIS-constant">IP_PROTO_ISIS</dt>
+      <dd>124</dd>
+    
+      <dt id="IP_PROTO_KRYPTOLAN-constant">IP_PROTO_KRYPTOLAN</dt>
+      <dd>65</dd>
+    
+      <dt id="IP_PROTO_L2TP-constant">IP_PROTO_L2TP</dt>
+      <dd>115</dd>
+    
+      <dt id="IP_PROTO_LARP-constant">IP_PROTO_LARP</dt>
+      <dd>91</dd>
+    
+      <dt id="IP_PROTO_LEAF1-constant">IP_PROTO_LEAF1</dt>
+      <dd>25</dd>
+    
+      <dt id="IP_PROTO_LEAF2-constant">IP_PROTO_LEAF2</dt>
+      <dd>26</dd>
+    
+      <dt id="IP_PROTO_MERITINP-constant">IP_PROTO_MERITINP</dt>
+      <dd>32</dd>
+    
+      <dt id="IP_PROTO_MFPNSP-constant">IP_PROTO_MFPNSP</dt>
+      <dd>31</dd>
+    
+      <dt id="IP_PROTO_MHRP-constant">IP_PROTO_MHRP</dt>
+      <dd>48</dd>
+    
+      <dt id="IP_PROTO_MICP-constant">IP_PROTO_MICP</dt>
+      <dd>95</dd>
+    
+      <dt id="IP_PROTO_MOBILE-constant">IP_PROTO_MOBILE</dt>
+      <dd>55</dd>
+    
+      <dt id="IP_PROTO_MTP-constant">IP_PROTO_MTP</dt>
+      <dd>92</dd>
+    
+      <dt id="IP_PROTO_MUX-constant">IP_PROTO_MUX</dt>
+      <dd>18</dd>
+    
+      <dt id="IP_PROTO_NARP-constant">IP_PROTO_NARP</dt>
+      <dd>54</dd>
+    
+      <dt id="IP_PROTO_NETBLT-constant">IP_PROTO_NETBLT</dt>
+      <dd>30</dd>
+    
+      <dt id="IP_PROTO_NONE-constant">IP_PROTO_NONE</dt>
+      <dd>59</dd>
+    
+      <dt id="IP_PROTO_NSFIGP-constant">IP_PROTO_NSFIGP</dt>
+      <dd>85</dd>
+    
+      <dt id="IP_PROTO_NVP-constant">IP_PROTO_NVP</dt>
+      <dd>11</dd>
+    
+      <dt id="IP_PROTO_OSPF-constant">IP_PROTO_OSPF</dt>
+      <dd>89</dd>
+    
+      <dt id="IP_PROTO_PGM-constant">IP_PROTO_PGM</dt>
+      <dd>113</dd>
+    
+      <dt id="IP_PROTO_PIM-constant">IP_PROTO_PIM</dt>
+      <dd>103</dd>
+    
+      <dt id="IP_PROTO_PIPE-constant">IP_PROTO_PIPE</dt>
+      <dd>131</dd>
+    
+      <dt id="IP_PROTO_PNNI-constant">IP_PROTO_PNNI</dt>
+      <dd>102</dd>
+    
+      <dt id="IP_PROTO_PRM-constant">IP_PROTO_PRM</dt>
+      <dd>21</dd>
+    
+      <dt id="IP_PROTO_PTP-constant">IP_PROTO_PTP</dt>
+      <dd>123</dd>
+    
+      <dt id="IP_PROTO_PUP-constant">IP_PROTO_PUP</dt>
+      <dd>12</dd>
+    
+      <dt id="IP_PROTO_PVP-constant">IP_PROTO_PVP</dt>
+      <dd>75</dd>
+    
+      <dt id="IP_PROTO_QNX-constant">IP_PROTO_QNX</dt>
+      <dd>106</dd>
+    
+      <dt id="IP_PROTO_RAW-constant">IP_PROTO_RAW</dt>
+      <dd>255</dd>
+    
+      <dt id="IP_PROTO_RDP-constant">IP_PROTO_RDP</dt>
+      <dd>27</dd>
+    
+      <dt id="IP_PROTO_ROUTING-constant">IP_PROTO_ROUTING</dt>
+      <dd>43</dd>
+    
+      <dt id="IP_PROTO_RSVP-constant">IP_PROTO_RSVP</dt>
+      <dd>46</dd>
+    
+      <dt id="IP_PROTO_RSVPIGN-constant">IP_PROTO_RSVPIGN</dt>
+      <dd>134</dd>
+    
+      <dt id="IP_PROTO_RVD-constant">IP_PROTO_RVD</dt>
+      <dd>66</dd>
+    
+      <dt id="IP_PROTO_SATMON-constant">IP_PROTO_SATMON</dt>
+      <dd>69</dd>
+    
+      <dt id="IP_PROTO_SCCSP-constant">IP_PROTO_SCCSP</dt>
+      <dd>96</dd>
+    
+      <dt id="IP_PROTO_SCPS-constant">IP_PROTO_SCPS</dt>
+      <dd>105</dd>
+    
+      <dt id="IP_PROTO_SCTP-constant">IP_PROTO_SCTP</dt>
+      <dd>132</dd>
+    
+      <dt id="IP_PROTO_SDRP-constant">IP_PROTO_SDRP</dt>
+      <dd>42</dd>
+    
+      <dt id="IP_PROTO_SEP-constant">IP_PROTO_SEP</dt>
+      <dd>33</dd>
+    
+      <dt id="IP_PROTO_SKIP-constant">IP_PROTO_SKIP</dt>
+      <dd>57</dd>
+    
+      <dt id="IP_PROTO_SM-constant">IP_PROTO_SM</dt>
+      <dd>122</dd>
+    
+      <dt id="IP_PROTO_SMP-constant">IP_PROTO_SMP</dt>
+      <dd>121</dd>
+    
+      <dt id="IP_PROTO_SNP-constant">IP_PROTO_SNP</dt>
+      <dd>109</dd>
+    
+      <dt id="IP_PROTO_SPRITERPC-constant">IP_PROTO_SPRITERPC</dt>
+      <dd>90</dd>
+    
+      <dt id="IP_PROTO_SPS-constant">IP_PROTO_SPS</dt>
+      <dd>130</dd>
+    
+      <dt id="IP_PROTO_SRP-constant">IP_PROTO_SRP</dt>
+      <dd>119</dd>
+    
+      <dt id="IP_PROTO_SSCOPMCE-constant">IP_PROTO_SSCOPMCE</dt>
+      <dd>128</dd>
+    
+      <dt id="IP_PROTO_ST-constant">IP_PROTO_ST</dt>
+      <dd>5</dd>
+    
+      <dt id="IP_PROTO_STP-constant">IP_PROTO_STP</dt>
+      <dd>118</dd>
+    
+      <dt id="IP_PROTO_SUNND-constant">IP_PROTO_SUNND</dt>
+      <dd>77</dd>
+    
+      <dt id="IP_PROTO_SVMTP-constant">IP_PROTO_SVMTP</dt>
+      <dd>82</dd>
+    
+      <dt id="IP_PROTO_SWIPE-constant">IP_PROTO_SWIPE</dt>
+      <dd>53</dd>
+    
+      <dt id="IP_PROTO_TCF-constant">IP_PROTO_TCF</dt>
+      <dd>87</dd>
+    
+      <dt id="IP_PROTO_TCP-constant">IP_PROTO_TCP</dt>
+      <dd>6</dd>
+    
+      <dt id="IP_PROTO_THIRDPC-constant">IP_PROTO_THIRDPC</dt>
+      <dd>34</dd>
+    
+      <dt id="IP_PROTO_TLSP-constant">IP_PROTO_TLSP</dt>
+      <dd>56</dd>
+    
+      <dt id="IP_PROTO_TP-constant">IP_PROTO_TP</dt>
+      <dd>29</dd>
+    
+      <dt id="IP_PROTO_TPPP-constant">IP_PROTO_TPPP</dt>
+      <dd>39</dd>
+    
+      <dt id="IP_PROTO_TRUNK1-constant">IP_PROTO_TRUNK1</dt>
+      <dd>23</dd>
+    
+      <dt id="IP_PROTO_TRUNK2-constant">IP_PROTO_TRUNK2</dt>
+      <dd>24</dd>
+    
+      <dt id="IP_PROTO_TTP-constant">IP_PROTO_TTP</dt>
+      <dd>84</dd>
+    
+      <dt id="IP_PROTO_UDP-constant">IP_PROTO_UDP</dt>
+      <dd>17</dd>
+    
+      <dt id="IP_PROTO_UTI-constant">IP_PROTO_UTI</dt>
+      <dd>120</dd>
+    
+      <dt id="IP_PROTO_VINES-constant">IP_PROTO_VINES</dt>
+      <dd>83</dd>
+    
+      <dt id="IP_PROTO_VISA-constant">IP_PROTO_VISA</dt>
+      <dd>70</dd>
+    
+      <dt id="IP_PROTO_VMTP-constant">IP_PROTO_VMTP</dt>
+      <dd>81</dd>
+    
+      <dt id="IP_PROTO_VRRP-constant">IP_PROTO_VRRP</dt>
+      <dd>112</dd>
+    
+      <dt id="IP_PROTO_WBEXPAK-constant">IP_PROTO_WBEXPAK</dt>
+      <dd>79</dd>
+    
+      <dt id="IP_PROTO_WBMON-constant">IP_PROTO_WBMON</dt>
+      <dd>78</dd>
+    
+      <dt id="IP_PROTO_WSN-constant">IP_PROTO_WSN</dt>
+      <dd>74</dd>
+    
+      <dt id="IP_PROTO_XNET-constant">IP_PROTO_XNET</dt>
+      <dd>15</dd>
+    
+      <dt id="IP_PROTO_XTP-constant">IP_PROTO_XTP</dt>
+      <dd>36</dd>
+    
+      <dt id="IP_RF-constant">IP_RF</dt>
+      <dd>0x8000</dd>
+    
+      <dt id="IP_TOS__PREC_CRITIC_ECP-constant">IP_TOS__PREC_CRITIC_ECP</dt>
+      <dd>0xa0</dd>
+    
+      <dt id="IP_TOS__PREC_FLASH-constant">IP_TOS__PREC_FLASH</dt>
+      <dd>0x60</dd>
+    
+      <dt id="IP_TOS__PREC_FLASHOVERRIDE-constant">IP_TOS__PREC_FLASHOVERRIDE</dt>
+      <dd>0x80</dd>
+    
+      <dt id="IP_TOS__PREC_IMMEDIATE-constant">IP_TOS__PREC_IMMEDIATE</dt>
+      <dd>0x40</dd>
+    
+      <dt id="IP_TOS__PREC_INTERNETCONTROL-constant">IP_TOS__PREC_INTERNETCONTROL</dt>
+      <dd>0xc0</dd>
+    
+      <dt id="IP_TOS__PREC_NETCONTROL-constant">IP_TOS__PREC_NETCONTROL</dt>
+      <dd>0xe0</dd>
+    
+      <dt id="IP_TOS__PREC_PRIORITY-constant">IP_TOS__PREC_PRIORITY</dt>
+      <dd>0x20</dd>
+    
+      <dt id="IP_TOS__PREC_ROUTINE-constant">IP_TOS__PREC_ROUTINE</dt>
+      <dd>0x00</dd>
+    
+      <dt id="IP_TOS_CE-constant">IP_TOS_CE</dt>
+      <dd>0x01</dd>
+    
+      <dt id="IP_TOS_DEFAULT-constant">IP_TOS_DEFAULT</dt>
+      <dd>0x00</dd>
+    
+      <dt id="IP_TOS_ECT-constant">IP_TOS_ECT</dt>
+      <dd>0x02</dd>
+    
+      <dt id="IP_TOS_LOWCOST-constant">IP_TOS_LOWCOST</dt>
+      <dd>0x02</dd>
+    
+      <dt id="IP_TOS_LOWDELAY-constant">IP_TOS_LOWDELAY</dt>
+      <dd>0x10</dd>
+    
+      <dt id="IP_TOS_RELIABILITY-constant">IP_TOS_RELIABILITY</dt>
+      <dd>0x04</dd>
+    
+      <dt id="IP_TOS_THROUGHPUT-constant">IP_TOS_THROUGHPUT</dt>
+      <dd>0x08</dd>
+    
+      <dt id="IP_TTL_DEFAULT-constant">IP_TTL_DEFAULT</dt>
+      <dd>64</dd>
+    
+      <dt id="IP_TTL_MAX-constant">IP_TTL_MAX</dt>
+      <dd>255</dd>
+    
+      <dt id="IpHandle-constant">IpHandle</dt>
+      <dd>Ip::Handle</dd>
+    
+      <dt id="RouteHandle-constant">RouteHandle</dt>
+      <dd>Route::Handle</dd>
+    
+      <dt id="TCP_HDR_LEN-constant">TCP_HDR_LEN</dt>
+      <dd>20</dd>
+    
+      <dt id="TCP_HDR_LEN_MAX-constant">TCP_HDR_LEN_MAX</dt>
+      <dd>(TCP_HDR_LEN + TCP_OPT_LEN_MAX)</dd>
+    
+      <dt id="TCP_OPT_LEN-constant">TCP_OPT_LEN</dt>
+      <dd>2</dd>
+    
+      <dt id="TCP_OPT_LEN_MAX-constant">TCP_OPT_LEN_MAX</dt>
+      <dd>40</dd>
+    
+      <dt id="TCP_OTYPE_ALTSUM-constant">TCP_OTYPE_ALTSUM</dt>
+      <dd>14</dd>
+    
+      <dt id="TCP_OTYPE_ALTSUMDATA-constant">TCP_OTYPE_ALTSUMDATA</dt>
+      <dd>15</dd>
+    
+      <dt id="TCP_OTYPE_BUBBA-constant">TCP_OTYPE_BUBBA</dt>
+      <dd>17</dd>
+    
+      <dt id="TCP_OTYPE_CC-constant">TCP_OTYPE_CC</dt>
+      <dd>11</dd>
+    
+      <dt id="TCP_OTYPE_CCECHO-constant">TCP_OTYPE_CCECHO</dt>
+      <dd>13</dd>
+    
+      <dt id="TCP_OTYPE_CCNEW-constant">TCP_OTYPE_CCNEW</dt>
+      <dd>12</dd>
+    
+      <dt id="TCP_OTYPE_CORRUPT-constant">TCP_OTYPE_CORRUPT</dt>
+      <dd>23</dd>
+    
+      <dt id="TCP_OTYPE_ECHO-constant">TCP_OTYPE_ECHO</dt>
+      <dd>6</dd>
+    
+      <dt id="TCP_OTYPE_ECHOREPLY-constant">TCP_OTYPE_ECHOREPLY</dt>
+      <dd>7</dd>
+    
+      <dt id="TCP_OTYPE_EOL-constant">TCP_OTYPE_EOL</dt>
+      <dd>0</dd>
+    
+      <dt id="TCP_OTYPE_MAX-constant">TCP_OTYPE_MAX</dt>
+      <dd>27</dd>
+    
+      <dt id="TCP_OTYPE_MD5-constant">TCP_OTYPE_MD5</dt>
+      <dd>19</dd>
+    
+      <dt id="TCP_OTYPE_MSS-constant">TCP_OTYPE_MSS</dt>
+      <dd>2</dd>
+    
+      <dt id="TCP_OTYPE_NOP-constant">TCP_OTYPE_NOP</dt>
+      <dd>1</dd>
+    
+      <dt id="TCP_OTYPE_POCONN-constant">TCP_OTYPE_POCONN</dt>
+      <dd>9</dd>
+    
+      <dt id="TCP_OTYPE_POSVC-constant">TCP_OTYPE_POSVC</dt>
+      <dd>10</dd>
+    
+      <dt id="TCP_OTYPE_REC-constant">TCP_OTYPE_REC</dt>
+      <dd>22</dd>
+    
+      <dt id="TCP_OTYPE_SACK-constant">TCP_OTYPE_SACK</dt>
+      <dd>5</dd>
+    
+      <dt id="TCP_OTYPE_SACKOK-constant">TCP_OTYPE_SACKOK</dt>
+      <dd>4</dd>
+    
+      <dt id="TCP_OTYPE_SCPS-constant">TCP_OTYPE_SCPS</dt>
+      <dd>20</dd>
+    
+      <dt id="TCP_OTYPE_SKEETER-constant">TCP_OTYPE_SKEETER</dt>
+      <dd>16</dd>
+    
+      <dt id="TCP_OTYPE_SNACK-constant">TCP_OTYPE_SNACK</dt>
+      <dd>21</dd>
+    
+      <dt id="TCP_OTYPE_SNAP-constant">TCP_OTYPE_SNAP</dt>
+      <dd>24</dd>
+    
+      <dt id="TCP_OTYPE_TCPCOMP-constant">TCP_OTYPE_TCPCOMP</dt>
+      <dd>26</dd>
+    
+      <dt id="TCP_OTYPE_TIMESTAMP-constant">TCP_OTYPE_TIMESTAMP</dt>
+      <dd>8</dd>
+    
+      <dt id="TCP_OTYPE_TRAILSUM-constant">TCP_OTYPE_TRAILSUM</dt>
+      <dd>18</dd>
+    
+      <dt id="TCP_OTYPE_WSCALE-constant">TCP_OTYPE_WSCALE</dt>
+      <dd>3</dd>
+    
+      <dt id="TCP_PORT_MAX-constant">TCP_PORT_MAX</dt>
+      <dd>65535</dd>
+    
+      <dt id="TCP_STATE_CLOSE_WAIT-constant">TCP_STATE_CLOSE_WAIT</dt>
+      <dd>5</dd>
+    
+      <dt id="TCP_STATE_CLOSED-constant">TCP_STATE_CLOSED</dt>
+      <dd>0</dd>
+    
+      <dt id="TCP_STATE_CLOSING-constant">TCP_STATE_CLOSING</dt>
+      <dd>7</dd>
+    
+      <dt id="TCP_STATE_ESTABLISHED-constant">TCP_STATE_ESTABLISHED</dt>
+      <dd>4</dd>
+    
+      <dt id="TCP_STATE_FIN_WAIT_1-constant">TCP_STATE_FIN_WAIT_1</dt>
+      <dd>6</dd>
+    
+      <dt id="TCP_STATE_FIN_WAIT_2-constant">TCP_STATE_FIN_WAIT_2</dt>
+      <dd>9</dd>
+    
+      <dt id="TCP_STATE_LAST_ACK-constant">TCP_STATE_LAST_ACK</dt>
+      <dd>8</dd>
+    
+      <dt id="TCP_STATE_LISTEN-constant">TCP_STATE_LISTEN</dt>
+      <dd>1</dd>
+    
+      <dt id="TCP_STATE_MAX-constant">TCP_STATE_MAX</dt>
+      <dd>11</dd>
+    
+      <dt id="TCP_STATE_SYN_RECEIVED-constant">TCP_STATE_SYN_RECEIVED</dt>
+      <dd>3</dd>
+    
+      <dt id="TCP_STATE_SYN_SENT-constant">TCP_STATE_SYN_SENT</dt>
+      <dd>2</dd>
+    
+      <dt id="TCP_STATE_TIME_WAIT-constant">TCP_STATE_TIME_WAIT</dt>
+      <dd>10</dd>
+    
+      <dt id="TCP_WIN_MAX-constant">TCP_WIN_MAX</dt>
+      <dd>65535</dd>
+    
+      <dt id="TH_ACK-constant">TH_ACK</dt>
+      <dd>0x10</dd>
+    
+      <dt id="TH_CWR-constant">TH_CWR</dt>
+      <dd>0x80</dd>
+    
+      <dt id="TH_ECE-constant">TH_ECE</dt>
+      <dd>0x40</dd>
+    
+      <dt id="TH_FIN-constant">TH_FIN</dt>
+      <dd>0x01</dd>
+    
+      <dt id="TH_PUSH-constant">TH_PUSH</dt>
+      <dd>0x08</dd>
+    
+      <dt id="TH_RST-constant">TH_RST</dt>
+      <dd>0x04</dd>
+    
+      <dt id="TH_SYN-constant">TH_SYN</dt>
+      <dd>0x02</dd>
+    
+      <dt id="TH_URG-constant">TH_URG</dt>
+      <dd>0x20</dd>
+    
+      <dt id="UDP_HDR_LEN-constant">UDP_HDR_LEN</dt>
+      <dd>8</dd>
+    
+      <dt id="UDP_PORT_MAX-constant">UDP_PORT_MAX</dt>
+      <dd>65535</dd>
+    
+  </dl>
+</div>
+
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#truncate_cstr-class_method" title="truncate_cstr">truncate_cstr</a></span><span class='args'>(val, max = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Produces a null-terminated string from &#8216;val&#8217;, if max is
+supplied, it is taken as a maximum length.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>truncate_cstr</h3>
+</div><div id="truncate_cstr-class_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>truncate_cstr</span><span class='args'>(val, max = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Produces a null-terminated string from &#8216;val&#8217;, if max is
+supplied, it is taken as a maximum length. If &#8216;val&#8217; is longer
+than max, it will be truncated to max-1 with a terminating null.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+14
+15
+16
+17
+18</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/helpers.rb', line 14</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='truncate_cstr identifier id'>truncate_cstr</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='comma token'>,</span> <span class='max identifier id'>max</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='ret identifier id'>ret</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='max identifier id'>max</span> <span class='and and kw'>and</span> <span class='val identifier id'>val</span><span class='dot token'>.</span><span class='size identifier id'>size</span> <span class='gt op'>&gt;</span> <span class='lparen token'>(</span><span class='max identifier id'>max</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='question op'>?</span> <span class='val identifier id'>val</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='max identifier id'>max</span><span class='minus op'>-</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='colon op'>:</span> <span class='val identifier id'>val</span>
+  <span class='ret identifier id'>ret</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>&quot;\x00&quot;</span>
+  <span class='return return kw'>return</span> <span class='ret identifier id'>ret</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Thursday, September 17 2009 at 10:43:13 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

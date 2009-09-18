@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Tcp::Opt</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Tcp_Opt">
+  <h1 class="title">Class: Dnet::Tcp::Opt</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::Struct</li><ul><li>Dnet::Tcp::Opt</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper, <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></p>
+</div>
+<div class="section docstring">
+  <p>
+TCP option (following TCP header)
+</p>
+<pre class="code">
+  <span class='struct identifier id'>struct</span> <span class='tcp_opt identifier id'>tcp_opt</span> <span class='lbrace token'>{</span>
+     <span class='uint8_t identifier id'>uint8_t</span>        <span class='opt_type identifier id'>opt_type</span><span class='semicolon token'>;</span>  <span class='regexp val'>/* option type */</span>
+     <span class='uint8_t identifier id'>uint8_t</span>        <span class='opt_len identifier id'>opt_len</span><span class='semicolon token'>;</span>   <span class='regexp val'>/* option length &gt;= TCP_OPT_LEN */</span>
+     <span class='union identifier id'>union</span> <span class='tcp_opt_data identifier id'>tcp_opt_data</span> <span class='lbrace token'>{</span>
+       <span class='uint16_t identifier id'>uint16_t</span>    <span class='mss identifier id'>mss</span><span class='semicolon token'>;</span>           <span class='regexp val'>/* TCP_OPT_MSS */</span>
+       <span class='uint8_t identifier id'>uint8_t</span>        <span class='wscale identifier id'>wscale</span><span class='semicolon token'>;</span>     <span class='regexp val'>/* TCP_OPT_WSCALE */</span>
+       <span class='uint16_t identifier id'>uint16_t</span>    <span class='sack identifier id'>sack</span><span class='lbrack token'>[</span><span class='integer val'>19</span><span class='rbrack token'>]</span><span class='semicolon token'>;</span>      <span class='regexp val'>/* TCP_OPT_SACK */</span>
+       <span class='uint32_t identifier id'>uint32_t</span>    <span class='echo identifier id'>echo</span><span class='semicolon token'>;</span>          <span class='regexp val'>/* TCP_OPT_ECHO{REPLY} */</span>
+       <span class='uint32_t identifier id'>uint32_t</span>    <span class='timestamp identifier id'>timestamp</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span><span class='semicolon token'>;</span>  <span class='regexp val'>/* TCP_OPT_TIMESTAMP */</span>
+       <span class='uint32_t identifier id'>uint32_t</span>    <span class='cc identifier id'>cc</span><span class='semicolon token'>;</span>            <span class='regexp val'>/* TCP_OPT_CC{NEW,ECHO} */</span>
+       <span class='uint8_t identifier id'>uint8_t</span>        <span class='cksum identifier id'>cksum</span><span class='semicolon token'>;</span>      <span class='regexp val'>/* TCP_OPT_ALTSUM */</span>
+       <span class='uint8_t identifier id'>uint8_t</span>        <span class='md5 identifier id'>md5</span><span class='lbrack token'>[</span><span class='integer val'>16</span><span class='rbrack token'>]</span><span class='semicolon token'>;</span>    <span class='regexp val'>/* TCP_OPT_MD5 */</span>
+       <span class='uint8_t identifier id'>uint8_t</span>        <span class='data8 identifier id'>data8</span><span class='lbrack token'>[</span><span class='TCP_OPT_LEN_MAX constant id'>TCP_OPT_LEN_MAX</span> <span class='minus op'>-</span> <span class='TCP_OPT_LEN constant id'>TCP_OPT_LEN</span><span class='rbrack token'>]</span><span class='semicolon token'>;</span>
+     <span class='rbrace token'>}</span> <span class='opt_data identifier id'>opt_data</span><span class='semicolon token'>;</span>
+  <span class='rbrace token'>}</span> <span class='__attribute__ identifier id'>__attribute__</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='__packed__ identifier id'>__packed__</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+<p>
+class Opt
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="DATA_LEN-constant">DATA_LEN</dt>
+      <dd>TCP_OPT_LEN_MAX - TCP_OPT_LEN</dd>
+    
+  </dl>
+</div>
+<div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></h1>
+    <p><span class='name'><a href="../NetEndianHelper.html#BYTE_ORDER_METH-constant" title="BYTE_ORDER_METH">BYTE_ORDER_METH</a></span>, <span class='name'><a href="../NetEndianHelper.html#I16_convert-constant" title="I16_convert">I16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#I32_convert-constant" title="I32_convert">I32_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U16_convert-constant" title="U16_convert">U16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U32_convert-constant" title="U32_convert">U32_convert</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Thursday, September 17 2009 at 10:43:15 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

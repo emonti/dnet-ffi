@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: Dnet::Ip</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module Dnet_Ip">
+  <h1 class="title">Module: Dnet::Ip</h1>
+  <div class="section docstring">
+  <p>
+module Ip
+</p>
+
+</div><div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary class public">
+    <h1>Public Class Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#add_option-class_method" title="add_option">add_option</a></span><span class='args'>(buf, proto, optbuf, bsz = nil, osz = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Adds the header option for the protocol proto specified by
+&#8216;optbuf&#8217; of length &#8216;osz&#8217; and appends it to the
+appropriate header of the IP packet contained in &#8216;buf&#8217; of size
+&#8216;bsz&#8217;, shifting any existing payload and adding NOPs to pad the
+option to a word boundary if necessary.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#checksum-class_method" title="checksum">checksum</a></span><span class='args'>(buf, len = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the IP checksum and any appropriate transport protocol checksum for
+the IP packet pointed to by buf of length len.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails class public">
+  <h1>Public Class Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>add_option</h3>
+</div><div id="add_option-class_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>add_option</span><span class='args'>(buf, proto, optbuf, bsz = nil, osz = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Adds the header option for the protocol proto specified by
+&#8216;optbuf&#8217; of length &#8216;osz&#8217; and appends it to the
+appropriate header of the IP packet contained in &#8216;buf&#8217; of size
+&#8216;bsz&#8217;, shifting any existing payload and adding NOPs to pad the
+option to a word boundary if necessary.
+</p>
+<p>
+The buf and/or optbuf can be String or FFI::Pointer objects. Pointers must
+also include the associated size in bsz or osz respectively.
+</p>
+<p>
+sizes are required for buffer
+</p>
+<pre class="code">
+    <span class='ssize_t identifier id'>ssize_t</span> <span class='ip_add_option identifier id'>ip_add_option</span><span class='lparen token'>(</span><span class='void identifier id'>void</span> <span class='mult op'>*</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='size_t identifier id'>size_t</span> <span class='len identifier id'>len</span><span class='comma token'>,</span> <span class='int identifier id'>int</span> <span class='proto identifier id'>proto</span><span class='comma token'>,</span>
+            <span class='const identifier id'>const</span> <span class='void identifier id'>void</span> <span class='mult op'>*</span><span class='optbuf identifier id'>optbuf</span><span class='comma token'>,</span> <span class='size_t identifier id'>size_t</span> <span class='optlen identifier id'>optlen</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+284
+285
+286
+287
+288</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 284</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='add_option identifier id'>add_option</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='proto identifier id'>proto</span><span class='comma token'>,</span> <span class='optbuf identifier id'>optbuf</span><span class='comma token'>,</span> <span class='bsz identifier id'>bsz</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='comma token'>,</span> <span class='osz identifier id'>osz</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='bufp identifier id'>bufp</span><span class='comma token'>,</span> <span class='blen identifier id'>blen</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='derive_pointer identifier id'>derive_pointer</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='bsz identifier id'>bsz</span><span class='rparen token'>)</span>
+  <span class='optbufp identifier id'>optbufp</span><span class='comma token'>,</span> <span class='olen identifier id'>olen</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='derive_pointer identifier id'>derive_pointer</span><span class='lparen token'>(</span><span class='optbuf identifier id'>optbuf</span><span class='comma token'>,</span> <span class='osz identifier id'>osz</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='ip_add_option identifier id'>ip_add_option</span><span class='lparen token'>(</span><span class='bufp identifier id'>bufp</span><span class='comma token'>,</span> <span class='proto identifier id'>proto</span><span class='comma token'>,</span> <span class='blen identifier id'>blen</span><span class='comma token'>,</span> <span class='optbufp identifier id'>optbufp</span><span class='comma token'>,</span> <span class='olen identifier id'>olen</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>checksum</h3>
+</div><div id="checksum-class_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>checksum</span><span class='args'>(buf, len = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Sets the IP checksum and any appropriate transport protocol checksum for
+the IP packet pointed to by buf of length len
+</p>
+<p>
+returns [buf-pointer, buf-length]
+</p>
+<pre class="code">
+    <span class='void identifier id'>void</span> <span class='ip_checksum identifier id'>ip_checksum</span><span class='lparen token'>(</span><span class='void identifier id'>void</span> <span class='mult op'>*</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='size_t identifier id'>size_t</span> <span class='len identifier id'>len</span><span class='rparen token'>)</span><span class='semicolon token'>;</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+296
+297
+298
+299
+300</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 296</span>
+
+<span class='def def kw'>def</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='checksum identifier id'>checksum</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='bufp identifier id'>bufp</span><span class='comma token'>,</span> <span class='plen identifier id'>plen</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='derive_pointer identifier id'>derive_pointer</span><span class='lparen token'>(</span><span class='buf identifier id'>buf</span><span class='comma token'>,</span> <span class='len identifier id'>len</span><span class='rparen token'>)</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='ip_checksum identifier id'>ip_checksum</span> <span class='bufp identifier id'>bufp</span><span class='comma token'>,</span> <span class='plen identifier id'>plen</span>
+  <span class='return return kw'>return</span> <span class='lbrack token'>[</span><span class='bufp identifier id'>bufp</span><span class='comma token'>,</span> <span class='plen identifier id'>plen</span><span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Thursday, September 17 2009 at 10:43:14 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Ip::Hdr</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Ip_Hdr">
+  <h1 class="title">Class: Dnet::Ip::Hdr</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::Struct</li><ul><li>Dnet::Ip::Hdr</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper, <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></p>
+</div>
+<div class="section docstring">
+  <p>
+IP header, without options
+</p>
+<pre class="code">
+  <span class='field identifier id'>field</span> <span class='symbol val'>:v_hl</span><span class='comma token'>,</span>    <span class='symbol val'>:uint8</span><span class='comma token'>,</span>   <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'v=vers(. &amp; 0xf0) / '</span><span class='plus op'>+</span>
+                                     <span class='string val'>'hl=hdr len(. &amp; 0x0f)'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:tos</span><span class='comma token'>,</span>     <span class='symbol val'>:uint8</span><span class='comma token'>,</span>   <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'type of service'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:len</span><span class='comma token'>,</span>     <span class='symbol val'>:uint16</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'total length (incl header)'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:id</span><span class='comma token'>,</span>      <span class='symbol val'>:uint16</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'identification'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:off</span><span class='comma token'>,</span>     <span class='symbol val'>:uint16</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'fragment offset and flags'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:ttl</span><span class='comma token'>,</span>     <span class='symbol val'>:uint8</span><span class='comma token'>,</span>   <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'time to live'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:proto</span><span class='comma token'>,</span>   <span class='symbol val'>:uint8</span><span class='comma token'>,</span>   <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'protocol'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:sum</span><span class='comma token'>,</span>     <span class='symbol val'>:uint16</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'checksum'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:src</span><span class='comma token'>,</span>     <span class='symbol val'>:uint32</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'source address'</span>
+  <span class='field identifier id'>field</span> <span class='symbol val'>:dst</span><span class='comma token'>,</span>     <span class='symbol val'>:uint32</span><span class='comma token'>,</span>  <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'destination address'</span>
+</pre>
+<p>
+class Hdr
+</p>
+
+</div><div class="section constants">
+  <div class="thisclass">
+  <h1>Constants</h1>
+  <dl>
+    
+      <dt id="Proto-constant">Proto</dt>
+      <dd>::Dnet::Ip::Proto</dd>
+    
+  </dl>
+</div>
+<div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></h1>
+    <p><span class='name'><a href="../NetEndianHelper.html#BYTE_ORDER_METH-constant" title="BYTE_ORDER_METH">BYTE_ORDER_METH</a></span>, <span class='name'><a href="../NetEndianHelper.html#I16_convert-constant" title="I16_convert">I16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#I32_convert-constant" title="I32_convert">I32_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U16_convert-constant" title="U16_convert">U16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U32_convert-constant" title="U32_convert">U32_convert</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#dst-instance_method" title="#dst">#dst</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the destination IP address from the header as an IPv4 address
+string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#dst%3D-instance_method" title="#dst=">#dst=</a></span><span class='args'>(val)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets destination IP address in the header from an IPv4 address string or
+32-bit number.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#hl-instance_method" title="#hl">#hl</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the value of the hl field.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#hl%3D-instance_method" title="#hl=">#hl=</a></span><span class='args'>(val)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets the value of the hl field.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#lookup_proto-instance_method" title="#lookup_proto">#lookup_proto</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#lookup_tos-instance_method" title="#lookup_tos">#lookup_tos</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#set_fields-instance_method" title="#set_fields">#set_fields</a></span><span class='args'>(params = nil)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Overrides set_fields to supply a default value for the &#8216;v_hl&#8217;
+field.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#src-instance_method" title="#src">#src</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Returns the source IP address as an IPv4 address string as an IPv4 address
+string.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#src%3D-instance_method" title="#src=">#src=</a></span><span class='args'>(val)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Sets source IP address in the header from an IPv4 address string or 32-bit
+number.
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dst</h3>
+</div><div id="dst-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>dst</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Returns the destination IP address from the header as an IPv4 address
+string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+117
+118
+119</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 117</span>
+
+<span class='def def kw'>def</span> <span class='dst identifier id'>dst</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='ipv4_ltoa identifier id'>ipv4_ltoa</span><span class='lparen token'>(</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='ntohl identifier id'>ntohl</span><span class='lparen token'>(</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:dst</span><span class='rbrack token'>]</span> <span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>dst=</h3>
+</div><div id="dst=-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>dst=</span><span class='args'>(val)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Sets destination IP address in the header from an IPv4 address string or
+32-bit number.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+110
+111
+112
+113</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 110</span>
+
+<span class='def def kw'>def</span> <span class='dst= identifier id'>dst=</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='ipv4_atol identifier id'>ipv4_atol</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='val identifier id'>val</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span> <span class='String constant id'>String</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:dst</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='htonl identifier id'>htonl</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hl</h3>
+</div><div id="hl-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>hl</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Returns the value of the hl field. This field is a 4-bit value occupying
+the lower 4 bits of the &#8216;v_hl&#8217; field.
+</p>
+<p>
+This value is the size of the IP header (including opts if present) in
+32-bit words. The byte size maximum is 15*4 - 60 bytes.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+75
+76
+77</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 75</span>
+
+<span class='def def kw'>def</span> <span class='hl identifier id'>hl</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:v_hl</span><span class='rbrack token'>]</span> <span class='bitand op'>&amp;</span> <span class='integer val'>0x0f</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>hl=</h3>
+</div><div id="hl=-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>hl=</span><span class='args'>(val)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Sets the value of the hl field. This field is a 4-bit value occupying the
+lower 4 bits of the &#8216;v_hl&#8217; field.
+</p>
+<p>
+This value is the size of the IP header (including opts if present) in
+32-bit words. The byte size maximum is 15*4 - 60 bytes.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="raise">
+  <h3>Raises:</h3>
+  <dl>
+  
+    <dt>
+      
+        <span class='type'>[<tt>ArgumentError</tt>]</span>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'></span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+64
+65
+66
+67
+68</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 64</span>
+
+<span class='def def kw'>def</span> <span class='hl= identifier id'>hl=</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='raise identifier id'>raise</span><span class='lparen token'>(</span><span class='ArgumentError constant id'>ArgumentError</span><span class='comma token'>,</span> <span class='string val'>&quot;value for header length too high&quot;</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='val identifier id'>val</span> <span class='gt op'>&gt;</span> <span class='integer val'>0xf</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:v_hl</span><span class='rbrack token'>]</span> <span class='opasgn op'>&amp;=</span> <span class='integer val'>0xf0</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:v_hl</span><span class='rbrack token'>]</span> <span class='opasgn op'>+=</span> <span class='val identifier id'>val</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup_proto</h3>
+</div><div id="lookup_proto-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>lookup_proto</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+93</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 93</span>
+
+<span class='def def kw'>def</span> <span class='lookup_proto identifier id'>lookup_proto</span><span class='semicolon token'>;</span> <span class='Proto constant id'>Proto</span><span class='lbrack token'>[</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='proto identifier id'>proto</span> <span class='rbrack token'>]</span> <span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup_tos</h3>
+</div><div id="lookup_tos-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>lookup_tos</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+88</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 88</span>
+
+<span class='def def kw'>def</span> <span class='lookup_tos identifier id'>lookup_tos</span><span class='semicolon token'>;</span>  <span class='Tos constant id'>Tos</span><span class='lbrack token'>[</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='tos identifier id'>tos</span> <span class='rbrack token'>]</span> <span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>set_fields</h3>
+</div><div id="set_fields-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>set_fields</span><span class='args'>(params = nil)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Overrides set_fields to supply a default value for the &#8216;v_hl&#8217;
+field.
+</p>
+<pre class="code">
+  <span class='v identifier id'>v</span>  <span class='assign token'>=</span> <span class='integer val'>4</span>
+  <span class='hl identifier id'>hl</span> <span class='assign token'>=</span> <span class='integer val'>5</span> <span class='comment val'># number of 32-bit words - 20 bytes (size of hdr without opts)</span>
+</pre>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+54
+55
+56
+57</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 54</span>
+
+<span class='def def kw'>def</span> <span class='set_fields identifier id'>set_fields</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
+  <span class='params identifier id'>params</span> <span class='opasgn op'>||=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='super super kw'>super</span><span class='lparen token'>(</span><span class='lbrace token'>{</span><span class='symbol val'>:v_hl</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>0x45</span><span class='rbrace token'>}</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='params identifier id'>params</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>src</h3>
+</div><div id="src-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>src</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Returns the source IP address as an IPv4 address string as an IPv4 address
+string.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+104
+105
+106</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 104</span>
+
+<span class='def def kw'>def</span> <span class='src identifier id'>src</span>
+  <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='ipv4_ltoa identifier id'>ipv4_ltoa</span><span class='lparen token'>(</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='ntohl identifier id'>ntohl</span><span class='lparen token'>(</span> <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:src</span><span class='rbrack token'>]</span> <span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>src=</h3>
+</div><div id="src=-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>src=</span><span class='args'>(val)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Sets source IP address in the header from an IPv4 address string or 32-bit
+number.
+</p>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+97
+98
+99
+100</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/ip.rb', line 97</span>
+
+<span class='def def kw'>def</span> <span class='src= identifier id'>src=</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+  <span class='val identifier id'>val</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='colon2 op'>::</span><span class='Util constant id'>Util</span><span class='dot token'>.</span><span class='ipv4_atol identifier id'>ipv4_atol</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span> <span class='if if_mod kw'>if</span> <span class='val identifier id'>val</span><span class='dot token'>.</span><span class='kind_of? fid id'>kind_of?</span> <span class='String constant id'>String</span>
+  <span class='self self kw'>self</span><span class='lbrack token'>[</span><span class='symbol val'>:src</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='colon3 op'>::</span><span class='Dnet constant id'>Dnet</span><span class='dot token'>.</span><span class='htonl identifier id'>htonl</span><span class='lparen token'>(</span><span class='val identifier id'>val</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Thursday, September 17 2009 at 10:43:14 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>

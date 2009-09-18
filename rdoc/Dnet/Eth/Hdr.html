@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../../style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="../../syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="../../jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Class: Dnet::Eth::Hdr</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section class Dnet_Eth_Hdr">
+  <h1 class="title">Class: Dnet::Eth::Hdr</h1>
+  <div class="section inheritance">
+  <ul>
+  <li>FFI::Struct</li><ul><li>Dnet::Eth::Hdr</li>
+  </ul></ul>
+</div><div class="section mixins">
+  <h1>Included Modules</h1>
+  <p>FFI::DRY::StructHelper, <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></p>
+</div>
+<div class="section docstring">
+  <p>
+struct :dst, EthAddr, :desc =&gt; &#8216;destination address&#8217;
+</p>
+<pre class="code">
+  <span class='struct identifier id'>struct</span> <span class='symbol val'>:src</span><span class='comma token'>,</span>   <span class='EthAddr constant id'>EthAddr</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'source address'</span>
+  <span class='field identifier id'>field</span>  <span class='symbol val'>:etype</span><span class='comma token'>,</span> <span class='symbol val'>:ushort</span><span class='comma token'>,</span> <span class='symbol val'>:desc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'ethernet payload type'</span>
+</pre>
+
+</div><div class="section constants">
+  <div class="included">
+  
+  <div>
+    <h1>Constants Included from <a href="../NetEndianHelper.html" title="Dnet::NetEndianHelper">Dnet::NetEndianHelper</a></h1>
+    <p><span class='name'><a href="../NetEndianHelper.html#BYTE_ORDER_METH-constant" title="BYTE_ORDER_METH">BYTE_ORDER_METH</a></span>, <span class='name'><a href="../NetEndianHelper.html#I16_convert-constant" title="I16_convert">I16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#I32_convert-constant" title="I32_convert">I32_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U16_convert-constant" title="U16_convert">U16_convert</a></span>, <span class='name'><a href="../NetEndianHelper.html#U32_convert-constant" title="U32_convert">U32_convert</a></span></p>
+  </div>
+  
+</div>
+<div class="clear"></div>
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#lookup_etype-instance_method" title="#lookup_etype">#lookup_etype</a></span><span class='args'></span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>lookup_etype</h3>
+</div><div id="lookup_etype-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>lookup_etype</span><span class='args'></span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+62
+63
+64</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/dnet/eth.rb', line 62</span>
+
+<span class='def def kw'>def</span> <span class='lookup_etype identifier id'>lookup_etype</span>
+  <span class='Etype constant id'>Etype</span><span class='lbrack token'>[</span> <span class='self self kw'>self</span><span class='dot token'>.</span><span class='etype identifier id'>etype</span> <span class='rbrack token'>]</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Thursday, September 17 2009 at 10:43:11 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>
