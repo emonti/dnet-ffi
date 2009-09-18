@@ -23,7 +23,8 @@ module Dnet
   class Addr < ::FFI::Struct
     include ::FFI::DRY::StructHelper
 
-    ADDR_TYPES = [ nil, :eth, :ip, :ip6 ] # A mapping of dnet address types
+    # A mapping of dnet address types
+    ADDR_TYPES = [ nil, :link, :inet, :inet6 ] 
 
     # struct addr { ... };
     dsl_layout do
@@ -53,7 +54,8 @@ module Dnet
     # leaves setting :bits up to chance depending on which hash key gets
     # plucked first in set_fields() because of how ip_aton() works under 
     # the hood.
-    def set_fields(params)
+    def set_fields(params=nil)
+      params ||= {}
       if params[:bits] and params[:addr]
         raise( ::ArgumentError, 
            "Don't use :addr and :bits fields together. "+
@@ -66,6 +68,7 @@ module Dnet
     # Looks up this object's 'atype' member against ADDR_TYPES
     # Returns a symbol for the type or nil a type is not found.
     def addr_type; ADDR_TYPES[ self[:atype] ] ; end
+    alias lookup_atype addr_type
 
     # Returns a human-readable network address from self. Uses dnet(3)'s
     # addr_ntoa function under the hood.
