@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dnet-ffi}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Eric Monti"]
-  s.date = %q{2009-09-13}
+  s.date = %q{2009-09-17}
   s.description = %q{Ruby FFI bindings for the libdnet raw network library}
   s.email = %q{emonti@matasano.com}
   s.extra_rdoc_files = [
@@ -44,6 +44,8 @@ Gem::Specification.new do |s|
      "lib/dnet/typedefs.rb",
      "lib/dnet/udp.rb",
      "lib/dnet/util.rb",
+     "samples/eth_send_raw.rb",
+     "samples/ifconfig-alike.rb",
      "samples/udp_send_raw.rb",
      "spec/addr_spec.rb",
      "spec/arp_spec.rb",
