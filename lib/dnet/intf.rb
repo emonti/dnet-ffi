@@ -53,7 +53,7 @@ module Dnet
         def self.list; @@list ||= super();  end
       end
 
-      def lookup_itype; Flags[self[:itype]]; end
+      def lookup_itype; Itype[self[:itype]]; end
 
       # Returns a newly instantiated and allocated copy of this interface entry
       def copy
