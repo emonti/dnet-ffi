@@ -2,43 +2,7 @@
 
 module Dnet
   
-  # FFI implementation of dnet(3)'s eth_addr struct.
-  class EthAddr < ::FFI::Struct
-    include ::FFI::DRY::StructHelper
-    
-    # struct eth_addr { ... } eth_addr_t;
-    dsl_layout{ array :data, [:uchar, ETH_ADDR_LEN] }
-
-    # Adds the ability to initialize a new EthAddr with a mac address
-    # string such as 'de:ad:be:ef:ba:be'. This argument is only parsed
-    # if it is passed as the only String argument.
-    def initialize(*args)
-      if args.size == 1 and (s=args[0]).is_a? String
-        super()
-        self.addr = s
-      else
-        super(*args)
-      end
-    end
-    
-    def addr=(val)
-      unless val.to_s =~ /^#{Dnet::Util::RX_MAC_ADDR}$/
-        raise(ArgumentError, "invalid mac address #{val.inspect}")
-      end
-      raw = ::Dnet::Util.unhexify(val, /[:-]/)
-      self[:data].to_ptr.write_string(raw, ETH_ADDR_LEN)
-    end
-
-    # Returns the MAC address as an array of unsigned char values.
-    def chars; self[:data].to_a ; end
-
-    # Returns the MAC address as a string with colon-separated hex-bytes.
-    def string; chars.map {|x| "%0.2x" % x }.join(':'); end
-  end
-
-
   module Eth
-
     include FFI::Packets::Eth
     
     # Obtains a new handle to transmit raw Ethernet frames via the specified
@@ -98,6 +62,9 @@ module Dnet
       Handle.open(dev){|h| h.eth_send(*args) }
     end
   end # Eth
+
+  # This is just an alias for ::Dnet::Eth::EthAddr
+  EthAddr = Eth::EthAddr
 
   # This is just an alias for ::Dnet::Eth::Handle
   EthHandle = Eth::Handle
