@@ -4,6 +4,7 @@ rescue LoadError
 end
 require 'ffi'
 require 'ffi/dry'
+require 'ffi/packets'
 
 module Dnet
   extend FFI::Library

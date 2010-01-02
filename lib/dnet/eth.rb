@@ -38,40 +38,9 @@ module Dnet
 
 
   module Eth
-    #
-    #   struct :dst,   EthAddr, :desc => 'destination address'
-    #   struct :src,   EthAddr, :desc => 'source address'
-    #   field  :etype, :ushort, :desc => 'ethernet payload type'
-    #
-    class Hdr < ::FFI::Struct
-      include ::FFI::DRY::NetStructHelper
-      
-      module Etype
-        include ::FFI::DRY::ConstMap
-        slurp_constants ::Dnet, "ETH_TYPE_"
-        def list; @@list ||= super();  end
-      end
 
-      dsl_layout do
-        struct :dst,   EthAddr, :desc => 'destination address'
-        struct :src,   EthAddr, :desc => 'source address'
-        field  :etype, :ushort, :desc => 'ethernet payload type'
-      end
-
-      def lookup_etype
-        Etype[ self.etype ]
-      end
-
-      alias _divert_set_eth etype=
-
-      def etype=(val)
-        if val.kind_of? String or val.kind_of? Symbol
-          val = Etype[ val ] or raise(ArgumentError, "invalid eth type #{val}")
-        end
-        _divert_set_eth(val)
-      end
-    end
-
+    include FFI::Packets::Eth
+    
     # Obtains a new handle to transmit raw Ethernet frames via the specified
     # network device.
     #
