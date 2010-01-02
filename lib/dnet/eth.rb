@@ -44,8 +44,7 @@ module Dnet
     #   field  :etype, :ushort, :desc => 'ethernet payload type'
     #
     class Hdr < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
       
       module Etype
         include ::FFI::DRY::ConstMap

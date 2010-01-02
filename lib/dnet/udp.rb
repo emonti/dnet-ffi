@@ -2,8 +2,7 @@ module Dnet
 
   class Udp
     class Hdr < ::FFI::Struct
-      include ::FFI::DRY::StructHelper 
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper 
 
       # struct udp_hdr {
       #   uint16_t	uh_sport;	/* source port */

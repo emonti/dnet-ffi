@@ -29,8 +29,7 @@ module Dnet
     #   field :dst,     :uint32,  :desc => 'destination address'
     #
     class Hdr < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
     
       dsl_layout do
         field :v_hl,    :uint8,   :desc => 'v=vers(. & 0xf0) / '+
@@ -128,8 +127,7 @@ module Dnet
     #   array :data, [:uint8, DATA_LEN], :desc => 'option message data '
     #
     class Opt < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
 
       DATA_LEN = IP_OPT_LEN_MAX - IP_OPT_LEN
     
@@ -156,8 +154,7 @@ module Dnet
       #   array :tcc,   [:uint8, 3], :desc => 'transmission control code'
       #
       class DataSEC < ::FFI::Struct
-        include ::FFI::DRY::StructHelper
-        include ::Dnet::NetEndianHelper
+        include ::FFI::DRY::NetStructHelper
  
         dsl_layout do
           field :sec,   :uint16,     :desc => 'security'
@@ -176,8 +173,8 @@ module Dnet
       #   field :iptspairs, :uint32, :desc => 'IP addr/ts pairs, var-length'
       #
       class DataTS < ::FFI::Struct
-        include ::FFI::DRY::StructHelper
-        include ::Dnet::NetEndianHelper 
+        include ::FFI::DRY::NetStructHelper
+
         dsl_layout do
           field :ptr,       :uint8,  :desc => 'from start of option'
           field :oflw_flg,  :uint8,  :desc => 'oflw = number of IPs skipped /'+
@@ -193,8 +190,7 @@ module Dnet
       #   field :iplist,  :uint32,  :desc => 'var-length list of IPs'
       #
       class DataRR < ::FFI::Struct
-        include ::FFI::DRY::StructHelper
-        include ::Dnet::NetEndianHelper
+        include ::FFI::DRY::NetStructHelper
       
         dsl_layout do
           field :ptr,     :uint8,   :desc => 'from start of option'
@@ -213,8 +209,7 @@ module Dnet
       #   } __attribute__((__packed__));
       #
       class DataTR < ::FFI::Struct
-        include ::FFI::DRY::StructHelper
-        include ::Dnet::NetEndianHelper
+        include ::FFI::DRY::NetStructHelper
       
         dsl_layout do
           field :id,      :uint16, :desc => 'ID number'

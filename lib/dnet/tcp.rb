@@ -14,8 +14,7 @@ module Dnet
     #   field :urgp,   :uint16, :desc => 'urgent pointer'
     #
     class Hdr < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
     
       dsl_layout do
         field :sport,  :uint16, :desc => 'source port'
@@ -71,8 +70,7 @@ module Dnet
     #   } __attribute__((__packed__));
     #
     class Opt < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
 
       DATA_LEN = TCP_OPT_LEN_MAX - TCP_OPT_LEN
     

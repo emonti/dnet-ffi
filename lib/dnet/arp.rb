@@ -10,8 +10,7 @@ module Dnet
     #   field :pln, :uint16, :desc => 'length of proto address (IP_ADDR_LEN)'
     #   field :op,  :uint16, :desc => 'operation'
     class Hdr < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
       
       dsl_layout do
         field :hrd, :uint16, :desc => 'format of hardware address'
@@ -42,8 +41,7 @@ module Dnet
     #   array :tpa, [:uint8, IP_ADDR_LEN],  :desc => 'target protocol address'
     #
     class Ethip < ::FFI::Struct
-      include ::FFI::DRY::StructHelper
-      include ::Dnet::NetEndianHelper
+      include ::FFI::DRY::NetStructHelper
 
       dsl_layout do
         array :sha, [:uint8, ETH_ADDR_LEN], :desc => 'sender hardware address'
