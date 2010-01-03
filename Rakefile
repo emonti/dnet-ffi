@@ -13,7 +13,8 @@ begin
     gem.homepage = "http://github.com/emonti/dnet-ffi"
     gem.authors = ["Eric Monti"]
     gem.files.delete_if {|f| f =~ /^mirror\//}
-#    gem.add_dependency "emonti-ffi_dry"
+    gem.add_dependency "ffi_dry"
+    gem.add_dependency "ffi-packets"
     gem.add_development_dependency "rspec"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

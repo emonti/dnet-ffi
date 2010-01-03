@@ -8,10 +8,6 @@ module Dnet
     # or module
     module Helpers
 
-      def unhexify(str, d=/\s*/)
-        str.to_s.strip.gsub(/([A-Fa-f0-9]{1,2})#{d}?/) { $1.hex.chr }
-      end
-
       # Attempts to derive a memory pointer and length from an "anonymous" object.
       # Returns an an array object containing [len, pointer]
       #
@@ -38,30 +34,6 @@ module Dnet
         return [pbuf, bsz]
       end
       
-      # takes a IPv4 number and returns it as a 32-bit number
-      def ipv4_atol(str)
-        unless str =~ /^#{::Dnet::Util::RX_IP4_ADDR}$/
-          raise(::ArgumentError, "invalid IP address #{str.inspect}")
-        else
-          u32=0
-          str.split('.',4).each {|o| u32 = ((u32 << 8) | o.to_i) }
-          return u32
-        end
-      end
-
-      # takes a 32-bit number and returns it as an IPv4 address string.
-      def ipv4_ltoa(int)
-        unless(int.is_a? Numeric and int <= 0xffffffff)
-          raise(::ArgumentError, "not a long integer: #{int.inspect}")
-        end
-        ret = []
-        4.times do 
-          ret.unshift(int & 0xff)
-          int >>= 8
-        end
-        ret.join('.')
-      end
-
     end # module Helpers
 
     extend(::Dnet::Util::Helpers)
