@@ -15,7 +15,7 @@ module Dnet
     def self.list; @@list ||= super() ; end
   end
 
-  # Common superclass for all sockaddr struct classes
+  # Common abstract superclass for all sockaddr struct classes
   #
   class SockAddrFamily < ::FFI::Struct
     include ::FFI::DRY::StructHelper
